@@ -4,9 +4,20 @@ const DB_RECORRIDOS = {
     "recorridos": {
 
     
-    "8-CONTROL SAN MARTIN": [
+    "CONTROL SAN MARTIN Y 5 ABRIL": [
     ],
-   
+"CONTROL TROPERO Y 5 ABRIL": [
+    ],
+"QUEDA Bº AMUPE": [
+    ],
+"QUEDA EST.GUTIERREZ": [
+    ],
+"CONTROL RODEO": [
+    ],
+"QUEDA RECOARO": [
+    ],
+"QUEDA BºC.SOÑADA": [
+    ],
     "1873": [
         "1;ESTACION GUTIERREZ; >IDA",
         "2;MAIPU (PERON); >IDA",
