@@ -1,4 +1,5 @@
-
+import { recorridos } from './recorridos.js';
+console.log(recorridos); // Verifica en la consola qué llega realmente
 function init() {
     // --- LÓGICA DEL MAPA ---
     map = L.map('map').setView([-32.8895, -68.8458], 13);
