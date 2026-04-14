@@ -3,6 +3,15 @@ const DB_RECORRIDOS = {
         
     "recorridos": {
 
+    
+    "FUERA DE RECORRIDO": [
+    ],
+    "GARAGE RODEO": [
+    ],
+    "GARAGE CORRALITOS": [
+    ],
+    "DENTRO TERMINAL": [
+    ],
     "1873": [
         "1;ESTACION GUTIERREZ; >IDA",
         "2;MAIPU (PERON); >IDA",
