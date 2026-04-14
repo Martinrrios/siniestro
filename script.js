@@ -1,8 +1,4 @@
-// Base de datos de opciones
-const opcionesRecorrido = {
-    "200": ["2-AZUL;--IDA", "2-ROJO;--IDA", "2-AMARILLO;--IDA"],
-    "201": ["2-PERAS;--IDA", "2-MANZANAS;--IDA", "2-NARANJAS;--IDA"]
-};
+
 
 let map, marker;
 
@@ -22,26 +18,61 @@ function init() {
         document.getElementById('lng').value = lng.toFixed(6);
     });
 
-    // --- LÓGICA DE LOS DESPLEGABLES ---
-    const lineaInput = document.getElementById('linea-input');
-    const ramalContainer = document.getElementById('container-ramal');
-    const ramalSelect = document.getElementById('ramal-select');
+   // --- LÓGICA DE LOS DESPLEGABLES ---
+const lineaInput = document.getElementById('linea-input');
+const datalistLineas = document.getElementById('lineas');
+const ramalContainer = document.getElementById('container-ramal');
+const ramalSelect = document.getElementById('ramal-select');
 
-    lineaInput.addEventListener('input', function() {
-        const seleccion = this.value;
-        if (opcionesRecorrido[seleccion]) {
-            // Llenar el select de ramales
-            ramalSelect.innerHTML = '<option value="">-- Selecciona una opción --</option>';
-            opcionesRecorrido[seleccion].forEach(opt => {
-                const el = document.createElement('option');
-                el.value = el.textContent = opt;
-                ramalSelect.appendChild(el);
-            });
-            ramalContainer.style.display = 'block';
-        } else {
-            ramalContainer.style.display = 'none';
+// 1. Poblar el datalist de Líneas automáticamente desde DB_RECORRIDOS
+function cargarLineas() {
+    if (typeof DB_RECORRIDOS === 'undefined') return;
+    datalistLineas.innerHTML = ''; 
+    
+    for (const grupo in DB_RECORRIDOS) {
+        const lineas = DB_RECORRIDOS[grupo].recorridos;
+        for (const nroLinea in lineas) {
+            const option = document.createElement('option');
+            option.value = nroLinea;
+            datalistLineas.appendChild(option);
         }
-    });
+    }
 }
+
+// 2. Evento cuando el usuario selecciona una línea
+lineaInput.addEventListener('input', function() {
+    const seleccion = this.value;
+    let puntosEncontrados = null;
+
+    // Buscar la línea en todos los grupos de la base de datos
+    for (const grupo in DB_RECORRIDOS) {
+        if (DB_RECORRIDOS[grupo].recorridos[seleccion]) {
+            puntosEncontrados = DB_RECORRIDOS[grupo].recorridos[seleccion];
+            break;
+        }
+    }
+
+    if (puntosEncontrados) {
+        ramalSelect.innerHTML = '<option value="">-- Selecciona un punto del recorrido --</option>';
+        
+        puntosEncontrados.forEach(punto => {
+            const el = document.createElement('option');
+            
+            // MODIFICACIÓN: Ahora reemplazamos el ";" por " - " para que figure el número delante
+            // Ejemplo: "1;CONTROL MAIPU" se convierte en "1 - CONTROL MAIPU"
+            el.textContent = punto.replace(';', ' - '); 
+            
+            el.value = punto;
+            ramalSelect.appendChild(el);
+        });
+
+        ramalContainer.style.display = 'block';
+    } else {
+        ramalContainer.style.display = 'none';
+    }
+});
+
+// Inicializar la carga de líneas al cargar el script
+cargarLineas()
 
 window.onload = init;
