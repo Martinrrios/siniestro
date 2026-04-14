@@ -4,7 +4,7 @@ const DB_RECORRIDOS = {
     "recorridos": {
 
     
-    "1-CONTROL SAN MARTIN": [
+    "8-CONTROL SAN MARTIN": [
     ],
    
     "1873": [
