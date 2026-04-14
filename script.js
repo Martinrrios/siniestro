@@ -55,20 +55,43 @@ lineaInput.addEventListener('input', function() {
     
     if (!grupoElegido || !lineaElegida) return;
 
-    // Buscar los puntos dentro del grupo seleccionado
     const puntosEncontrados = DB_RECORRIDOS[grupoElegido]?.recorridos[lineaElegida];
 
     if (puntosEncontrados) {
         ramalSelect.innerHTML = '<option value="">-- Selecciona un punto del recorrido --</option>';
+        
         puntosEncontrados.forEach(punto => {
             const el = document.createElement('option');
-            el.textContent = punto.replace(';', ' - '); // Formato "1 - CONTROL"
+            el.textContent = punto.replace(';', ' - '); 
             el.value = punto;
+
+            // --- AQUÍ SE ASIGNAN LOS COLORES ---
+            if (punto.includes('>IDA')) {
+                el.classList.add('opcion-ida');
+            } else if (punto.includes('>VUELTA')) {
+                el.classList.add('opcion-vuelta');
+            }
+            
             ramalSelect.appendChild(el);
         });
-        ramalContainer.style.display = 'block'; // PASO 3: Mostrar Ramal
+
+        ramalContainer.style.display = 'block';
     } else {
         ramalContainer.style.display = 'none';
+    }
+});
+
+// NUEVO: Cambiar el color del selector principal al elegir un ramal
+ramalSelect.addEventListener('change', function() {
+    // Limpiamos colores previos
+    this.classList.remove('bg-ida', 'bg-vuelta');
+    
+    const selectedOption = this.options[this.selectedIndex];
+    
+    if (selectedOption.classList.contains('opcion-ida')) {
+        this.classList.add('bg-ida');
+    } else if (selectedOption.classList.contains('opcion-vuelta')) {
+        this.classList.add('bg-vuelta');
     }
 });
 

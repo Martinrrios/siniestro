@@ -67,3 +67,19 @@ input[readonly] {
     background-color: #f8f9fa;
     color: #666;
 }
+
+/* Colores para las opciones del selector */
+.opcion-ida {
+    background-color: #fff9c4 !important; /* Amarillo clarito */
+    color: #000;
+}
+
+.opcion-vuelta {
+    background-color: #c8e6c9 !important; /* Verde clarito */
+    color: #000;
+}
+
+/* Estilo para el select en sí cuando cambia */
+select#ramal-select {
+    transition: background-color 0.3s ease;
+}
