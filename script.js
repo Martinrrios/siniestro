@@ -23,52 +23,41 @@ function init() {
 // --- LÓGICA DE LOS DESPLEGABLES ---
 const grupoSelect = document.getElementById('grupo-select');
 const lineaInput = document.getElementById('linea-input');
-const datalistLineas = document.getElementById('lineas');
+const ramalSelect = document.getElementById('ramal-select');
+const ramalContainer = document.getElementById('container-ramal');
 
-// 1. Cuando cambia el Grupo (G200 o G800)
-grupoSelect.addEventListener('change', function() {
-    const grupoElegido = this.value;
-    
-    // Limpiar y resetear el input de líneas
-    lineaInput.value = '';
-    datalistLineas.innerHTML = '';
-    
-    if (grupoElegido && DB_RECORRIDOS[grupoElegido]) {
-        lineaInput.disabled = false;
-        lineaInput.placeholder = "Escribe o selecciona línea...";
-        
-        // Cargar solo las líneas de ese grupo
-        const lineas = DB_RECORRIDOS[grupoElegido].recorridos;
-        for (const nroLinea in lineas) {
-            const option = document.createElement('option');
-            option.value = nroLinea;
-            datalistLineas.appendChild(option);
-        }
-    } else {
-        lineaInput.disabled = true;
-        lineaInput.placeholder = "Primero selecciona un grupo...";
-    }
-});
-
-// 2. Modificar el evento de búsqueda de la línea
+// Evento cuando el usuario escribe o selecciona una Línea
 lineaInput.addEventListener('input', function() {
     const grupoElegido = grupoSelect.value;
     const lineaElegida = this.value;
     
-    if (!grupoElegido || !lineaElegida) return;
+    // Si no hay grupo o línea, escondemos el selector de ramal
+    if (!grupoElegido || !lineaElegida) {
+        ramalContainer.style.display = 'none';
+        return;
+    }
 
-    const puntosEncontrados = DB_RECORRIDOS[grupoElegido].recorridos[lineaElegida];
+    // Buscamos los puntos (ramales) en nuestra base de datos
+    const puntosEncontrados = DB_RECORRIDOS[grupoElegido]?.recorridos[lineaElegida];
 
     if (puntosEncontrados) {
-        ramalSelect.innerHTML = '<option value="">-- Selecciona un punto --</option>';
+        // Limpiamos el selector de ramales
+        ramalSelect.innerHTML = '<option value="">-- Selecciona un punto del recorrido --</option>';
+        
+        // Llenamos el selector con los datos del array
         puntosEncontrados.forEach(punto => {
             const el = document.createElement('option');
+            
+            // Reemplazamos el ";" por " - " para que se vea limpio (ej: "1 - CONTROL")
             el.textContent = punto.replace(';', ' - '); 
             el.value = punto;
             ramalSelect.appendChild(el);
         });
+
+        // Mostramos el contenedor del ramal
         ramalContainer.style.display = 'block';
     } else {
+        // Si la línea escrita no existe, escondemos el selector
         ramalContainer.style.display = 'none';
     }
 });
