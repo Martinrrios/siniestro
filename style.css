@@ -7,6 +7,13 @@ body {
     margin: 0;
 }
 
+@media (max-width: 600px) {
+    #map {
+        height: 350px; /* Un mapa un poco más alto para dedos grandes */
+        border-radius: 8px;
+    }
+}
+
 .form-card {
     background: white;
     width: 100%;
