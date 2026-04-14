@@ -6,12 +6,44 @@ const ramalSelect = document.getElementById('ramal-select');
 const ramalContainer = document.getElementById('container-ramal');
 
 function init() {
-    // --- LÓGICA DEL MAPA ---
+    // 1. Inicializar el mapa con una vista por defecto (Mendoza)
     map = L.map('map').setView([-32.8895, -68.8458], 13);
+    
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '© OpenStreetMap'
     }).addTo(map);
 
+    // 2. Intentar obtener la ubicación actual
+    if ("geolocation" in navigator) {
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                const { latitude, longitude } = position.coords;
+                const pos = [latitude, longitude];
+
+                // Centrar el mapa y hacer zoom en la ubicación actual
+                map.setView(pos, 16);
+
+                // Colocar el marcador automáticamente en la ubicación actual
+                if (marker) marker.setLatLng(pos);
+                else marker = L.marker(pos).addTo(map);
+
+                // Llenar los campos de latitud y longitud
+                document.getElementById('lat').value = latitude.toFixed(6);
+                document.getElementById('lng').value = longitude.toFixed(6);
+            },
+            (error) => {
+                console.warn("Error de geolocalización o permiso denegado:", error.message);
+                // Si falla o deniega, el mapa simplemente queda en la vista por defecto
+            },
+            {
+                enableHighAccuracy: true, // Usa el GPS para mayor precisión
+                timeout: 5000,
+                maximumAge: 0
+            }
+        );
+    }
+
+    // 3. Mantener el evento de clic para corregir la ubicación manualmente
     map.on('click', (e) => {
         const { lat, lng } = e.latlng;
         if (marker) marker.setLatLng(e.latlng);
@@ -21,7 +53,6 @@ function init() {
         document.getElementById('lng').value = lng.toFixed(6);
     });
 }
-
 // PASO 1: Al seleccionar el GRUPO
 grupoSelect.addEventListener('change', function() {
     const grupoElegido = this.value;
