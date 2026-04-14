@@ -1,4 +1,3 @@
-export const recorridos = [ ... ]; // Asegúrate de que no haya solo un 200 y 201 aquí
 const DB_RECORRIDOS = {
 "G800": {
         
