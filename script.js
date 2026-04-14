@@ -81,15 +81,19 @@ lineaInput.addEventListener('input', function() {
     }
 });
 
-// Referencia al input
-const lineaInput = document.getElementById('linea-input');
-
-// Cuando el usuario hace clic o toca el campo de recorrido
-lineaInput.addEventListener('click', function() {
-    this.value = ''; // Limpia el texto para quitar el filtro del datalist
+// Forzar apertura de la lista con un solo clic
+lineaInput.addEventListener('mousedown', function() {
+    this.value = ''; // Borra el contenido
     
-    // Opcional: si quieres que el ramal se oculte hasta que elija la nueva línea
-    document.getElementById('container-ramal').style.display = 'none';
+    // Si el campo estaba deshabilitado, no hacemos nada
+    if(this.disabled) return;
+
+    // Pequeño retardo para asegurar que el navegador procese el borrado 
+    // y despliegue la lista completa
+    setTimeout(() => {
+        const event = new Event('input', { bubbles: true });
+        this.dispatchEvent(event);
+    }, 1);
 });
 
 // Para navegadores que usan 'focus' (como algunos en Android)
