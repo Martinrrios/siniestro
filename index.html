@@ -16,11 +16,22 @@
         </header>
 
         <div class="section-group">
-            <div class="field">
-                <label>Recorrido (Línea):</label>
-                <input list="lineas" id="linea-input" placeholder="Escribe o selecciona línea...">
-               
-            </div>
+    <div class="field">
+        <label>Grupo de Líneas:</label>
+        <select id="grupo-select">
+            <option value="">-- Selecciona Grupo --</option>
+            <option value="G200">Grupo 200</option>
+            <option value="G800">Grupo 800</option>
+        </select>
+    </div>
+
+    <div class="field">
+        <label>Recorrido (Línea):</label>
+        <input list="lineas" id="linea-input" placeholder="Primero selecciona un grupo..." disabled>
+        <datalist id="lineas"></datalist>
+    </div>
+    
+    </div>
 
             <div class="field" id="container-ramal" style="display: none;">
                 <label>Ramal / Opción:</label>

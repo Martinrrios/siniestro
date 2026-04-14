@@ -21,48 +21,52 @@ function init() {
   let map, marker;
 
 // --- LÓGICA DE LOS DESPLEGABLES ---
-function cargarLineas() {
-    const datalistLineas = document.getElementById('lineas');
-    if (typeof DB_RECORRIDOS === 'undefined' || !datalistLineas) return;
+const grupoSelect = document.getElementById('grupo-select');
+const lineaInput = document.getElementById('linea-input');
+const datalistLineas = document.getElementById('lineas');
+
+// 1. Cuando cambia el Grupo (G200 o G800)
+grupoSelect.addEventListener('change', function() {
+    const grupoElegido = this.value;
     
-    datalistLineas.innerHTML = ''; 
-    for (const grupo in DB_RECORRIDOS) {
-        const lineas = DB_RECORRIDOS[grupo].recorridos;
+    // Limpiar y resetear el input de líneas
+    lineaInput.value = '';
+    datalistLineas.innerHTML = '';
+    
+    if (grupoElegido && DB_RECORRIDOS[grupoElegido]) {
+        lineaInput.disabled = false;
+        lineaInput.placeholder = "Escribe o selecciona línea...";
+        
+        // Cargar solo las líneas de ese grupo
+        const lineas = DB_RECORRIDOS[grupoElegido].recorridos;
         for (const nroLinea in lineas) {
             const option = document.createElement('option');
             option.value = nroLinea;
             datalistLineas.appendChild(option);
         }
+    } else {
+        lineaInput.disabled = true;
+        lineaInput.placeholder = "Primero selecciona un grupo...";
     }
-}
+});
 
-// 2. Evento cuando el usuario selecciona una línea
+// 2. Modificar el evento de búsqueda de la línea
 lineaInput.addEventListener('input', function() {
-    const seleccion = this.value;
-    let puntosEncontrados = null;
+    const grupoElegido = grupoSelect.value;
+    const lineaElegida = this.value;
+    
+    if (!grupoElegido || !lineaElegida) return;
 
-    // Buscar la línea en todos los grupos de la base de datos
-    for (const grupo in DB_RECORRIDOS) {
-        if (DB_RECORRIDOS[grupo].recorridos[seleccion]) {
-            puntosEncontrados = DB_RECORRIDOS[grupo].recorridos[seleccion];
-            break;
-        }
-    }
+    const puntosEncontrados = DB_RECORRIDOS[grupoElegido].recorridos[lineaElegida];
 
     if (puntosEncontrados) {
-        ramalSelect.innerHTML = '<option value="">-- Selecciona un punto del recorrido --</option>';
-        
+        ramalSelect.innerHTML = '<option value="">-- Selecciona un punto --</option>';
         puntosEncontrados.forEach(punto => {
             const el = document.createElement('option');
-            
-            // MODIFICACIÓN: Ahora reemplazamos el ";" por " - " para que figure el número delante
-            // Ejemplo: "1;CONTROL MAIPU" se convierte en "1 - CONTROL MAIPU"
             el.textContent = punto.replace(';', ' - '); 
-            
             el.value = punto;
             ramalSelect.appendChild(el);
         });
-
         ramalContainer.style.display = 'block';
     } else {
         ramalContainer.style.display = 'none';
