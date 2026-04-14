@@ -1,4 +1,3 @@
-// --- 1. Inicialización de Variables ---
 let map, marker;
 const grupoSelect = document.getElementById('grupo-select');
 const lineaInput = document.getElementById('linea-input');
@@ -6,8 +5,8 @@ const datalistLineas = document.getElementById('lineas');
 const ramalSelect = document.getElementById('ramal-select');
 const ramalContainer = document.getElementById('container-ramal');
 
-// --- 2. Iniciar el Mapa (Leaflet) ---
 function init() {
+    // --- LÓGICA DEL MAPA ---
     map = L.map('map').setView([-32.8895, -68.8458], 13);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '© OpenStreetMap'
@@ -23,57 +22,54 @@ function init() {
     });
 }
 
-// --- 3. Lógica de Cascada (Grupo -> Recorrido -> Ramal) ---
-
-// PASO 1: Al cambiar el GRUPO
+// PASO 1: Al seleccionar el GRUPO
 grupoSelect.addEventListener('change', function() {
-    const grupo = this.value;
+    const grupoElegido = this.value;
     
-    // Resetear todo lo siguiente
+    // Limpiar campos hijos
     lineaInput.value = '';
-    lineaInput.disabled = !grupo;
     datalistLineas.innerHTML = '';
     ramalContainer.style.display = 'none';
-    ramalSelect.innerHTML = '';
-
-    if (grupo && DB_RECORRIDOS[grupo]) {
+    
+    if (grupoElegido && DB_RECORRIDOS[grupoElegido]) {
+        lineaInput.disabled = false;
         lineaInput.placeholder = "Escribe o selecciona línea...";
-        const lineas = DB_RECORRIDOS[grupo].recorridos;
         
-        // Llenar el datalist con las líneas del grupo
-        for (const nro in lineas) {
-            const opt = document.createElement('option');
-            opt.value = nro;
-            datalistLineas.appendChild(opt);
+        // Cargar SOLO las líneas del grupo seleccionado
+        const lineas = DB_RECORRIDOS[grupoElegido].recorridos;
+        for (const nroLinea in lineas) {
+            const option = document.createElement('option');
+            option.value = nroLinea;
+            datalistLineas.appendChild(option);
         }
     } else {
+        lineaInput.disabled = true;
         lineaInput.placeholder = "Primero selecciona un grupo...";
     }
 });
 
-// PASO 2: Al seleccionar el RECORRIDO (Línea)
+// PASO 2: Al escribir/seleccionar la LÍNEA
 lineaInput.addEventListener('input', function() {
-    const grupo = grupoSelect.value;
-    const linea = this.value;
+    const grupoElegido = grupoSelect.value;
+    const lineaElegida = this.value;
+    
+    if (!grupoElegido || !lineaElegida) return;
 
-    if (grupo && linea && DB_RECORRIDOS[grupo]?.recorridos[linea]) {
-        const puntos = DB_RECORRIDOS[grupo].recorridos[linea];
-        
-        // Limpiar y llenar el selector de RAMAL
-        ramalSelect.innerHTML = '<option value="">-- Selecciona una opción --</option>';
-        puntos.forEach(punto => {
-            const opt = document.createElement('option');
-            opt.value = punto;
-            opt.textContent = punto.replace(';', ' - '); // Formato: "1 - CONTROL"
-            ramalSelect.appendChild(opt);
+    // Buscar los puntos dentro del grupo seleccionado
+    const puntosEncontrados = DB_RECORRIDOS[grupoElegido]?.recorridos[lineaElegida];
+
+    if (puntosEncontrados) {
+        ramalSelect.innerHTML = '<option value="">-- Selecciona un punto del recorrido --</option>';
+        puntosEncontrados.forEach(punto => {
+            const el = document.createElement('option');
+            el.textContent = punto.replace(';', ' - '); // Formato "1 - CONTROL"
+            el.value = punto;
+            ramalSelect.appendChild(el);
         });
-
-        // Mostrar el último paso
-        ramalContainer.style.display = 'block';
+        ramalContainer.style.display = 'block'; // PASO 3: Mostrar Ramal
     } else {
         ramalContainer.style.display = 'none';
     }
 });
 
-// Llamar a init al cargar la página
 window.onload = init;
