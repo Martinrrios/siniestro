@@ -4,16 +4,7 @@ const DB_RECORRIDOS = {
     "recorridos": {
 
     
-    "222": ["1;ESTACION GUTIERREZ; >IDA",
-        "2;MAIPU (PERON); >IDA",
-        "3;RUSSELL; >IDA",
-        "4;CRUZ DE PIEDRA; >IDA",
-        "5;TRES ESQUINAS (ESC. CRUZ DE PIEDRA); >IDA",
-        "6;LUNLUNTA; >VUELTA",
-        "7;CRUZ DE PIEDRA; >VUELTA",
-        "8;RUSSELL; >VUELTA",
-        "9;MAIPU (PERON); >VUELTA",
-        "10;ESTACION GUTIERREZ; >VUELTA"
+    "CONTROL SAN MARTIN": [
     ],
    
     "1873": [
