@@ -18,6 +18,10 @@ function init() {
         document.getElementById('lng').value = lng.toFixed(6);
     });
 
+    // IMPORTANTE: Llamar a la función para que cargue las líneas de recorridos.js
+    cargarLineas(); 
+}
+
    // --- LÓGICA DE LOS DESPLEGABLES ---
 const lineaInput = document.getElementById('linea-input');
 const datalistLineas = document.getElementById('lineas');
