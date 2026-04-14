@@ -497,7 +497,7 @@ const DB_RECORRIDOS = {
     ]
 }
 
-};
+},
 
 "G200": {
         
