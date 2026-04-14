@@ -1,4 +1,3 @@
-
 function init() {
     // --- LÓGICA DEL MAPA ---
     map = L.map('map').setView([-32.8895, -68.8458], 13);
