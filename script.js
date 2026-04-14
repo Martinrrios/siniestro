@@ -96,11 +96,6 @@ lineaInput.addEventListener('mousedown', function() {
     }, 1);
 });
 
-// Para navegadores que usan 'focus' (como algunos en Android)
-lineaInput.addEventListener('focus', function() {
-    this.value = '';
-});
-
 // NUEVO: Cambiar el color del selector principal al elegir un ramal
 ramalSelect.addEventListener('change', function() {
     // Limpiamos colores previos
