@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cuestionario de Siniestros</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="form-card">
+        <header>
+            <h2>Información del Siniestro</h2>
+            <p>Complete los datos del recorrido y marque la ubicación en el mapa.</p>
+        </header>
+
+        <div class="section-group">
+            <div class="field">
+                <label>Recorrido (Línea):</label>
+                <input list="lineas" id="linea-input" placeholder="Escribe o selecciona línea...">
+                <datalist id="lineas">
+                    <option value="200">
+                    <option value="201">
+                </datalist>
+            </div>
+
+            <div class="field" id="container-ramal" style="display: none;">
+                <label>Ramal / Opción:</label>
+                <select id="ramal-select">
+                    <option value="">-- Selecciona una opción --</option>
+                </select>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="section-group">
+            <label>Marque el lugar del hecho en el mapa:</label>
+            <div id="map"></div>
+
+            <div class="results-container">
+                <div class="field">
+                    <label>Latitud</label>
+                    <input type="text" id="lat" readonly placeholder="0.000000">
+                </div>
+                <div class="field">
+                    <label>Longitud</label>
+                    <input type="text" id="lng" readonly placeholder="0.000000">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
