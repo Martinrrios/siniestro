@@ -68,7 +68,7 @@ input[readonly] {
     color: #666;
 }
 
-/* Colores para las opciones del selector */
+/* --- Colores para los Ramales --- */
 .opcion-ida {
     background-color: #fff9c4 !important; /* Amarillo clarito */
     color: #000;
@@ -79,7 +79,11 @@ input[readonly] {
     color: #000;
 }
 
-/* Estilo para el select en sí cuando cambia */
-select#ramal-select {
-    transition: background-color 0.3s ease;
+/* Color del selector cuando ya elegiste una opción */
+#ramal-select.bg-ida {
+    background-color: #fff9c4;
+}
+
+#ramal-select.bg-vuelta {
+    background-color: #c8e6c9;
 }
