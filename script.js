@@ -1,7 +1,4 @@
 
-
-let map, marker;
-
 function init() {
     // --- LÓGICA DEL MAPA ---
     map = L.map('map').setView([-32.8895, -68.8458], 13);
@@ -22,17 +19,14 @@ function init() {
     cargarLineas(); 
 }
 
-   // --- LÓGICA DE LOS DESPLEGABLES ---
-const lineaInput = document.getElementById('linea-input');
-const datalistLineas = document.getElementById('lineas');
-const ramalContainer = document.getElementById('container-ramal');
-const ramalSelect = document.getElementById('ramal-select');
+  let map, marker;
 
-// 1. Poblar el datalist de Líneas automáticamente desde DB_RECORRIDOS
+// --- LÓGICA DE LOS DESPLEGABLES ---
 function cargarLineas() {
-    if (typeof DB_RECORRIDOS === 'undefined') return;
-    datalistLineas.innerHTML = ''; 
+    const datalistLineas = document.getElementById('lineas');
+    if (typeof DB_RECORRIDOS === 'undefined' || !datalistLineas) return;
     
+    datalistLineas.innerHTML = ''; 
     for (const grupo in DB_RECORRIDOS) {
         const lineas = DB_RECORRIDOS[grupo].recorridos;
         for (const nroLinea in lineas) {
