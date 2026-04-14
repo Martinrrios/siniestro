@@ -81,6 +81,12 @@ lineaInput.addEventListener('input', function() {
     }
 });
 
+// Limpiar el input al hacer clic para mostrar todos los recorridos de nuevo
+lineaInput.addEventListener('click', function() {
+    this.value = ''; // Borra el texto actual
+    ramalContainer.style.display = 'none'; // Esconde el ramal hasta que elija uno nuevo
+});
+
 // NUEVO: Cambiar el color del selector principal al elegir un ramal
 ramalSelect.addEventListener('change', function() {
     // Limpiamos colores previos
