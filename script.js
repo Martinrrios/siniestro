@@ -81,10 +81,20 @@ lineaInput.addEventListener('input', function() {
     }
 });
 
-// Limpiar el input al hacer clic para mostrar todos los recorridos de nuevo
+// Referencia al input
+const lineaInput = document.getElementById('linea-input');
+
+// Cuando el usuario hace clic o toca el campo de recorrido
 lineaInput.addEventListener('click', function() {
-    this.value = ''; // Borra el texto actual
-    ramalContainer.style.display = 'none'; // Esconde el ramal hasta que elija uno nuevo
+    this.value = ''; // Limpia el texto para quitar el filtro del datalist
+    
+    // Opcional: si quieres que el ramal se oculte hasta que elija la nueva línea
+    document.getElementById('container-ramal').style.display = 'none';
+});
+
+// Para navegadores que usan 'focus' (como algunos en Android)
+lineaInput.addEventListener('focus', function() {
+    this.value = '';
 });
 
 // NUEVO: Cambiar el color del selector principal al elegir un ramal
