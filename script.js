@@ -1,5 +1,13 @@
+// --- 1. Inicialización de Variables ---
+let map, marker;
+const grupoSelect = document.getElementById('grupo-select');
+const lineaInput = document.getElementById('linea-input');
+const datalistLineas = document.getElementById('lineas');
+const ramalSelect = document.getElementById('ramal-select');
+const ramalContainer = document.getElementById('container-ramal');
+
+// --- 2. Iniciar el Mapa (Leaflet) ---
 function init() {
-    // --- LÓGICA DEL MAPA ---
     map = L.map('map').setView([-32.8895, -68.8458], 13);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '© OpenStreetMap'
@@ -13,56 +21,59 @@ function init() {
         document.getElementById('lat').value = lat.toFixed(6);
         document.getElementById('lng').value = lng.toFixed(6);
     });
-
-    // IMPORTANTE: Llamar a la función para que cargue las líneas de recorridos.js
-    cargarLineas(); 
 }
 
-  let map, marker;
+// --- 3. Lógica de Cascada (Grupo -> Recorrido -> Ramal) ---
 
-// --- LÓGICA DE LOS DESPLEGABLES ---
-const grupoSelect = document.getElementById('grupo-select');
-const lineaInput = document.getElementById('linea-input');
-const ramalSelect = document.getElementById('ramal-select');
-const ramalContainer = document.getElementById('container-ramal');
-
-// Evento cuando el usuario escribe o selecciona una Línea
-lineaInput.addEventListener('input', function() {
-    const grupoElegido = grupoSelect.value;
-    const lineaElegida = this.value;
+// PASO 1: Al cambiar el GRUPO
+grupoSelect.addEventListener('change', function() {
+    const grupo = this.value;
     
-    // Si no hay grupo o línea, escondemos el selector de ramal
-    if (!grupoElegido || !lineaElegida) {
-        ramalContainer.style.display = 'none';
-        return;
-    }
+    // Resetear todo lo siguiente
+    lineaInput.value = '';
+    lineaInput.disabled = !grupo;
+    datalistLineas.innerHTML = '';
+    ramalContainer.style.display = 'none';
+    ramalSelect.innerHTML = '';
 
-    // Buscamos los puntos (ramales) en nuestra base de datos
-    const puntosEncontrados = DB_RECORRIDOS[grupoElegido]?.recorridos[lineaElegida];
-
-    if (puntosEncontrados) {
-        // Limpiamos el selector de ramales
-        ramalSelect.innerHTML = '<option value="">-- Selecciona un punto del recorrido --</option>';
+    if (grupo && DB_RECORRIDOS[grupo]) {
+        lineaInput.placeholder = "Escribe o selecciona línea...";
+        const lineas = DB_RECORRIDOS[grupo].recorridos;
         
-        // Llenamos el selector con los datos del array
-        puntosEncontrados.forEach(punto => {
-            const el = document.createElement('option');
-            
-            // Reemplazamos el ";" por " - " para que se vea limpio (ej: "1 - CONTROL")
-            el.textContent = punto.replace(';', ' - '); 
-            el.value = punto;
-            ramalSelect.appendChild(el);
+        // Llenar el datalist con las líneas del grupo
+        for (const nro in lineas) {
+            const opt = document.createElement('option');
+            opt.value = nro;
+            datalistLineas.appendChild(opt);
+        }
+    } else {
+        lineaInput.placeholder = "Primero selecciona un grupo...";
+    }
+});
+
+// PASO 2: Al seleccionar el RECORRIDO (Línea)
+lineaInput.addEventListener('input', function() {
+    const grupo = grupoSelect.value;
+    const linea = this.value;
+
+    if (grupo && linea && DB_RECORRIDOS[grupo]?.recorridos[linea]) {
+        const puntos = DB_RECORRIDOS[grupo].recorridos[linea];
+        
+        // Limpiar y llenar el selector de RAMAL
+        ramalSelect.innerHTML = '<option value="">-- Selecciona una opción --</option>';
+        puntos.forEach(punto => {
+            const opt = document.createElement('option');
+            opt.value = punto;
+            opt.textContent = punto.replace(';', ' - '); // Formato: "1 - CONTROL"
+            ramalSelect.appendChild(opt);
         });
 
-        // Mostramos el contenedor del ramal
+        // Mostrar el último paso
         ramalContainer.style.display = 'block';
     } else {
-        // Si la línea escrita no existe, escondemos el selector
         ramalContainer.style.display = 'none';
     }
 });
 
-// Inicializar la carga de líneas al cargar el script
-cargarLineas()
-
+// Llamar a init al cargar la página
 window.onload = init;
