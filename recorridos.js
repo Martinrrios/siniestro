@@ -4,7 +4,7 @@ const DB_RECORRIDOS = {
     "recorridos": {
 
     
-    "FUERA DE RECORRIDO": [""
+    "222": [""
     ],
     "GARAGE RODEO": [
     ],
