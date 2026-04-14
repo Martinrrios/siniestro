@@ -15,12 +15,7 @@ const DB_RECORRIDOS = {
         "9;MAIPU (PERON); >VUELTA",
         "10;ESTACION GUTIERREZ; >VUELTA"
     ],
-    "GARAGE RODEO": [
-    ],
-    "GARAGE CORRALITOS": [
-    ],
-    "DENTRO TERMINAL": [
-    ],
+   
     "1873": [
         "1;ESTACION GUTIERREZ; >IDA",
         "2;MAIPU (PERON); >IDA",
