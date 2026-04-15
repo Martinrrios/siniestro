@@ -162,7 +162,7 @@ function enviarWhatsApp() {
         
 
 	`*LUGAR DEL SINIESTRO*%0A` +
-	`*Lugar:* ${getVal('siniestro-lugar')} ${getVal('ramal-select')} ;${lat}, ${lng}%0A`+
+	`*Lugar:* ${getVal('siniestro-lugar')} ${getVal('ramal-select')} (;${lat}, ${lng})%0A`+
         `*Sentido:* ${getVal('sentido-select')}%0A%0A` +
 	`*UBICACIÓN:* https://www.google.com/maps?q=${lat},${lng}`;
         
