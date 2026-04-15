@@ -191,7 +191,7 @@ function enviarWhatsApp() {
         `*Ubicación en Mapa:*%0A${googleMapsLink}`;
 
     // 4. Configurar el número (Formato: 549 + área + número)
-    const telefono = "549261XXXXXXX"; // <--- REEMPLAZA CON TU NÚMERO AQUÍ
+    const telefono = "5492616147829"; // <--- REEMPLAZA CON TU NÚMERO AQUÍ
 
     // 5. Abrir WhatsApp
     const url = `https://wa.me/${telefono}?text=${mensaje}`;
