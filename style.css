@@ -94,3 +94,32 @@ input[readonly] {
 #ramal-select.bg-vuelta {
     background-color: #c8e6c9;
 }
+
+/* --- Estilo del Botón de WhatsApp --- */
+#btn-enviar {
+    width: 100%;
+    background-color: #25D366; /* Verde oficial de WhatsApp */
+    color: white;
+    padding: 15px;
+    border: none;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: background-color 0.3s ease, transform 0.1s;
+}
+
+#btn-enviar:active {
+    background-color: #128C7E;
+    transform: scale(0.98); /* Efecto de hundido al tocarlo */
+}
+
+#btn-enviar img {
+    filter: brightness(0) invert(1); /* Pone el icono de blanco */
+}
