@@ -141,4 +141,61 @@ ramalSelect.addEventListener('change', function() {
     }
 });
 
+function enviarWhatsApp() {
+    const grupo = document.getElementById('grupo-select').value;
+    const linea = document.getElementById('linea-input').value;
+    const ramal = document.getElementById('ramal-select').value;
+    const lat = document.getElementById('lat').value;
+    const lng = document.getElementById('lng').value;
+    
+    // Crear el link de Google Maps con la ubicación marcada
+    const googleMapsLink = `https://www.google.com/maps?q=${lat},${lng}`;
+
+    const mensaje = `*INFORME DE SINIESTRO*%0A` +
+                    `----------------------------%0A` +
+                    `*Grupo:* ${grupo}%0A` +
+                    `*Línea:* ${linea}%0A` +
+                    `*Ramal:* ${ramal}%0A` +
+                    `*Ubicación:* ${googleMapsLink}`;
+
+    const telefono = "5492616147829"; // Reemplaza con tu número
+    window.open(`https://wa.me/${telefono}?text=${mensaje}`, '_blank');
+}
+
+function enviarWhatsApp() {
+    // 1. Obtener los valores de los campos
+    const grupo = document.getElementById('grupo-select').value;
+    const linea = document.getElementById('linea-input').value;
+    const ramal = document.getElementById('ramal-select').value;
+    const lat = document.getElementById('lat').value;
+    const lng = document.getElementById('lng').value;
+
+    // Validar que los campos básicos estén llenos
+    if (!grupo || !linea || !lat) {
+        alert("Por favor, selecciona Grupo, Recorrido y marca la ubicación en el mapa.");
+        return;
+    }
+
+    // 2. Crear el enlace de Google Maps
+    // Usamos el formato de búsqueda directa para que abra el pin exacto
+    const googleMapsLink = `https://www.google.com/maps?q=${lat},${lng}`;
+
+    // 3. Construir el mensaje (usando %0A para saltos de línea)
+    const mensaje = 
+        `*INFORME DE SINIESTRO*%0A` +
+        `----------------------------%0A` +
+        `*Grupo:* ${grupo}%0A` +
+        `*Línea:* ${linea}%0A` +
+        `*Ramal:* ${ramal}%0A` +
+        `*Coordenadas:* ${lat}, ${lng}%0A%0A` +
+        `*Ubicación en Mapa:*%0A${googleMapsLink}`;
+
+    // 4. Configurar el número (Formato: 549 + área + número)
+    const telefono = "549261XXXXXXX"; // <--- REEMPLAZA CON TU NÚMERO AQUÍ
+
+    // 5. Abrir WhatsApp
+    const url = `https://wa.me/${telefono}?text=${mensaje}`;
+    window.open(url, '_blank');
+}
+
 window.onload = init;
