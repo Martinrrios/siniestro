@@ -123,3 +123,62 @@ input[readonly] {
 #btn-enviar img {
     filter: brightness(0) invert(1); /* Pone el icono de blanco */
 }
+
+/* Añadir al final de style.css */
+
+.field-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+h3 {
+    margin-top: 0;
+    color: #2c3e50;
+    border-left: 4px solid #25d366;
+    padding-left: 10px;
+}
+
+h4 { margin-bottom: 5px; color: #666; }
+
+.header-inline {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.counter-controls {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background: #f0f2f5;
+    padding: 5px 15px;
+    border-radius: 20px;
+}
+
+.counter-controls button {
+    background: #fff;
+    border: 1px solid #ccc;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.lesionado-card {
+    background: #f9f9f9;
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 10px;
+    border: 1px dashed #ccc;
+}
+
+textarea {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-family: inherit;
+    box-sizing: border-box;
+}
