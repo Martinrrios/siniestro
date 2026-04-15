@@ -132,7 +132,10 @@ function cambiarLesionados(delta) {
 // --- ENVÍO DE DATOS ---
 
 function enviarWhatsApp() {
-    const getVal = (id) => document.getElementById(id).value || "No informado";
+    const getVal = (id) => {
+        const el = document.getElementById(id);
+        return el ? (el.value || "S/D") : "Campo no encontrado";
+    };
     
     // Bloque de Lesionados
     let textoLesionados = "";
@@ -151,30 +154,28 @@ function enviarWhatsApp() {
     const mensaje = 
         `*INFORME DE SINIESTRO*%0A` +
         `----------------------------------------%0A` +
-        `*CHOFER:* ${getVal('chofer-nombre')} (Leg: ${getVal('chofer-legajo')})%0A` +
-	`*LEGAJO:* ${getVal('chofer-legajo')}%0A` +
+        `*CHOFER:* ${getVal('chofer-nombre')}%0A` +
+        `*LEGAJO:* ${getVal('chofer-legajo')}%0A` +
         `*FECHA:* ${getVal('siniestro-fecha')}%0A` +
-	`*HORA:* ${getVal('siniestro-hora')}%0A` +
+        `*HORA:* ${getVal('siniestro-hora')}%0A` +
         `*UNIDAD:* ${getVal('unidad-interno')}%0A` +
-	`*PATENTE:* ${getVal('unidad-patente')}%0A%0A` +
+        `*PATENTE:* ${getVal('unidad-patente')}%0A%0A` +
         
         `*DATOS DEL RECORRIDO*%0A` +
         `*Grupo:* ${getVal('grupo-select')}%0A` +
         `*Línea:* ${getVal('linea-input')}%0A%0A` +
                
-
-	`*LUGAR DEL SINIESTRO*%0A` +
-	`*Lugar:* ${getVal('siniestro-lugar')} ${getVal('ramal-select')} (;${lat}, ${lng})%0A`+
+        `*LUGAR DEL SINIESTRO*%0A` +
+        `*Lugar:* ${getVal('siniestro-lugar')} ${getVal('ramal-select')}%0A` +
         `*Sentido:* ${getVal('sentido-select')}%0A%0A` +
-	
         
         `*POLICIA ACTA:* ${getVal('policia-datos')}%0A%0A` +
         
         `*TERCERO INVOLUCRADO*%0A` +
         `*Apellido y Nombre:* ${getVal('tercero-nombre')}%0A` +
-	`*Dni:* ${getVal('tercero-dni')}%0A` +
-	`*Telefono:* ${getVal('tercero-tel')}%0A` +
-	`*Domicilio:* ${getVal('tercero-dir')}%0A` +
+        `*Dni:* ${getVal('tercero-dni')}%0A` +
+        `*Telefono:* ${getVal('tercero-tel')}%0A` +
+        `*Domicilio:* ${getVal('tercero-dir')}%0A` +
         `*Vehiculo:* ${getVal('tercero-marca')} ${getVal('tercero-modelo')} (Pat: ${getVal('tercero-dominio')})%0A` +
         `*Seguro:* ${getVal('tercero-seguro')}%0A%0A` +
         
@@ -188,5 +189,5 @@ function enviarWhatsApp() {
     window.open(`https://wa.me/${telefono}?text=${mensaje}`, '_blank');
 }
 
-// Inicialización única
+// Inicialización única al cargar el DOM
 document.addEventListener('DOMContentLoaded', init);
