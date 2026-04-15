@@ -142,27 +142,6 @@ ramalSelect.addEventListener('change', function() {
 });
 
 function enviarWhatsApp() {
-    const grupo = document.getElementById('grupo-select').value;
-    const linea = document.getElementById('linea-input').value;
-    const ramal = document.getElementById('ramal-select').value;
-    const lat = document.getElementById('lat').value;
-    const lng = document.getElementById('lng').value;
-    
-    // Crear el link de Google Maps con la ubicación marcada
-    const googleMapsLink = `https://www.google.com/maps?q=${lat},${lng}`;
-
-    const mensaje = `*INFORME DE SINIESTRO*%0A` +
-                    `----------------------------%0A` +
-                    `*Grupo:* ${grupo}%0A` +
-                    `*Línea:* ${linea}%0A` +
-                    `*Ramal:* ${ramal}%0A` +
-                    `*Ubicación:* ${googleMapsLink}`;
-
-    const telefono = "5492616147829"; // Reemplaza con tu número
-    window.open(`https://wa.me/${telefono}?text=${mensaje}`, '_blank');
-}
-
-function enviarWhatsApp() {
     // 1. Obtener los valores de los campos
     const grupo = document.getElementById('grupo-select').value;
     const linea = document.getElementById('linea-input').value;
