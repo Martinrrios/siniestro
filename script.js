@@ -150,16 +150,18 @@ function enviarWhatsApp() {
 
     const mensaje = 
         `*INFORME DE SINIESTRO*%0A` +
-        `----------------------------%0A` +
+        `----------------------------------------%0A` +
         `*CHOFER:* ${getVal('chofer-nombre')} (Leg: ${getVal('chofer-legajo')})%0A` +
-        `*FECHA/HORA:* ${getVal('siniestro-fecha')} ${getVal('siniestro-hora')}%0A` +
-        `*UNIDAD:* Int ${getVal('unidad-interno')} (Pat: ${getVal('unidad-patente')})%0A%0A` +
+	`*LEGAJO:* ${getVal('chofer-legajo')}%0A` +
+        `*FECHA:* ${getVal('siniestro-fecha')}%0A` +
+	`*HORA:* ${getVal('siniestro-hora')}%0A` +
+        `*UNIDAD:* ${getVal('unidad-interno')}%0A` +
+	`*PATENTE:* ${getVal('unidad-patente')}%0A%0A` +
         
         `*DATOS DEL RECORRIDO*%0A` +
         `*Grupo:* ${getVal('grupo-select')}%0A` +
-        `*Línea:* ${getVal('linea-input')}%0A` +
-        `*Ramal:* ${getVal('ramal-select')}%0A` +
-        
+        `*Línea:* ${getVal('linea-input')}%0A%0A` +
+               
 
 	`*LUGAR DEL SINIESTRO*%0A` +
 	`*Lugar:* ${getVal('siniestro-lugar')} ${getVal('ramal-select')} (;${lat}, ${lng})%0A`+
@@ -169,7 +171,10 @@ function enviarWhatsApp() {
         `*POLICÍA/Nº ACTA:* ${getVal('policia-datos')}%0A%0A` +
         
         `*TERCERO INVOLUCRADO*%0A` +
-        `*Nombre:* ${getVal('tercero-nombre')} (DNI: ${getVal('tercero-dni')})%0A` +
+        `*Apellido y Nombre:* ${getVal('tercero-nombre')}%0A` +
+	`*Dni:* ${getVal('tercero-dni')}%0A` +
+	`*Teléfono:* ${getVal('tercero-tel')}%0A` +
+	`*Domicilio:* ${getVal('tercero-dir')}%0A` +
         `*Vehículo:* ${getVal('tercero-marca')} ${getVal('tercero-modelo')} (Pat: ${getVal('tercero-dominio')})%0A` +
         `*Seguro:* ${getVal('tercero-seguro')}%0A%0A` +
         
