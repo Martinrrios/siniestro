@@ -159,10 +159,14 @@ function enviarWhatsApp() {
         `*Grupo:* ${getVal('grupo-select')}%0A` +
         `*Línea:* ${getVal('linea-input')}%0A` +
         `*Ramal:* ${getVal('ramal-select')}%0A` +
-        `*Lugar:* ${getVal('siniestro-lugar')}%0A` +
-        `*Sentido:* ${getVal('sentido-select')}%0A%0A` +
         
-        `*POLICÍA:* ${getVal('policia-datos')}%0A%0A` +
+
+	`*LUGAR DEL SINIESTRO*%0A` +
+	`*Lugar:* ${getVal('siniestro-lugar')} ${getVal('ramal-select')} ${lat}, ${lng}%0A`+
+        `*Sentido:* ${getVal('sentido-select')}%0A%0A` +
+	`*UBICACIÓN:* https://www.google.com/maps?q=${lat},${lng}`;
+        
+        `*POLICÍA/Nº ACTA:* ${getVal('policia-datos')}%0A%0A` +
         
         `*TERCERO INVOLUCRADO*%0A` +
         `*Nombre:* ${getVal('tercero-nombre')} (DNI: ${getVal('tercero-dni')})%0A` +
@@ -173,7 +177,6 @@ function enviarWhatsApp() {
         
         `*RELATO:*%0A${getVal('siniestro-relato')}%0A%0A` +
         
-        `*COORDENADAS:* ${lat}, ${lng}%0A` +
         `*UBICACIÓN:* https://www.google.com/maps?q=${lat},${lng}`;
 
     const telefono = "5492616147829"; 
