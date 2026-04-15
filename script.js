@@ -176,8 +176,9 @@ function enviarWhatsApp() {
         `*Dni:* ${getVal('tercero-dni')}%0A` +
         `*Telefono:* ${getVal('tercero-tel')}%0A` +
         `*Domicilio:* ${getVal('tercero-dir')}%0A` +
-        `*Vehiculo:* ${getVal('tercero-marca')} ${getVal('tercero-modelo')} (Pat: ${getVal('tercero-dominio')})%0A` +
-        `*Seguro:* ${getVal('tercero-seguro')}%0A%0A` +
+        `*Vehiculo:* ${getVal('tercero-marca')} ${getVal('tercero-modelo')}%0A` +
+	`*Dominio:* ${getVal('tercero-dir')}%0A` +
+        `*Seguro:* ${getVal('tercero-dominio')}%0A%0A` +
         
         `*LESIONADOS (${lesionadosCount}):*${textoLesionados}%0A` +
         
