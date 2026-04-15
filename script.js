@@ -168,14 +168,14 @@ function enviarWhatsApp() {
         `*Sentido:* ${getVal('sentido-select')}%0A%0A` +
 	`*UBICACIÓN:* https://www.google.com/maps?q=${lat},${lng}%0A%0A`;
         
-        `*POLICÍA Nº ACTA:* ${getVal('policia-datos')}%0A%0A` +
+        `*POLICIA ACTA:* ${getVal('policia-datos')}%0A%0A` +
         
         `*TERCERO INVOLUCRADO*%0A` +
         `*Apellido y Nombre:* ${getVal('tercero-nombre')}%0A` +
 	`*Dni:* ${getVal('tercero-dni')}%0A` +
-	`*Teléfono:* ${getVal('tercero-tel')}%0A` +
+	`*Telefono:* ${getVal('tercero-tel')}%0A` +
 	`*Domicilio:* ${getVal('tercero-dir')}%0A` +
-        `*Vehículo:* ${getVal('tercero-marca')} ${getVal('tercero-modelo')} (Pat: ${getVal('tercero-dominio')})%0A` +
+        `*Vehiculo:* ${getVal('tercero-marca')} ${getVal('tercero-modelo')} (Pat: ${getVal('tercero-dominio')})%0A` +
         `*Seguro:* ${getVal('tercero-seguro')}%0A%0A` +
         
         `*LESIONADOS (${lesionadosCount}):*${textoLesionados}%0A` +
