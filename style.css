@@ -1,6 +1,5 @@
-/* --- CONFIGURACIÓN GENERAL --- */
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Segoe UI', sans-serif;
     background-color: #f0f2f5;
     display: flex;
     justify-content: center;
@@ -8,45 +7,83 @@ body {
     margin: 0;
 }
 
+@media (max-width: 600px) {
+    #map {
+        height: 350px; /* Un mapa un poco más alto para dedos grandes */
+        border-radius: 8px;
+    }
+}
+
 .form-card {
     background: white;
     width: 100%;
-    max-width: 850px;
+    max-width: 850px; /* FORMULARIO MÁS ANCHO */
     padding: 25px;
     border-radius: 12px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
 }
 
-header {
-    text-align: center;
-    margin-bottom: 25px;
+#map {
+    height: 450px; /* MAPA MÁS GRANDE */
+    width: 100%;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    margin-top: 10px;
 }
 
-header h2 {
-    margin: 0;
-    color: #2c3e50;
+/* Filtro para mejorar contraste de nombres de calles en Leaflet */
+.map-tiles {
+    filter: contrast(1.1) brightness(0.95);
 }
 
-header p {
-    color: #666;
-    font-size: 0.9rem;
+.checkbox-container {
+    background: #fff3cd;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ffeeba;
+}
+
+.button-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-top: 25px;
+}
+
+#btn-pdf {
+    background-color: #4a5568;
+    color: white;
+    padding: 15px;
+    border: none;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+#btn-pdf:hover {
+    background-color: #2d3748;
+}
+
+@media (max-width: 600px) {
+    .button-group {
+        grid-template-columns: 1fr;
+    }
+    .form-card {
+        padding: 15px;
+    }
+}
+
+.section-group {
+    margin-bottom: 20px;
 }
 
 hr {
     border: 0;
     border-top: 1px solid #eee;
-    margin: 20px 0;
-}
-
-/* --- FORMULARIO Y CAMPOS --- */
-.section-group {
-    margin-bottom: 20px;
-}
-
-.field-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 15px;
+    margin: 25px 0;
 }
 
 .field {
@@ -56,184 +93,145 @@ hr {
 }
 
 label {
+    font-size: 0.9rem;
     font-weight: bold;
-    font-size: 0.85rem;
-    margin-bottom: 5px;
+    margin-bottom: 8px;
     color: #333;
 }
 
-input, select, textarea {
-    padding: 10px;
+input, select {
+    padding: 12px;
     border: 1px solid #ccc;
-    border-radius: 6px;
+    border-radius: 8px;
     font-size: 1rem;
-    outline: none;
-}
-
-input:focus, select:focus {
-    border-color: #25d366;
-}
-
-input:disabled {
-    background-color: #f9f9f9;
-    cursor: not-allowed;
-}
-
-/* --- MAPA Y CONTENEDORES --- */
-#map-container {
     width: 100%;
-    margin-top: 10px;
+    box-sizing: border-box;
 }
 
 #map {
-    height: 450px;
+    height: 300px;
     width: 100%;
     border-radius: 10px;
     border: 1px solid #ddd;
-    z-index: 1;
-    transition: opacity 0.3s ease, border 0.3s ease;
+    margin-top: 10px;
 }
 
-/* Estilo cuando el mapa está bloqueado por punto fijo */
-.map-bloqueado {
-    border: 3px solid #ffc107 !important; /* Borde amarillo de advertencia */
-    cursor: not-allowed;
+.results-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-top: 15px;
 }
 
-/* --- CHECKBOX ZONA RURAL --- */
-.checkbox-container {
-    background: #fff3cd; /* Fondo amarillento para destacar */
-    padding: 12px;
+input[readonly] {
+    background-color: #f8f9fa;
+    color: #666;
+}
+
+/* --- Colores para los Ramales --- */
+.opcion-ida {
+    background-color: #fff9c4 !important; /* Amarillo clarito */
+    color: #000;
+}
+
+.opcion-vuelta {
+    background-color: #c8e6c9 !important; /* Verde clarito */
+    color: #000;
+}
+
+/* Color del selector cuando ya elegiste una opción */
+#ramal-select.bg-ida {
+    background-color: #fff9c4;
+}
+
+#ramal-select.bg-vuelta {
+    background-color: #c8e6c9;
+}
+
+/* --- Estilo del Botón de WhatsApp --- */
+#btn-enviar {
+    width: 100%;
+    background-color: #25D366; /* Verde oficial de WhatsApp */
+    color: white;
+    padding: 15px;
+    border: none;
     border-radius: 8px;
-    margin-bottom: 10px;
-    border: 1px solid #ffeeba;
-    display: flex;
-    align-items: center;
-    transition: opacity 0.3s ease;
-}
-
-.checkbox-container label {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 0;
+    font-size: 18px;
+    font-weight: bold;
     cursor: pointer;
-    color: #856404;
-}
-
-.checkbox-container input {
-    width: 18px;
-    height: 18px;
-}
-
-/* --- LESIONADOS --- */
-.header-inline {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    margin-bottom: 10px;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: background-color 0.3s ease, transform 0.1s;
+}
+
+#btn-enviar:active {
+    background-color: #128C7E;
+    transform: scale(0.98); /* Efecto de hundido al tocarlo */
+}
+
+#btn-enviar img {
+    filter: brightness(0) invert(1); /* Pone el icono de blanco */
+}
+
+/* Añadir al final de style.css */
+
+.field-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
 }
 
 h3 {
-    margin: 0;
+    margin-top: 0;
     color: #2c3e50;
     border-left: 4px solid #25d366;
     padding-left: 10px;
 }
 
+h4 { margin-bottom: 5px; color: #666; }
+
+.header-inline {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .counter-controls {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 15px;
+    background: #f0f2f5;
+    padding: 5px 15px;
+    border-radius: 20px;
 }
 
 .counter-controls button {
-    background: #e9ecef;
+    background: #fff;
     border: 1px solid #ccc;
-    width: 35px;
-    height: 35px;
+    width: 30px;
+    height: 30px;
     border-radius: 50%;
     cursor: pointer;
     font-weight: bold;
-    font-size: 1.2rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.counter-controls button:hover {
-    background: #dee2e6;
 }
 
 .lesionado-card {
-    background: #f8f9fa;
+    background: #f9f9f9;
     padding: 15px;
     border-radius: 8px;
-    border-left: 5px solid #007bff;
     margin-top: 10px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    border: 1px dashed #ccc;
 }
 
-.lesionado-card h4 {
-    margin: 0 0 10px 0;
-    color: #555;
-}
-
-/* --- BOTONES --- */
-.button-group {
-    display: flex;
-    gap: 15px;
-    margin-top: 25px;
-}
-
-button[onclick^="enviarWhatsApp"], 
-button[onclick^="generarPDF"] {
-    flex: 1;
-    padding: 15px;
-    border: none;
+textarea {
+    width: 100%;
+    padding: 10px;
     border-radius: 8px;
-    font-weight: bold;
-    font-size: 1rem;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    color: white;
-    transition: transform 0.1s, opacity 0.2s;
-}
-
-#btn-enviar {
-    background-color: #25d366; /* Verde WhatsApp */
-}
-
-#btn-pdf {
-    background-color: #e74c3c; /* Rojo PDF */
-}
-
-button:active {
-    transform: scale(0.98);
-}
-
-button:hover {
-    opacity: 0.9;
-}
-
-/* --- RESPONSIVE PARA CELULARES --- */
-@media (max-width: 600px) {
-    body {
-        padding: 10px;
-    }
-
-    .field-row {
-        grid-template-columns: 1fr;
-    }
-
-    #map {
-        height: 350px;
-    }
-
-    .button-group {
-        flex-direction: column;
-    }
+    border: 1px solid #ccc;
+    font-family: inherit;
+    box-sizing: border-box;
 }
