@@ -6,17 +6,17 @@ const DB_RECORRIDOS = {
     
     "CONTROL SAN MARTIN Y 5 ABRIL": [
     ],
-"CONTROL TROPERO Y 5 ABRIL": [
+    "CONTROL TROPERO Y 5 ABRIL": [
     ],
-"QUEDA Bº AMUPE": [
+    "QUEDA Bº AMUPE": [
     ],
-"QUEDA EST.GUTIERREZ": [
+    "QUEDA EST.GUTIERREZ": [
     ],
-"CONTROL RODEO": [
+    "CONTROL RODEO": [
     ],
-"QUEDA RECOARO": [
+    "QUEDA RECOARO": [
     ],
-"QUEDA BºC.SOÑADA": [
+    "QUEDA BºC.SOÑADA": [
     ],
     "1873": [
         "1;ESTACION GUTIERREZ; >IDA",
@@ -517,6 +517,8 @@ const DB_RECORRIDOS = {
 "G200": {
         
         "recorridos": {
+	    "CONTROL RODEO": [
+            ],
 	    "CONTROL CORRALITOS": [
             ],
             "QUEDE TERMINAL": [
