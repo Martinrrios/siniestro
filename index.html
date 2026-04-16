@@ -18,7 +18,7 @@
 
     <div class="section-group">
         <div class="field-row">
-            <div class="field"><label>Nombre y Apellido:</label><input type="text" id="chofer-nombre"></div>
+            <div class="field"><label>Apellido y Nombre:</label><input type="text" id="chofer-nombre"></div>
             <div class="field"><label>Legajo:</label><input type="number" id="chofer-legajo"></div>
         </div>
         <div class="field-row">
@@ -41,12 +41,12 @@
             </select>
         </div>
         <div class="field">
-            <label>Recorrido (Línea):</label>
+            <label>Recorrido: (RECORRIDO - GARAGE O FUERA DE SERVICIO)</label>
             <input list="lineas" id="linea-input" disabled placeholder="Seleccione un grupo primero">
             <datalist id="lineas"></datalist>
         </div>
         <div class="field" id="container-ramal" style="display:none;">
-            <label>Punto del Recorrido:</label>
+            <label>ELIJA ULTIMA ETAPA QUE PASO ANTES DEL SINIESTRO:</label>
             <select id="ramal-select"></select>
         </div>
 	<div>
@@ -85,7 +85,7 @@
     </div>
     <div class="field">
         <label>Policía que intervino y Nº de Acta:</label>
-        <input type="text" id="policia-datos">
+        <input type="text" id="policia-datos" placeholder="Ej. Tránsito Maipú. Nº Acta">
     </div>
 </div>
 
