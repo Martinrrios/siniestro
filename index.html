@@ -61,14 +61,14 @@
 
         <div class="field">
             <label>Recorrido (Línea o Punto de Control):</label>
-            <input list="lineas" id="linea-input" placeholder="Selecciona un grupo..." disabled>
+            <input list="lineas" id="linea-input" placeholder="Primero selecciona un grupo..." disabled>
             <datalist id="lineas"></datalist>
         </div>
 
         <div class="field" id="container-ramal" style="display: none;">
             <label>ÚLTIMA ETAPA MARCADA (Calle):</label>
             <select id="ramal-select">
-                <option value="">-- Selecciona punto --</option>
+                <option value="">-- Selecciona un punto --</option>
             </select>
         </div>
 
@@ -97,26 +97,19 @@
             <label for="no-mapa">No puedo identificar el lugar en el mapa (Zona rural)</label>
         </div>
         
-        <div id="map-container">
+        <div id="map-container" style="display: block;">
             <div id="map"></div>
         </div>
 
         <div class="field-row" style="margin-top: 10px;">
             <div class="field">
                 <label>Latitud</label>
-                <input type="text" id="lat" readonly>
+                <input type="text" id="lat" readonly placeholder="0.000000">
             </div>
             <div class="field">
                 <label>Longitud</label>
-                <input type="text" id="lng" readonly>
+                <input type="text" id="lng" readonly placeholder="0.000000">
             </div>
-        </div>
-    </div> <hr>
-
-    <div class="section-group">
-        <div class="field">
-            <label>Policía interviniente y N° de acta:</label>
-            <input type="text" id="policia-datos">
         </div>
     </div> <hr>
 
@@ -134,12 +127,12 @@
         </div>
         <div class="field-row">
             <div class="field">
-                <label>Patente Vehículo:</label>
-                <input type="text" id="tercero-dominio">
+                <label>Seguro:</label>
+                <input type="text" id="tercero-seguro">
             </div>
             <div class="field">
-                <label>Seguro y N° Póliza:</label>
-                <input type="text" id="tercero-seguro">
+                <label>Patente:</label>
+                <input type="text" id="tercero-patente">
             </div>
         </div>
     </div> <hr>
@@ -168,4 +161,8 @@
 
    </div>
 
-    <script src="
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="recorridos.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

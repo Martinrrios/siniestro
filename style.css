@@ -1,103 +1,165 @@
-body {
-    font-family: 'Segoe UI', sans-serif;
-    background-color: #f0f2f5;
-    display: flex;
-    justify-content: center;
-    padding: 20px;
-    margin: 0;
+let map, marker;
+let lesionadosCount = 0;
+
+const COORDENADAS_FIJAS = {
+    "SAN MARTIN Y 5 ABRIL": [-32.985566, -68.782253],
+    "TROPERO Y 5 ABRIL": [-32.987591, -68.780913],
+    "AMUPE": [-33.001162, -68.758262],
+    "GUTIERREZ": [-32.958955, -68.783622],
+    "TERMINAL": [-32.895239, -68.830288],
+    "RODEO": [-32.936751, -68.732997],
+    "RECOARO": [-33.041453, -68.833136],
+    "SONADA": [-33.034928, -68.765966],
+    "CORRALITOS": [-32.859662, -68.662657]
+};
+
+const grupoSelect = document.getElementById('grupo-select');
+const lineaInput = document.getElementById('linea-input');
+const datalistLineas = document.getElementById('lineas');
+const ramalSelect = document.getElementById('ramal-select');
+const ramalContainer = document.getElementById('container-ramal');
+const checkboxNoMapa = document.getElementById('no-mapa');
+const wrapperCheckbox = document.getElementById('capa-checkbox');
+
+function init() {
+    // Inicializar mapa
+    map = L.map('map').setView([-32.8895, -68.8458], 13);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+
+    // Evento clic mapa
+    map.on('click', (e) => {
+        if (!checkboxNoMapa.disabled && !checkboxNoMapa.checked) {
+            actualizarMapa(e.latlng.lat, e.latlng.lng);
+        }
+    });
+
+    document.getElementById('siniestro-fecha').valueAsDate = new Date();
 }
 
-.form-card {
-    background: white;
-    width: 100%;
-    max-width: 750px;
-    padding: 25px;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+function actualizarMapa(lat, lng) {
+    const pos = [lat, lng];
+    map.setView(pos, 16);
+    if (marker) marker.setLatLng(pos);
+    else marker = L.marker(pos).addTo(map);
+    document.getElementById('lat').value = lat.toFixed(6);
+    document.getElementById('lng').value = lng.toFixed(6);
 }
 
-.section-group { margin-bottom: 20px; }
-hr { border: 0; border-top: 1px solid #eee; margin: 25px 0; }
-
-.field { display: flex; flex-direction: column; margin-bottom: 15px; }
-label { font-size: 0.9rem; font-weight: bold; margin-bottom: 8px; color: #333; }
-
-input, select, textarea {
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    font-size: 1rem;
+function normalizar(t) {
+    return t.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^A-Z0-9]/g, "");
 }
 
-.field-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 15px;
+function setEstadoBloqueo(bloquear) {
+    const mapaDiv = document.getElementById('map');
+    if (bloquear) {
+        map.dragging.disable();
+        map.touchZoom.disable();
+        map.doubleClickZoom.disable();
+        map.scrollWheelZoom.disable();
+        mapaDiv.style.opacity = "0.5";
+        mapaDiv.style.pointerEvents = "none";
+        checkboxNoMapa.checked = false;
+        checkboxNoMapa.disabled = true;
+        wrapperCheckbox.classList.add('disabled');
+    } else {
+        map.dragging.enable();
+        map.touchZoom.enable();
+        map.doubleClickZoom.enable();
+        map.scrollWheelZoom.enable();
+        mapaDiv.style.opacity = "1";
+        mapaDiv.style.pointerEvents = "auto";
+        checkboxNoMapa.disabled = false;
+        wrapperCheckbox.classList.remove('disabled');
+    }
 }
 
-/* --- ESTILO CHECKBOX GRANDE --- */
-.checkbox-wrapper {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    background: #f8f9fa;
-    padding: 15px;
-    border-radius: 8px;
-    margin-bottom: 10px;
-    border: 1px solid #ddd;
-    transition: all 0.3s ease;
+// 1. CARGAR LÍNEAS AL SELECCIONAR GRUPO
+grupoSelect.addEventListener('change', function() {
+    lineaInput.value = '';
+    lineaInput.disabled = !this.value;
+    datalistLineas.innerHTML = '';
+    ramalContainer.style.display = 'none';
+    setEstadoBloqueo(false);
+
+    if (this.value && DB_RECORRIDOS[this.value]) {
+        const recorridos = DB_RECORRIDOS[this.value].recorridos;
+        for (const key in recorridos) {
+            const opt = document.createElement('option');
+            opt.value = key;
+            datalistLineas.appendChild(opt);
+        }
+    }
+});
+
+// 2. DETECTAR SELECCIÓN DE RECORRIDO
+lineaInput.addEventListener('input', function() {
+    const valOriginal = this.value;
+    const valLimpio = normalizar(valOriginal);
+    let esFijo = false;
+
+    // Verificar si es un punto de control
+    for (let clave in COORDENADAS_FIJAS) {
+        if (valLimpio.includes(normalizar(clave))) {
+            actualizarMapa(COORDENADAS_FIJAS[clave][0], COORDENADAS_FIJAS[clave][1]);
+            esFijo = true;
+            break;
+        }
+    }
+
+    setEstadoBloqueo(esFijo);
+
+    // Cargar ramales si existen
+    const puntos = DB_RECORRIDOS[grupoSelect.value]?.recorridos[valOriginal];
+    if (puntos && puntos.length > 0) {
+        ramalSelect.innerHTML = '<option value="">-- Selecciona punto --</option>';
+        puntos.forEach(p => {
+            const opt = document.createElement('option');
+            opt.textContent = p.replace(';', ' - ');
+            opt.value = p;
+            ramalSelect.appendChild(opt);
+        });
+        ramalContainer.style.display = 'block';
+    } else {
+        ramalContainer.style.display = 'none';
+    }
+});
+
+function toggleMapa(checked) {
+    document.getElementById('map-container').style.display = checked ? 'none' : 'block';
+    if(checked) {
+        document.getElementById('lat').value = "0.0";
+        document.getElementById('lng').value = "0.0";
+    } else {
+        map.invalidateSize();
+    }
 }
 
-.checkbox-wrapper input[type="checkbox"] {
-    width: 25px;
-    height: 25px;
-    cursor: pointer;
+function cambiarLesionados(delta) {
+    const contenedor = document.getElementById('lista-lesionados');
+    if (delta > 0) {
+        lesionadosCount++;
+        const div = document.createElement('div');
+        div.className = 'lesionado-card';
+        div.id = `les-${lesionadosCount}`;
+        div.innerHTML = `<b>Lesionado ${lesionadosCount}</b><div class="field-row"><input type="text" placeholder="Nombre"><input type="number" placeholder="DNI"></div>`;
+        contenedor.appendChild(div);
+    } else if (lesionadosCount > 0) {
+        document.getElementById(`les-${lesionadosCount}`).remove();
+        lesionadosCount--;
+    }
+    document.getElementById('cant-lesionados').innerText = lesionadosCount;
 }
 
-.checkbox-wrapper label {
-    margin: 0;
-    font-weight: normal;
-    cursor: pointer;
+function generarPDF() {
+    const element = document.getElementById('form-to-print');
+    html2pdf().from(element).save('Informe_Siniestro.pdf');
 }
 
-.checkbox-wrapper.disabled {
-    opacity: 0.5;
-    background: #e9ecef;
-    pointer-events: none;
+function enviarWhatsApp() {
+    const lat = document.getElementById('lat').value;
+    const lng = document.getElementById('lng').value;
+    const msg = `Siniestro - Ubicación: https://www.google.com/maps?q=${lat},${lng}`;
+    window.open(`https://wa.me/5492616147829?text=${encodeURIComponent(msg)}`);
 }
 
-/* --- MAPA --- */
-#map {
-    height: 400px;
-    width: 100%;
-    border-radius: 10px;
-    border: 1px solid #ddd;
-    transition: opacity 0.3s ease;
-}
-
-.button-group {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    margin-top: 20px;
-}
-
-button {
-    padding: 12px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: bold;
-    font-size: 1rem;
-}
-
-#btn-enviar { background-color: #25d366; color: white; }
-#btn-pdf { background-color: #e74c3c; color: white; }
-
-.lesionado-card {
-    background: #f9f9f9;
-    padding: 15px;
-    border-radius: 8px;
-    border-left: 5px solid #25d366;
-    margin-bottom: 10px;
-}
+document.addEventListener('DOMContentLoaded', init);
