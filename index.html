@@ -5,11 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cuestionario de Siniestros</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-   <div class="form-card">
+   <div class="form-card" id="form-to-print">
     <header>
         <h2>Información del Siniestro</h2>
         <p>Complete todos los datos del informe.</p>
@@ -65,14 +66,14 @@
         </div>
 
         <div class="field" id="container-ramal" style="display: none;">
-            <label>Última etapa marcada:</label>
+            <label>ÚLTIMA ETAPA MARCADA:</label>
             <select id="ramal-select">
                 <option value="">-- Selecciona una opción --</option>
             </select>
         </div>
 
         <div class="field">
-            <label>Lugar del Siniestro (Calle y Altura):</label>
+            <label>Lugar del Siniestro (Calle e intersección o altura):</label>
             <input type="text" id="siniestro-lugar" placeholder="Ej: Av. San Martín 1234">
         </div>
 
@@ -90,7 +91,15 @@
 
     <div class="section-group">
         <label>Marcar ubicación exacta en el mapa:</label>
-        <div id="map"></div>
+        <div class="checkbox-container">
+            <input type="checkbox" id="no-mapa" onchange="toggleMapa(this.checked)">
+            <label for="no-mapa" style="display:inline; font-weight: normal;">No puedo identificar el lugar en el mapa (Zona rural)</label>
+        </div>
+        
+        <div id="map-container">
+            <div id="map"></div>
+        </div>
+
         <div class="results-container">
             <div class="field">
                 <label>Latitud</label>
@@ -172,10 +181,13 @@
         <textarea id="siniestro-relato" rows="4"></textarea>
     </div>
 
-    <div class="field">
+    <div class="button-group">
         <button type="button" id="btn-enviar" onclick="enviarWhatsApp()">
             <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="20" height="20" alt="ws">
-            Enviar Informe por WhatsApp
+            WhatsApp
+        </button>
+        <button type="button" id="btn-pdf" onclick="generarPDF()">
+            📄 Descargar PDF
         </button>
     </div>
 

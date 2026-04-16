@@ -517,6 +517,11 @@ const DB_RECORRIDOS = {
 "G200": {
         
         "recorridos": {
+	    "CONTROL CORRALITOS": [
+            ],
+            "QUEDE TERMINAL": [
+            ],
+	    
 	    "1208": [
                 "1;SALIDA TERMINAL; >IDA",
                 "2;BELTRAN Y SAN MARTIN; >IDA",
