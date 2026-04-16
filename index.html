@@ -71,7 +71,25 @@
                 <option value="">-- Selecciona un punto --</option>
             </select>
         </div>
+<div class="field">
+    <label>Grupo:</label>
+    <select id="grupo-select">
+        <option value="">-- Selecciona Grupo --</option>
+        <option value="G200">Grupo 200</option>
+        <option value="G800">Grupo 800</option>
+    </select>
+</div>
 
+<div class="field">
+    <label>Recorrido:</label>
+    <input list="lineas" id="linea-input" placeholder="Selecciona grupo primero..." disabled>
+    <datalist id="lineas"></datalist>
+</div>
+
+<div class="field" id="container-ramal" style="display: none;">
+    <label>Punto del recorrido:</label>
+    <select id="ramal-select"></select>
+</div>
         <div class="field">
             <label>Lugar del Siniestro (Calle e intersección, también):</label>
             <input type="text" id="siniestro-lugar" placeholder="Ej: Av. San Martín 1234">

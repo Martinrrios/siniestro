@@ -27,7 +27,12 @@ input, select, textarea { padding: 10px; border: 1px solid #ddd; border-radius: 
     width: 100%;
     border-radius: 10px;
     border: 1px solid #ddd;
-    z-index: 100; /* Asegura que se vea */
+    margin-top: 10px;
+    z-index: 1; /* Evita que otros elementos lo tapen */
+}
+
+#map-container {
+    min-height: 400px; /* Asegura espacio para Leaflet */
 }
 
 /* Filtro para mejorar contraste de nombres de calles en Leaflet */
