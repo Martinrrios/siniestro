@@ -60,20 +60,20 @@
         </div>
 
         <div class="field">
-            <label>Recorrido (Línea o Punto de Control):</label>
+            <label>RECORRIDO O GARAGE:</label>
             <input list="lineas" id="linea-input" placeholder="Selecciona un grupo primero..." disabled>
             <datalist id="lineas"></datalist>
         </div>
 
         <div class="field" id="container-ramal" style="display: none;">
-            <label>ÚLTIMA ETAPA MARCADA (Calle):</label>
+            <label>ÚLTIMA ETAPA MARCADA:</label>
             <select id="ramal-select">
                 <option value="">-- Selecciona un punto --</option>
             </select>
         </div>
 
         <div class="field">
-            <label>Lugar del Siniestro (Calle e intersección):</label>
+            <label>Lugar del Siniestro (Calle e intersección, también):</label>
             <input type="text" id="siniestro-lugar" placeholder="Ej: Av. San Martín 1234">
         </div>
 
@@ -90,10 +90,10 @@
     </div> <hr>
 
     <div class="section-group">
-        <label>Ubicación en el mapa:</label>
+        <label>SELECCIONE EN EL MAPA LUGAR DEL SINIESTRO (por favor sea preciso)</label>
         <div class="checkbox-container" id="capa-checkbox" style="background: #f8f9fa; padding: 10px; border-radius: 8px; margin-bottom: 10px; border: 1px solid #ddd;">
             <input type="checkbox" id="no-mapa" onchange="toggleMapa(this.checked)">
-            <label for="no-mapa" style="display:inline; font-weight: normal;">No puedo identificar el lugar (Zona rural / 0.0,0.0)</label>
+            <label for="no-mapa" style="display:inline; font-weight: normal;">NO PUEDO IDENTIFICAR LUGAR EN EL MAPA (Zona rural / 0.0,0.0)</label>
         </div>
         
         <div id="map-container">
