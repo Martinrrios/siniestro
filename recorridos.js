@@ -1,22 +1,22 @@
 const DB_RECORRIDOS = {
 "G800": {
-        
+
     "recorridos": {
 
-    
+
     "CONTROL SAN MARTIN Y 5 ABRIL": [
     ],
-    "CONTROL TROPERO Y 5 ABRIL": [
+"CONTROL TROPERO Y 5 ABRIL": [
     ],
-    "QUEDA Bº AMUPE": [
+"QUEDA Bº AMUPE": [
     ],
-    "QUEDA EST.GUTIERREZ": [
+"QUEDA EST.GUTIERREZ": [
     ],
-    "CONTROL RODEO": [
+"CONTROL RODEO": [
     ],
-    "QUEDA RECOARO": [
+"QUEDA RECOARO": [
     ],
-    "QUEDA BºC.SOÑADA": [
+"QUEDA BºC.SOÑADA": [
     ],
     "1873": [
         "1;ESTACION GUTIERREZ; >IDA",
@@ -515,10 +515,8 @@ const DB_RECORRIDOS = {
 },
 
 "G200": {
-        
+
         "recorridos": {
-	    "CONTROL RODEO": [
-            ],
 	    "CONTROL CORRALITOS": [
             ],
             "QUEDE TERMINAL": [
@@ -538,7 +536,7 @@ const DB_RECORRIDOS = {
                 "11;SAN MARTIN Y GODOY CRUZ; >VUELTA",
                 "12;SALIDA TERMINAL; >VUELTA"
             ],
-           
+
             "1293": [
                 "1;SALIDA TERMINAL; >IDA",
                 "2;ESC. EVA PERON; >VUELTA",
@@ -1311,7 +1309,6 @@ const DB_RECORRIDOS = {
                 "16;PONCE Y BANDERA; >VUELTA",
                 "17;CONTROL RODEO; >VUELTA"
             ]
-        
+
         }
     }
-};
