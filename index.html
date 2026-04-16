@@ -37,64 +37,46 @@
                 <input type="time" id="siniestro-hora">
             </div>
         </div>
-        <div class="field-row">
-            <div class="field">
-                <label>Interno:</label>
-                <input type="text" id="unidad-interno">
-            </div>
-            <div class="field">
-                <label>Patente:</label>
-                <input type="text" id="unidad-patente">
-            </div>
-        </div>
     </div> <hr>
 
-    
-<div class="field">
-    <label>Grupo:</label>
-    <select id="grupo-select">
-        <option value="">-- Selecciona Grupo --</option>
-        <option value="G200">Grupo 200</option>
-        <option value="G800">Grupo 800</option>
-    </select>
-</div>
-
-<div class="field">
-    <label>Recorrido:</label>
-    <input list="lineas" id="linea-input" placeholder="Selecciona grupo primero..." disabled>
-    <datalist id="lineas"></datalist>
-</div>
-
-<div class="field" id="container-ramal" style="display: none;">
-    <label>Punto del recorrido:</label>
-    <select id="ramal-select"></select>
-</div>
+    <div class="section-group">
         <div class="field">
-            <label>Lugar del Siniestro (Calle e intersección, también):</label>
-            <input type="text" id="siniestro-lugar" placeholder="Ej: Av. San Martín 1234">
+            <label>Grupo:</label>
+            <select id="grupo-select">
+                <option value="">-- Selecciona Grupo --</option>
+                <option value="G200">Grupo 200</option>
+                <option value="G800">Grupo 800</option>
+            </select>
         </div>
 
         <div class="field">
-            <label>Sentido de circulación:</label>
-            <select id="sentido-select">
-                <option value="">-- Selecciona Sentido --</option>
-                <option value="Al Este">Al Este</option>
-                <option value="Al Oeste">Al Oeste</option>
-                <option value="Al Norte">Al Norte</option>
-                <option value="Al Sur">Al Sur</option>
+            <label>Recorrido (Línea o Punto de Control):</label>
+            <input list="lineas" id="linea-input" placeholder="Primero selecciona un grupo..." disabled>
+            <datalist id="lineas"></datalist>
+        </div>
+
+        <div class="field" id="container-ramal" style="display: none;">
+            <label>ÚLTIMA ETAPA MARCADA (Calle):</label>
+            <select id="ramal-select">
+                <option value="">-- Selecciona punto --</option>
             </select>
+        </div>
+
+        <div class="field">
+            <label>Lugar del Siniestro:</label>
+            <input type="text" id="siniestro-lugar">
         </div>
     </div> <hr>
 
     <div class="section-group">
-        <label>SELECCIONE EN EL MAPA LUGAR DEL SINIESTRO (por favor sea preciso)</label>
-        <div class="checkbox-container" id="capa-checkbox" style="background: #f8f9fa; padding: 10px; border-radius: 8px; margin-bottom: 10px; border: 1px solid #ddd;">
+        <label>Ubicación en el mapa:</label>
+        <div class="checkbox-wrapper" id="capa-checkbox">
             <input type="checkbox" id="no-mapa" onchange="toggleMapa(this.checked)">
-            <label for="no-mapa" style="display:inline; font-weight: normal;">NO PUEDO IDENTIFICAR LUGAR EN EL MAPA (Zona rural / 0.0,0.0)</label>
+            <label for="no-mapa">No puedo identificar el lugar en el mapa (Zona rural)</label>
         </div>
         
-        <div id="map-container">
-            <div id="map" style="height: 400px; width: 100%; border-radius: 8px;"></div>
+        <div id="map-container" style="min-height: 400px; width: 100%;">
+            <div id="map"></div>
         </div>
 
         <div class="field-row" style="margin-top: 10px;">
@@ -109,59 +91,10 @@
         </div>
     </div> <hr>
 
-    <div class="section-group">
-        <div class="field">
-            <label>Policía interviniente y N° de acta:</label>
-            <input type="text" id="policia-datos">
-        </div>
-    </div> <hr>
-
-    <div class="section-group">
-        <h3>Datos del Tercero Involucrado</h3>
-        <div class="field-row">
-            <div class="field">
-                <label>Nombre:</label>
-                <input type="text" id="tercero-nombre">
-            </div>
-            <div class="field">
-                <label>DNI:</label>
-                <input type="number" id="tercero-dni">
-            </div>
-        </div>
-        <div class="field-row">
-            <div class="field">
-                <label>Teléfono:</label>
-                <input type="tel" id="tercero-tel">
-            </div>
-            <div class="field">
-                <label>Seguro y N° Póliza:</label>
-                <input type="text" id="tercero-seguro">
-            </div>
-        </div>
-    </div> <hr>
-
-    <div class="section-group">
-        <div class="header-inline">
-            <h3>Lesionados</h3>
-            <div class="counter-controls">
-                <button type="button" onclick="cambiarLesionados(-1)">-</button>
-                <span id="cant-lesionados">0</span>
-                <button type="button" onclick="cambiarLesionados(1)">+</button>
-            </div>
-        </div>
-        <div id="lista-lesionados"></div>
-    </div> <hr>
-
-    <div class="section-group">
-        <label>Relato del Siniestro:</label>
-        <textarea id="siniestro-relato" rows="4" style="width: 100%;"></textarea>
-    </div>
-
     <div class="button-group">
-        <button type="button" id="btn-enviar" onclick="enviarWhatsApp()">Enviar WhatsApp</button>
+        <button type="button" id="btn-enviar" onclick="enviarWhatsApp()">WhatsApp</button>
         <button type="button" id="btn-pdf" onclick="generarPDF()">Descargar PDF</button>
     </div>
-
    </div>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>

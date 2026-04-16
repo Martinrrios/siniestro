@@ -22,18 +22,8 @@ input, select, textarea { padding: 10px; border: 1px solid #ddd; border-radius: 
     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
 }
 
-#map {
-    height: 400px;
-    width: 100%;
-    border-radius: 10px;
-    border: 1px solid #ddd;
-    margin-top: 10px;
-    z-index: 1; /* Evita que otros elementos lo tapen */
-}
-
-#map-container {
-    min-height: 400px; /* Asegura espacio para Leaflet */
-}
+#map { height: 400px; width: 100%; border-radius: 10px; border: 1px solid #ddd; z-index: 10; }
+#map-container { min-height: 400px; }
 
 /* Filtro para mejorar contraste de nombres de calles en Leaflet */
 .map-tiles {
@@ -250,8 +240,9 @@ textarea {
     margin-bottom: 10px;
     border: 1px solid #ddd;
 }
+.checkbox-wrapper { display: flex; align-items: center; gap: 15px; background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 10px; border: 1px solid #ddd; }
 .checkbox-wrapper input { width: 25px; height: 25px; cursor: pointer; }
-.checkbox-wrapper.disabled { opacity: 0.5; pointer-events: none; background: #eee; }
+.checkbox-wrapper.disabled { opacity: 0.5; pointer-events: none; }
 
 .button-group { display: flex; gap: 10px; margin-top: 20px; }
 #btn-enviar { background: #25d366; color: white; border: none; flex: 1; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: bold; }
