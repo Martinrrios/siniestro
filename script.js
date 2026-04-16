@@ -1,7 +1,6 @@
 let map, marker;
 let lesionadosCount = 0;
 
-// Objeto de coordenadas (Normalizamos las claves para facilitar la búsqueda)
 const COORDENADAS_FIJAS = {
     "SAN MARTIN Y 5 ABRIL": [-32.985566, -68.782253],
     "TROPERO Y 5 ABRIL": [-32.987591, -68.780913],
@@ -20,17 +19,18 @@ const datalistLineas = document.getElementById('lineas');
 const ramalSelect = document.getElementById('ramal-select');
 const ramalContainer = document.getElementById('container-ramal');
 const checkboxNoMapa = document.getElementById('no-mapa');
-const capaCheckbox = document.getElementById('capa-checkbox');
+const wrapperCheckbox = document.getElementById('capa-checkbox');
 
 function init() {
     map = L.map('map').setView([-32.8895, -68.8458], 13);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
 
     map.on('click', (e) => {
-        if(!checkboxNoMapa.disabled && !checkboxNoMapa.checked) {
+        if (!checkboxNoMapa.disabled && !checkboxNoMapa.checked) {
             actualizarMapa(e.latlng.lat, e.latlng.lng);
         }
     });
+
     document.getElementById('siniestro-fecha').valueAsDate = new Date();
 }
 
@@ -43,50 +43,49 @@ function actualizarMapa(lat, lng) {
     document.getElementById('lng').value = lng.toFixed(6);
 }
 
-// FUNCION DE BLOQUEO ROBUSTA
+// Función de Normalización (Quita acentos, comillas y símbolos)
+function normalizar(t) {
+    return t.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^A-Z0-9]/g, "");
+}
+
 function setEstadoBloqueo(bloquear) {
+    const mapaDiv = document.getElementById('map');
     if (bloquear) {
         map.dragging.disable();
         map.touchZoom.disable();
         map.doubleClickZoom.disable();
         map.scrollWheelZoom.disable();
         map.off('click');
-        document.getElementById('map').style.opacity = "0.5";
-        document.getElementById('map').style.pointerEvents = "none"; // Impide cualquier interacción
+        mapaDiv.style.opacity = "0.5";
+        mapaDiv.style.pointerEvents = "none";
         
         checkboxNoMapa.checked = false;
         checkboxNoMapa.disabled = true;
-        capaCheckbox.style.background = "#ebebeb";
-        capaCheckbox.style.opacity = "0.6";
+        wrapperCheckbox.classList.add('disabled');
         document.getElementById('map-container').style.display = 'block';
     } else {
         map.dragging.enable();
         map.touchZoom.enable();
         map.doubleClickZoom.enable();
         map.scrollWheelZoom.enable();
-        document.getElementById('map').style.opacity = "1";
-        document.getElementById('map').style.pointerEvents = "auto";
+        mapaDiv.style.opacity = "1";
+        mapaDiv.style.pointerEvents = "auto";
         
+        map.off('click');
+        map.on('click', (e) => {
+            if(!checkboxNoMapa.checked) actualizarMapa(e.latlng.lat, e.latlng.lng);
+        });
+
         checkboxNoMapa.disabled = false;
-        capaCheckbox.style.background = "#f8f9fa";
-        capaCheckbox.style.opacity = "1";
+        wrapperCheckbox.classList.remove('disabled');
     }
 }
 
-// NORMALIZADOR PARA COMPARAR SIN ERRORES (Quita acentos, comillas y símbolos)
-function normalizar(texto) {
-    return texto.toUpperCase()
-        .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-        .replace(/[^A-Z0-9]/g, "");
-}
-
-// EVENTO DE SELECCIÓN EN RECORRIDO
 lineaInput.addEventListener('input', function() {
     const valOriginal = this.value;
     const valLimpio = normalizar(valOriginal);
     let encontrado = false;
 
-    // Comparar contra coordenadas fijas
     for (let clave in COORDENADAS_FIJAS) {
         if (valLimpio.includes(normalizar(clave))) {
             actualizarMapa(COORDENADAS_FIJAS[clave][0], COORDENADAS_FIJAS[clave][1]);
@@ -97,7 +96,6 @@ lineaInput.addEventListener('input', function() {
 
     setEstadoBloqueo(encontrado);
 
-    // Cargar Ramales si es una línea numérica
     const puntos = DB_RECORRIDOS[grupoSelect.value]?.recorridos[valOriginal];
     if (puntos) {
         ramalSelect.innerHTML = '<option value="">-- Selecciona punto --</option>';
@@ -131,16 +129,16 @@ function toggleMapa(checked) {
     }
 }
 
-// PDF y WhatsApp (Funciones básicas)
+// PDF y WhatsApp
 function generarPDF() {
     const elemento = document.getElementById('form-to-print');
-    html2pdf().from(elemento).save(`Siniestro_${Date.now()}.pdf`);
+    html2pdf().from(elemento).save(`Informe_${Date.now()}.pdf`);
 }
 
 function enviarWhatsApp() {
     const lat = document.getElementById('lat').value;
     const lng = document.getElementById('lng').value;
-    const mensaje = `Informe de Siniestro - Ubicación: https://www.google.com/maps?q=${lat},${lng}`;
+    const mensaje = `Siniestro en: https://www.google.com/maps?q=${lat},${lng}`;
     window.open(`https://wa.me/5492616147829?text=${encodeURIComponent(mensaje)}`, '_blank');
 }
 
@@ -162,8 +160,9 @@ function cambiarLesionados(delta) {
     if (delta > 0) {
         lesionadosCount++;
         const div = document.createElement('div');
+        div.className = 'lesionado-card';
         div.id = `les-${lesionadosCount}`;
-        div.innerHTML = `<label>Lesionado ${lesionadosCount}:</label><input type="text" placeholder="Nombre">`;
+        div.innerHTML = `<h4>Lesionado ${lesionadosCount}</h4><div class="field-row"><div class="field"><label>Nombre:</label><input type="text"></div><div class="field"><label>DNI:</label><input type="number"></div></div>`;
         contenedor.appendChild(div);
     } else if (lesionadosCount > 0) {
         document.getElementById(`les-${lesionadosCount}`).remove();

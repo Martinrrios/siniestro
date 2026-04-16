@@ -60,21 +60,21 @@
         </div>
 
         <div class="field">
-            <label>RECORRIDO O GARAGE:</label>
-            <input list="lineas" id="linea-input" placeholder="Selecciona un grupo primero..." disabled>
+            <label>Recorrido (Línea o Punto de Control):</label>
+            <input list="lineas" id="linea-input" placeholder="Selecciona un grupo..." disabled>
             <datalist id="lineas"></datalist>
         </div>
 
         <div class="field" id="container-ramal" style="display: none;">
-            <label>ÚLTIMA ETAPA MARCADA:</label>
+            <label>ÚLTIMA ETAPA MARCADA (Calle):</label>
             <select id="ramal-select">
-                <option value="">-- Selecciona un punto --</option>
+                <option value="">-- Selecciona punto --</option>
             </select>
         </div>
 
         <div class="field">
-            <label>Lugar del Siniestro (Calle e intersección, también):</label>
-            <input type="text" id="siniestro-lugar" placeholder="Ej: Av. San Martín 1234">
+            <label>Lugar del Siniestro (Calle e intersección):</label>
+            <input type="text" id="siniestro-lugar">
         </div>
 
         <div class="field">
@@ -88,31 +88,30 @@
             </select>
         </div>
     </div> <hr>
-   
- <div class="section-group">
-    <label>SELECCIONE EN EL MAPA LUGAR DEL SINIESTRO (por favor sea preciso)</label>
-    
-    <div class="checkbox-wrapper" id="capa-checkbox">
-        <input type="checkbox" id="no-mapa" onchange="toggleMapa(this.checked)">
-        <label for="no-mapa">NO PUEDO IDENTIFICAR LUGAR EN EL MAPA</label>
-    </div>
-    
-    <div id="map-container">
-        <div id="map"></div>
-    </div>
 
-    <div class="field-row" style="margin-top: 10px;">
-        <div class="field">
-            <label>Latitud</label>
-            <input type="text" id="lat" readonly placeholder="0.000000">
+    <div class="section-group">
+        <label>Ubicación en el mapa:</label>
+        
+        <div class="checkbox-wrapper" id="capa-checkbox">
+            <input type="checkbox" id="no-mapa" onchange="toggleMapa(this.checked)">
+            <label for="no-mapa">No puedo identificar el lugar en el mapa (Zona rural)</label>
         </div>
-        <div class="field">
-            <label>Longitud</label>
-            <input type="text" id="lng" readonly placeholder="0.000000">
+        
+        <div id="map-container">
+            <div id="map"></div>
         </div>
-    </div>
-</div>
-   
+
+        <div class="field-row" style="margin-top: 10px;">
+            <div class="field">
+                <label>Latitud</label>
+                <input type="text" id="lat" readonly>
+            </div>
+            <div class="field">
+                <label>Longitud</label>
+                <input type="text" id="lng" readonly>
+            </div>
+        </div>
+    </div> <hr>
 
     <div class="section-group">
         <div class="field">
@@ -135,8 +134,8 @@
         </div>
         <div class="field-row">
             <div class="field">
-                <label>Teléfono:</label>
-                <input type="tel" id="tercero-tel">
+                <label>Patente Vehículo:</label>
+                <input type="text" id="tercero-dominio">
             </div>
             <div class="field">
                 <label>Seguro y N° Póliza:</label>
@@ -159,18 +158,14 @@
 
     <div class="section-group">
         <label>Relato del Siniestro:</label>
-        <textarea id="siniestro-relato" rows="4" style="width: 100%;"></textarea>
+        <textarea id="siniestro-relato" rows="4"></textarea>
     </div>
 
     <div class="button-group">
-        <button type="button" id="btn-enviar" onclick="enviarWhatsApp()">Enviar WhatsApp</button>
+        <button type="button" id="btn-enviar" onclick="enviarWhatsApp()">WhatsApp</button>
         <button type="button" id="btn-pdf" onclick="generarPDF()">Descargar PDF</button>
     </div>
 
    </div>
 
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script src="recorridos.js"></script>
-    <script src="script.js"></script>
-</body>
-</html>
+    <script src="
