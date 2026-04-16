@@ -124,12 +124,23 @@ function toggleMapa(checked) {
 function cambiarLesionados(delta) {
     const contenedor = document.getElementById('lista-lesionados');
     const displayCount = document.getElementById('cant-lesionados');
+    
     if (delta > 0) {
         lesionadosCount++;
         const div = document.createElement('div');
         div.className = 'lesionado-card';
         div.id = `les-${lesionadosCount}`;
-        div.innerHTML = `<h4>Lesionado ${lesionadosCount}</h4><div class="field-row"><input type="text" placeholder="Nombre"><input type="number" placeholder="DNI"></div>`;
+        div.innerHTML = `
+            <h4>Lesionado ${lesionadosCount}</h4>
+            <div class="field-row">
+                <input type="text" placeholder="Nombre completo">
+                <input type="number" placeholder="DNI">
+            </div>
+            <div class="field-row" style="margin-top:5px;">
+                <input type="text" placeholder="Domicilio">
+                <input type="tel" placeholder="Teléfono">
+            </div>
+        `;
         contenedor.appendChild(div);
     } else if (lesionadosCount > 0) {
         document.getElementById(`les-${lesionadosCount}`).remove();

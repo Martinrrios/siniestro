@@ -25,6 +25,10 @@
             <div class="field"><label>Fecha:</label><input type="date" id="siniestro-fecha"></div>
             <div class="field"><label>Hora:</label><input type="time" id="siniestro-hora"></div>
         </div>
+	div class="field-row">
+    		<div class="field"><label>Unidad:</label><input type="number" id="unidad-numero"></div>
+    		<div class="field"><label>Patente:</label><input type="text" id="unidad-patente" placeholder="ABC 123 o AF 123 CD"></div>
+	</div>
     </div>
 
     <div class="section-group">
@@ -59,6 +63,46 @@
                 <div class="field"><label>Longitud:</label><input type="text" id="lng" readonly></div>
             </div>
         </div>
+	<div class="section-group">
+    <div class="field">
+        <label>Lugar del siniestro:</label>
+        <input type="text" id="siniestro-direccion" placeholder="Calle principal e intersección o altura">
+    </div>
+    <div class="field">
+        <label>Sentido de circulación:</label>
+        <select id="siniestro-sentido">
+            <option value="">-- Seleccionar --</option>
+            <option value="Norte">Al Norte</option>
+            <option value="Sur">Al Sur</option>
+            <option value="Este">Al Este</option>
+            <option value="Oeste">Al Oeste</option>
+        </select>
+    </div>
+    <div class="field">
+        <label>Policía que intervino y Nº de Acta:</label>
+        <input type="text" id="policia-datos">
+    </div>
+</div>
+
+<div class="section-group">
+    <h3>Tercero Involucrado</h3>
+    <div class="field-row">
+        <div class="field"><label>Apellido y Nombre:</label><input type="text" id="tercero-nombre"></div>
+        <div class="field"><label>DNI:</label><input type="number" id="tercero-dni"></div>
+    </div>
+    <div class="field-row">
+        <div class="field"><label>Teléfono:</label><input type="tel" id="tercero-tel"></div>
+        <div class="field"><label>Domicilio:</label><input type="text" id="tercero-domicilio"></div>
+    </div>
+    <div class="field-row">
+        <div class="field"><label>Marca:</label><input type="text" id="tercero-marca"></div>
+        <div class="field"><label>Modelo:</label><input type="text" id="tercero-modelo"></div>
+    </div>
+    <div class="field-row">
+        <div class="field"><label>Seguro y Nº Póliza:</label><input type="text" id="tercero-seguro"></div>
+    </div>
+</div>
+
     </div>
 
     <div class="section-group">
