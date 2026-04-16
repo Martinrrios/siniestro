@@ -1,7 +1,7 @@
 let map, marker;
 let lesionadosCount = 0;
 
-// 1. Coordenadas fijas para bloqueo automático
+// Coordenadas para puntos de control (Bloqueo automático)
 const COORDENADAS_FIJAS = {
     "CONTROL SAN MARTIN Y 5 ABRIL": [-32.985566, -68.782253],
     "CONTROL TROPERO Y 5 ABRIL": [-32.987591, -68.780913],
@@ -14,7 +14,6 @@ const COORDENADAS_FIJAS = {
     "CONTROL CORRALITOS": [-32.859662, -68.662657]
 };
 
-// 2. Referencias al DOM
 const grupoSelect = document.getElementById('grupo-select');
 const lineaInput = document.getElementById('linea-input');
 const datalistLineas = document.getElementById('lineas');
@@ -22,7 +21,6 @@ const ramalSelect = document.getElementById('ramal-select');
 const ramalContainer = document.getElementById('container-ramal');
 const checkboxNoMapa = document.getElementById('no-mapa');
 
-// 3. Inicialización del Mapa
 function initMap() {
     map = L.map('map').setView([-32.8895, -68.8458], 13);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -30,45 +28,38 @@ function initMap() {
     }).addTo(map);
 
     map.on('click', function(e) {
-        // Solo permite marcar si el mapa no está bloqueado (por punto fijo o checkbox)
-        const isLocked = document.getElementById('map').style.pointerEvents === 'none';
-        if (!isLocked && (!checkboxNoMapa || !checkboxNoMapa.checked)) {
+        if (document.getElementById('map').style.pointerEvents !== 'none' && !checkboxNoMapa.checked) {
             actualizarMapa(e.latlng.lat, e.latlng.lng);
         }
     });
 
-    // Fecha por defecto
-    const fechaInput = document.getElementById('siniestro-fecha');
-    if(fechaInput) fechaInput.valueAsDate = new Date();
+    document.getElementById('siniestro-fecha').valueAsDate = new Date();
 }
 
 function actualizarMapa(lat, lng) {
     const pos = [lat, lng];
     map.setView(pos, 16);
-    if (marker) {
-        marker.setLatLng(pos);
-    } else {
-        marker = L.marker(pos).addTo(map);
-    }
+    if (marker) marker.setLatLng(pos);
+    else marker = L.marker(pos).addTo(map);
+    
     document.getElementById('lat').value = lat.toFixed(6);
     document.getElementById('lng').value = lng.toFixed(6);
 }
 
-// 4. Gestión de Bloqueo del Mapa
 function setEstadoBloqueo(bloquear) {
     const mapaDiv = document.getElementById('map');
     if (bloquear) {
         mapaDiv.style.opacity = "0.5";
         mapaDiv.style.pointerEvents = "none";
-        if (checkboxNoMapa) checkboxNoMapa.disabled = true;
+        checkboxNoMapa.disabled = true;
     } else {
         mapaDiv.style.opacity = "1";
         mapaDiv.style.pointerEvents = "auto";
-        if (checkboxNoMapa) checkboxNoMapa.disabled = false;
+        checkboxNoMapa.disabled = false;
     }
 }
 
-// 5. EVENTO: Cambio de Grupo (Carga Recorridos)
+// CARGA DE RECORRIDOS SEGÚN GRUPO
 grupoSelect.addEventListener('change', function() {
     const grupo = this.value;
     lineaInput.value = '';
@@ -78,43 +69,38 @@ grupoSelect.addEventListener('change', function() {
 
     if (grupo && DB_RECORRIDOS[grupo]) {
         lineaInput.disabled = false;
-        lineaInput.placeholder = "Seleccione o escriba el recorrido...";
-        
-        // Cargar las claves del objeto recorridos del grupo seleccionado
-        const recorridosDisponibles = Object.keys(DB_RECORRIDOS[grupo].recorridos);
-        recorridosDisponibles.forEach(rec => {
+        // Acceder a DB_RECORRIDOS[G800].recorridos
+        const opciones = Object.keys(DB_RECORRIDOS[grupo].recorridos);
+        opciones.forEach(nombre => {
             const opt = document.createElement('option');
-            opt.value = rec;
+            opt.value = nombre;
             datalistLineas.appendChild(opt);
         });
     } else {
         lineaInput.disabled = true;
-        lineaInput.placeholder = "Seleccione grupo primero...";
     }
 });
 
-// 6. EVENTO: Selección de Recorrido (Puntos Fijos y Ramales)
+// DETECTAR SELECCIÓN DE LÍNEA O PUNTO FIJO
 lineaInput.addEventListener('input', function() {
-    const seleccion = this.value;
+    const val = this.value;
     const grupo = grupoSelect.value;
 
-    // Verificar si es un punto fijo para bloquear el mapa
-    if (COORDENADAS_FIJAS[seleccion]) {
-        actualizarMapa(COORDENADAS_FIJAS[seleccion][0], COORDENADAS_FIJAS[seleccion][1]);
+    if (COORDENADAS_FIJAS[val]) {
+        actualizarMapa(COORDENADAS_FIJAS[val][0], COORDENADAS_FIJAS[val][1]);
         setEstadoBloqueo(true);
     } else {
         setEstadoBloqueo(false);
     }
 
-    // Cargar ramales (puntos intermedios)
-    const puntos = DB_RECORRIDOS[grupo]?.recorridos[seleccion];
+    const puntos = DB_RECORRIDOS[grupo]?.recorridos[val];
     if (puntos && puntos.length > 0) {
-        ramalSelect.innerHTML = '<option value="">-- Selecciona un punto del recorrido --</option>';
-        puntos.forEach(punto => {
-            const el = document.createElement('option');
-            el.textContent = punto.replace(';', ' - '); 
-            el.value = punto;
-            ramalSelect.appendChild(el);
+        ramalSelect.innerHTML = '<option value="">-- Selecciona punto --</option>';
+        puntos.forEach(p => {
+            const opt = document.createElement('option');
+            opt.value = p;
+            opt.textContent = p.replace(';', ' - ');
+            ramalSelect.appendChild(opt);
         });
         ramalContainer.style.display = 'block';
     } else {
@@ -122,47 +108,9 @@ lineaInput.addEventListener('input', function() {
     }
 });
 
-// 7. Gestión de Lesionados
-function cambiarLesionados(delta) {
-    const contenedor = document.getElementById('lista-lesionados');
-    const displayCount = document.getElementById('cant-lesionados');
-    if (delta > 0) {
-        lesionadosCount++;
-        const div = document.createElement('div');
-        div.className = 'lesionado-card';
-        div.id = `lesionado-${lesionadosCount}`;
-        div.innerHTML = `
-            <h4>Lesionado ${lesionadosCount}</h4>
-            <div class="field-row">
-                <div class="field"><label>Nombre:</label><input type="text"></div>
-                <div class="field"><label>DNI:</label><input type="number"></div>
-            </div>`;
-        contenedor.appendChild(div);
-    } else if (lesionadosCount > 0) {
-        document.getElementById(`lesionado-${lesionadosCount}`).remove();
-        lesionadosCount--;
-    }
-    if(displayCount) displayCount.innerText = lesionadosCount;
-}
-
-// 8. Utilidades: WhatsApp y PDF
-function enviarWhatsApp() {
-    const lat = document.getElementById('lat').value;
-    const lng = document.getElementById('lng').value;
-    const chofer = document.getElementById('chofer-nombre').value;
-    const texto = `Informe de Siniestro - Chofer: ${chofer} - Ubicación: https://www.google.com/maps?q=${lat},${lng}`;
-    window.open(`https://wa.me/5492616147829?text=${encodeURIComponent(texto)}`);
-}
-
-function generarPDF() {
-    const element = document.getElementById('form-to-print');
-    const opt = { margin: 0.5, filename: 'siniestro.pdf', image: { type: 'jpeg', quality: 0.98 }, html2canvas: { scale: 2 }, jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' } };
-    html2pdf().set(opt).from(element).save();
-}
-
 function toggleMapa(checked) {
     const mapDiv = document.getElementById('map-container');
-    if(checked) {
+    if (checked) {
         mapDiv.style.display = 'none';
         document.getElementById('lat').value = "0";
         document.getElementById('lng').value = "0";
@@ -172,5 +120,33 @@ function toggleMapa(checked) {
     }
 }
 
-// Iniciar
+function cambiarLesionados(delta) {
+    const contenedor = document.getElementById('lista-lesionados');
+    const displayCount = document.getElementById('cant-lesionados');
+    if (delta > 0) {
+        lesionadosCount++;
+        const div = document.createElement('div');
+        div.className = 'lesionado-card';
+        div.id = `les-${lesionadosCount}`;
+        div.innerHTML = `<h4>Lesionado ${lesionadosCount}</h4><div class="field-row"><input type="text" placeholder="Nombre"><input type="number" placeholder="DNI"></div>`;
+        contenedor.appendChild(div);
+    } else if (lesionadosCount > 0) {
+        document.getElementById(`les-${lesionadosCount}`).remove();
+        lesionadosCount--;
+    }
+    displayCount.innerText = lesionadosCount;
+}
+
+function enviarWhatsApp() {
+    const lat = document.getElementById('lat').value;
+    const lng = document.getElementById('lng').value;
+    const msg = `Siniestro: https://www.google.com/maps?q=${lat},${lng}`;
+    window.open(`https://wa.me/5492616147829?text=${encodeURIComponent(msg)}`);
+}
+
+function generarPDF() {
+    const element = document.getElementById('form-to-print');
+    html2pdf().from(element).save('siniestro.pdf');
+}
+
 document.addEventListener('DOMContentLoaded', initMap);
