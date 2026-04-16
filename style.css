@@ -1,11 +1,10 @@
-body {
-    font-family: 'Segoe UI', sans-serif;
-    background-color: #f0f2f5;
-    display: flex;
-    justify-content: center;
-    padding: 20px;
-    margin: 0;
-}
+body { font-family: 'Segoe UI', sans-serif; background-color: #f0f2f5; display: flex; justify-content: center; padding: 20px; }
+.form-card { background: white; width: 100%; max-width: 800px; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+.section-group { margin-bottom: 20px; }
+.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+.field { display: flex; flex-direction: column; margin-bottom: 15px; }
+label { font-weight: bold; font-size: 0.9rem; margin-bottom: 5px; }
+input, select, textarea { padding: 10px; border: 1px solid #ddd; border-radius: 6px; }
 
 @media (max-width: 600px) {
     #map {
@@ -24,11 +23,11 @@ body {
 }
 
 #map {
-    height: 450px; /* MAPA MÁS GRANDE */
+    height: 400px;
     width: 100%;
     border-radius: 10px;
     border: 1px solid #ddd;
-    margin-top: 10px;
+    z-index: 100; /* Asegura que se vea */
 }
 
 /* Filtro para mejorar contraste de nombres de calles en Leaflet */
@@ -235,3 +234,20 @@ textarea {
     font-family: inherit;
     box-sizing: border-box;
 }
+
+.checkbox-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+}
+.checkbox-wrapper input { width: 25px; height: 25px; cursor: pointer; }
+.checkbox-wrapper.disabled { opacity: 0.5; pointer-events: none; background: #eee; }
+
+.button-group { display: flex; gap: 10px; margin-top: 20px; }
+#btn-enviar { background: #25d366; color: white; border: none; flex: 1; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: bold; }
+#btn-pdf { background: #e74c3c; color: white; border: none; flex: 1; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: bold; }
