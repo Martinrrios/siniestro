@@ -61,7 +61,7 @@
 
         <div class="field">
             <label>Recorrido (Línea o Punto de Control):</label>
-            <input list="lineas" id="linea-input" placeholder="Primero selecciona un grupo..." disabled>
+            <input list="lineas" id="linea-input" placeholder="Selecciona un grupo primero..." disabled>
             <datalist id="lineas"></datalist>
         </div>
 
@@ -91,13 +91,13 @@
 
     <div class="section-group">
         <label>Ubicación en el mapa:</label>
-        <div class="checkbox-container" id="capa-checkbox">
+        <div class="checkbox-container" id="capa-checkbox" style="background: #f8f9fa; padding: 10px; border-radius: 8px; margin-bottom: 10px; border: 1px solid #ddd;">
             <input type="checkbox" id="no-mapa" onchange="toggleMapa(this.checked)">
             <label for="no-mapa" style="display:inline; font-weight: normal;">No puedo identificar el lugar (Zona rural / 0.0,0.0)</label>
         </div>
         
         <div id="map-container">
-            <div id="map"></div>
+            <div id="map" style="height: 400px; width: 100%; border-radius: 8px;"></div>
         </div>
 
         <div class="field-row" style="margin-top: 10px;">
@@ -157,17 +157,12 @@
 
     <div class="section-group">
         <label>Relato del Siniestro:</label>
-        <textarea id="siniestro-relato" rows="4"></textarea>
+        <textarea id="siniestro-relato" rows="4" style="width: 100%;"></textarea>
     </div>
 
     <div class="button-group">
-        <button type="button" id="btn-enviar" onclick="enviarWhatsApp()">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="20" height="20" alt="ws">
-            WhatsApp
-        </button>
-        <button type="button" id="btn-pdf" onclick="generarPDF()">
-            📄 Descargar PDF
-        </button>
+        <button type="button" id="btn-enviar" onclick="enviarWhatsApp()">Enviar WhatsApp</button>
+        <button type="button" id="btn-pdf" onclick="generarPDF()">Descargar PDF</button>
     </div>
 
    </div>
