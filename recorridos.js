@@ -1,9 +1,9 @@
 const DB_RECORRIDOS = {
 "G800": {
-
+        
     "recorridos": {
 
-
+    
     "CONTROL SAN MARTIN Y 5 ABRIL": [
     ],
 "CONTROL TROPERO Y 5 ABRIL": [
@@ -515,7 +515,7 @@ const DB_RECORRIDOS = {
 },
 
 "G200": {
-
+        
         "recorridos": {
 	    "CONTROL CORRALITOS": [
             ],
@@ -536,7 +536,7 @@ const DB_RECORRIDOS = {
                 "11;SAN MARTIN Y GODOY CRUZ; >VUELTA",
                 "12;SALIDA TERMINAL; >VUELTA"
             ],
-
+           
             "1293": [
                 "1;SALIDA TERMINAL; >IDA",
                 "2;ESC. EVA PERON; >VUELTA",
@@ -1309,6 +1309,7 @@ const DB_RECORRIDOS = {
                 "16;PONCE Y BANDERA; >VUELTA",
                 "17;CONTROL RODEO; >VUELTA"
             ]
-
+        
         }
     }
+};
