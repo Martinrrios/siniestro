@@ -27,16 +27,6 @@
                 <input type="number" id="chofer-legajo">
             </div>
         </div>
-        <div class="field-row">
-            <div class="field">
-                <label>Fecha:</label>
-                <input type="date" id="siniestro-fecha">
-            </div>
-            <div class="field">
-                <label>Hora:</label>
-                <input type="time" id="siniestro-hora">
-            </div>
-        </div>
     </div> <hr>
 
     <div class="section-group">
@@ -58,42 +48,30 @@
         <div class="field" id="container-ramal" style="display: none;">
             <label>ÚLTIMA ETAPA MARCADA (Calle):</label>
             <select id="ramal-select">
-                <option value="">-- Selecciona punto --</option>
+                <option value="">-- Selecciona un punto --</option>
             </select>
-        </div>
-
-        <div class="field">
-            <label>Lugar del Siniestro:</label>
-            <input type="text" id="siniestro-lugar">
         </div>
     </div> <hr>
 
     <div class="section-group">
         <label>Ubicación en el mapa:</label>
-        <div class="checkbox-wrapper" id="capa-checkbox">
-            <input type="checkbox" id="no-mapa" onchange="toggleMapa(this.checked)">
-            <label for="no-mapa">No puedo identificar el lugar en el mapa (Zona rural)</label>
-        </div>
-        
         <div id="map-container" style="min-height: 400px; width: 100%;">
             <div id="map"></div>
         </div>
-
         <div class="field-row" style="margin-top: 10px;">
             <div class="field">
                 <label>Latitud</label>
-                <input type="text" id="lat" readonly placeholder="0.000000">
+                <input type="text" id="lat" readonly>
             </div>
             <div class="field">
                 <label>Longitud</label>
-                <input type="text" id="lng" readonly placeholder="0.000000">
+                <input type="text" id="lng" readonly>
             </div>
         </div>
-    </div> <hr>
+    </div>
 
     <div class="button-group">
         <button type="button" id="btn-enviar" onclick="enviarWhatsApp()">WhatsApp</button>
-        <button type="button" id="btn-pdf" onclick="generarPDF()">Descargar PDF</button>
     </div>
    </div>
 
