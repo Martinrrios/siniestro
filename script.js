@@ -150,7 +150,7 @@ function cambiarLesionados(delta) {
 }
 
 function enviarWhatsApp() {
-    // Captura de datos básicos
+    // 1. Datos del Personal y Unidad
     const nombre = document.getElementById('chofer-nombre').value;
     const legajo = document.getElementById('chofer-legajo').value;
     const fecha = document.getElementById('siniestro-fecha').value;
@@ -158,37 +158,68 @@ function enviarWhatsApp() {
     const unidad = document.getElementById('unidad-numero').value;
     const patente = document.getElementById('unidad-patente').value;
 
-    // Datos de ubicación y recorrido
+    // 2. Datos de Recorrido y Ubicación
+    const grupo = document.getElementById('grupo-select').value;
     const linea = document.getElementById('linea-input').value;
-    const ramal = document.getElementById('ramal-select').value; // Punto del recorrido
+    const ramal = document.getElementById('ramal-select').value;
     const direccionManual = document.getElementById('siniestro-direccion').value;
+    const sentido = document.getElementById('siniestro-sentido').value;
     const lat = document.getElementById('lat').value;
     const lng = document.getElementById('lng').value;
-    const sentido = document.getElementById('siniestro-sentido').value;
+    const acta = document.getElementById('policia-datos').value;
 
-    // Construcción del campo especial "Lugar del Siniestro" que pediste
-    // Formato: "Dirección + Punto Recorrido + Coordenadas"
-    const lugarDetallado = `${direccionManual} + ${ramal} + ${lat}, ${lng}`;
-
-    // Datos de Terceros
+    // 3. Datos del Tercero
     const tNombre = document.getElementById('tercero-nombre').value;
+    const tDni = document.getElementById('tercero-dni').value;
+    const tTel = document.getElementById('tercero-tel').value;
+    const tDom = document.getElementById('tercero-domicilio').value;
+    const tMarca = document.getElementById('tercero-marca').value;
+    const tModelo = document.getElementById('tercero-modelo').value;
     const tSeguro = document.getElementById('tercero-seguro').value;
 
-    // Construcción del mensaje
-    let mensaje = `*INFORME DE SINIESTRO*\n`;
-    mensaje += `--------------------------\n`;
-    mensaje += `*Chofer:* ${nombre} (Legajo: ${legajo})\n`;
-    mensaje += `*Unidad:* ${unidad} (Patente: ${patente})\n`;
-    mensaje += `*Fecha/Hora:* ${fecha} - ${hora}hs\n`;
-    mensaje += `*Línea:* ${linea}\n`;
-    mensaje += `*Sentido:* ${sentido}\n`;
-    mensaje += `*Lugar:* ${lugarDetallado}\n`;
-    mensaje += `*Tercero:* ${tNombre} - Seguro: ${tSeguro}\n`;
-    mensaje += `*Lesionados:* ${lesionadosCount}\n`;
-    mensaje += `--------------------------\n`;
-    mensaje += `*Ubicación GPS:* https://www.google.com/maps?q=${lat},${lng}`;
+    // 4. Relato
+    const relato = document.getElementById('siniestro-relato').value;
 
-    // Abrir WhatsApp
+    // 5. Procesar Lesionados dinámicamente
+    let infoLesionados = "";
+    const listaCards = document.querySelectorAll('.lesionado-card');
+    
+    if (listaCards.length > 0) {
+        listaCards.forEach((card, index) => {
+            const inputs = card.querySelectorAll('input');
+            infoLesionados += `\n   - *Lesionado ${index + 1}:* ${inputs[0].value || 'S/D'}, DNI: ${inputs[1].value || 'S/D'}, Dom: ${inputs[2].value || 'S/D'}, Tel: ${inputs[3].value || 'S/D'}`;
+        });
+    } else {
+        infoLesionados = " Sin lesionados.";
+    }
+
+    // CONSTRUCCIÓN DEL MENSAJE
+    let mensaje = `*⚠️ INFORME DE SINIESTRO*\n`;
+    mensaje += `------------------------------------------\n`;
+    mensaje += `*PERSONAL Y UNIDAD*\n`;
+    mensaje += `• Chofer: ${nombre} (Legajo: ${legajo})\n`;
+    mensaje += `• Unidad: ${unidad} (Patente: ${patente})\n`;
+    mensaje += `• Fecha/Hora: ${fecha} - ${hora}hs\n\n`;
+
+    mensaje += `*UBICACIÓN Y RECORRIDO*\n`;
+    mensaje += `• Grupo/Línea: ${grupo} - ${linea}\n`;
+    mensaje += `• Sentido: ${sentido}\n`;
+    mensaje += `• Lugar: ${direccionManual} + ${ramal} + ${lat}, ${lng}\n`;
+    mensaje += `• Acta/Policía: ${acta}\n\n`;
+
+    mensaje += `*TERCERO INVOLUCRADO*\n`;
+    mensaje += `• Nombre: ${tNombre} (DNI: ${tDni})\n`;
+    mensaje += `• Tel/Dom: ${tTel} / ${tDom}\n`;
+    mensaje += `• Vehículo: ${tMarca} ${tModelo}\n`;
+    mensaje += `• Seguro/Póliza: ${tSeguro}\n\n`;
+
+    mensaje += `*LESIONADOS (${lesionadosCount}):*${infoLesionados}\n\n`;
+
+    mensaje += `*RELATO:* ${relato}\n\n`;
+    
+    mensaje += `*MAPA:* https://www.google.com/maps?q=${lat},${lng}`;
+
+    // Envío
     const nroTelefono = "5492616147829";
     window.open(`https://wa.me/${nroTelefono}?text=${encodeURIComponent(mensaje)}`);
 }
