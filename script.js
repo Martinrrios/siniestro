@@ -1,16 +1,16 @@
 let map, marker;
 let lesionadosCount = 0;
 
-// Diccionario con guiones (debe ser idéntico a recorridos.js)
+// Diccionario de coordenadas fijas (debe coincidir con recorridos.js)
 const COORDENADAS_FIJAS = {
     "CONTROL-SAN-MARTIN-Y-5-ABRIL": [-32.985566, -68.782253],
     "CONTROL-TROPERO-Y-5-ABRIL": [-32.987591, -68.780913],
     "QUEDA-B-AMUPE": [-33.001162, -68.758262],
-    "QUEDA-EST-GUTIERREZ": [-32.958955, -68.783622],
+    "QUEDA-EST.GUTIERREZ": [-32.958955, -68.783622],
     "TERMINAL": [-32.895239, -68.830288],
     "CONTROL-RODEO": [-32.936751, -68.732997],
     "QUEDA-RECOARO": [-33.041453, -68.833136],
-    "QUEDA-B-C-SOÑADA": [-33.034928, -68.765966],
+    "QUEDA-B-C.SOÑADA": [-33.034928, -68.765966],
     "CONTROL-CORRALITOS": [-32.859662, -68.662657]
 };
 
@@ -45,33 +45,39 @@ function actualizarMapa(lat, lng) {
 function gestionarBloqueo(fijo) {
     if (fijo) {
         mapDiv.style.pointerEvents = 'none';
-        mapDiv.style.opacity = '0.7';
-        mapDiv.style.border = '4px solid #ffc107';
+        mapDiv.style.opacity = '0.6';
+        mapDiv.classList.add('map-bloqueado');
         checkboxNoMapa.checked = false;
         checkboxNoMapa.disabled = true;
+        checkboxNoMapa.parentElement.style.opacity = "0.5";
     } else {
         mapDiv.style.pointerEvents = 'auto';
         mapDiv.style.opacity = '1';
-        mapDiv.style.border = '1px solid #ddd';
+        mapDiv.classList.remove('map-bloqueado');
         checkboxNoMapa.disabled = false;
+        checkboxNoMapa.parentElement.style.opacity = "1";
     }
 }
 
-// Escuchar cuando el usuario elige una opción
+// 1. Al hacer click/focus, se borra el contenido para mostrar el datalist
+lineaInput.addEventListener('focus', function() {
+    this.value = '';
+    gestionarBloqueo(false);
+    ramalContainer.style.display = 'none';
+});
+
+// 2. Lógica al seleccionar o escribir la línea
 lineaInput.addEventListener('input', function() {
-    const seleccion = this.value.trim(); // Toma el valor con guiones
+    const seleccion = this.value.trim();
     const grupo = grupoSelect.value;
 
-    // Si la opción elegida existe en nuestro diccionario de coordenadas
     if (COORDENADAS_FIJAS[seleccion]) {
-        const coords = COORDENADAS_FIJAS[seleccion];
-        actualizarMapa(coords[0], coords[1]);
+        actualizarMapa(COORDENADAS_FIJAS[seleccion][0], COORDENADAS_FIJAS[seleccion][1]);
         gestionarBloqueo(true);
     } else {
         gestionarBloqueo(false);
     }
 
-    // Cargar ramales si la línea tiene datos
     const puntos = DB_RECORRIDOS[grupo]?.recorridos[seleccion];
     if (puntos && puntos.length > 0) {
         ramalSelect.innerHTML = '<option value="">-- Seleccionar punto --</option>';
@@ -104,14 +110,15 @@ grupoSelect.addEventListener('change', function() {
     }
 });
 
-document.addEventListener('DOMContentLoaded', () => {
-    initMap();
-    document.getElementById('siniestro-fecha').valueAsDate = new Date();
-});
-
 function toggleMapa(checked) {
-    document.getElementById('map-container').style.display = checked ? 'none' : 'block';
-    if(!checked) setTimeout(() => map.invalidateSize(), 200);
+    const container = document.getElementById('map-container');
+    container.style.display = checked ? 'none' : 'block';
+    if (!checked) {
+        setTimeout(() => map.invalidateSize(), 200);
+    } else {
+        document.getElementById('lat').value = "0";
+        document.getElementById('lng').value = "0";
+    }
 }
 
 function cambiarLesionados(delta) {
@@ -134,10 +141,16 @@ function cambiarLesionados(delta) {
 function enviarWhatsApp() {
     const lat = document.getElementById('lat').value;
     const lng = document.getElementById('lng').value;
-    const msg = `Siniestro: https://www.google.com/maps?q=${lat},${lng}`;
+    const msg = `Siniestro Informado - Ubicación: https://www.google.com/maps?q=${lat},${lng}`;
     window.open(`https://wa.me/5492616147829?text=${encodeURIComponent(msg)}`);
 }
 
 function generarPDF() {
-    html2pdf().from(document.getElementById('form-to-print')).save('siniestro.pdf');
+    const element = document.getElementById('form-to-print');
+    html2pdf().from(element).save('informe-siniestro.pdf');
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    initMap();
+    document.getElementById('siniestro-fecha').valueAsDate = new Date();
+});

@@ -3,166 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cuestionario de Siniestros</title>
+    <title>Informe de Siniestros</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-   <div class="form-card" id="form-to-print">
+<div class="form-card" id="form-to-print">
     <header>
         <h2>Información del Siniestro</h2>
-        <p>Complete todos los datos del informe.</p>
+        <p>Complete los datos requeridos para el informe oficial.</p>
     </header>
 
     <div class="section-group">
         <div class="field-row">
-            <div class="field">
-                <label>Nombre y Apellido:</label>
-                <input type="text" id="chofer-nombre">
-            </div>
-            <div class="field">
-                <label>Legajo:</label>
-                <input type="number" id="chofer-legajo">
-            </div>
+            <div class="field"><label>Nombre y Apellido:</label><input type="text" id="chofer-nombre"></div>
+            <div class="field"><label>Legajo:</label><input type="number" id="chofer-legajo"></div>
         </div>
         <div class="field-row">
-            <div class="field">
-                <label>Fecha:</label>
-                <input type="date" id="siniestro-fecha">
-            </div>
-            <div class="field">
-                <label>Hora:</label>
-                <input type="time" id="siniestro-hora">
-            </div>
+            <div class="field"><label>Fecha:</label><input type="date" id="siniestro-fecha"></div>
+            <div class="field"><label>Hora:</label><input type="time" id="siniestro-hora"></div>
         </div>
-        <div class="field-row">
-            <div class="field">
-                <label>Interno:</label>
-                <input type="text" id="unidad-interno">
-            </div>
-            <div class="field">
-                <label>Patente:</label>
-                <input type="text" id="unidad-patente">
-            </div>
-        </div>
-    </div> <hr>
+    </div>
 
     <div class="section-group">
         <div class="field">
             <label>Grupo:</label>
             <select id="grupo-select">
-                <option value="">-- Selecciona Grupo --</option>
+                <option value="">-- Seleccionar Grupo --</option>
                 <option value="G200">Grupo 200</option>
                 <option value="G800">Grupo 800</option>
             </select>
         </div>
-
         <div class="field">
-            <label>Recorrido:</label>
-            <input list="lineas" id="linea-input" placeholder="Primero selecciona un grupo..." disabled>
+            <label>Recorrido (Línea):</label>
+            <input list="lineas" id="linea-input" disabled placeholder="Seleccione un grupo primero">
             <datalist id="lineas"></datalist>
         </div>
-
-        <div class="field" id="container-ramal" style="display: none;">
-            <label>ÚLTIMA ETAPA MARCADA:</label>
-            <select id="ramal-select">
-                <option value="">-- Selecciona una opción --</option>
-            </select>
+        <div class="field" id="container-ramal" style="display:none;">
+            <label>Punto del Recorrido:</label>
+            <select id="ramal-select"></select>
         </div>
-
-        <div class="field">
-            <label>Lugar del Siniestro (Calle e intersección o altura):</label>
-            <input type="text" id="siniestro-lugar" placeholder="Ej: Av. San Martín 1234">
-        </div>
-
-        <div class="field">
-            <label>Sentido de circulación:</label>
-            <select id="sentido-select">
-                <option value="">-- Selecciona Sentido --</option>
-                <option value="Al Este">Al Este</option>
-                <option value="Al Oeste">Al Oeste</option>
-                <option value="Al Norte">Al Norte</option>
-                <option value="Al Sur">Al Sur</option>
-            </select>
-        </div>
-    </div> <hr>
+    </div>
 
     <div class="section-group">
-        <label>Marcar ubicación exacta en el mapa:</label>
         <div class="checkbox-container">
             <input type="checkbox" id="no-mapa" onchange="toggleMapa(this.checked)">
-            <label for="no-mapa" style="display:inline; font-weight: normal;">No puedo identificar el lugar en el mapa (Zona rural)</label>
+            <label for="no-mapa">Zona Rural / No puedo identificar el lugar en el mapa</label>
         </div>
-        
         <div id="map-container">
             <div id="map"></div>
-        </div>
-
-        <div class="results-container">
-            <div class="field">
-                <label>Latitud</label>
-                <input type="text" id="lat" readonly placeholder="0.000000">
-            </div>
-            <div class="field">
-                <label>Longitud</label>
-                <input type="text" id="lng" readonly placeholder="0.000000">
+            <div class="field-row" style="margin-top:10px;">
+                <div class="field"><label>Latitud:</label><input type="text" id="lat" readonly></div>
+                <div class="field"><label>Longitud:</label><input type="text" id="lng" readonly></div>
             </div>
         </div>
-    </div> <hr>
-
-    <div class="section-group">
-        <div class="field">
-            <label>Policía interviniente y N° de acta:</label>
-            <input type="text" id="policia-datos" placeholder="Nombre/Comisaría y N° Acta">
-        </div>
-    </div> <hr>
-
-    <div class="section-group">
-        <h3>Datos del Tercero Involucrado</h3>
-        <div class="field-row">
-            <div class="field">
-                <label>Nombre:</label>
-                <input type="text" id="tercero-nombre">
-            </div>
-            <div class="field">
-                <label>DNI:</label>
-                <input type="number" id="tercero-dni">
-            </div>
-        </div>
-        <div class="field-row">
-            <div class="field">
-                <label>Teléfono:</label>
-                <input type="tel" id="tercero-tel">
-            </div>
-            <div class="field">
-                <label>Dirección:</label>
-                <input type="text" id="tercero-dir">
-            </div>
-        </div>
-        <h4>Vehículo del Tercero</h4>
-        <div class="field-row">
-            <div class="field">
-                <label>Marca:</label>
-                <input type="text" id="tercero-marca">
-            </div>
-            <div class="field">
-                <label>Modelo:</label>
-                <input type="text" id="tercero-modelo">
-            </div>
-        </div>
-        <div class="field-row">
-            <div class="field">
-                <label>Dominio (Patente):</label>
-                <input type="text" id="tercero-dominio">
-            </div>
-            <div class="field">
-                <label>Seguro y N° Póliza:</label>
-                <input type="text" id="tercero-seguro">
-            </div>
-        </div>
-    </div> <hr>
+    </div>
 
     <div class="section-group">
         <div class="header-inline">
@@ -174,27 +71,21 @@
             </div>
         </div>
         <div id="lista-lesionados"></div>
-    </div> <hr>
+    </div>
 
     <div class="section-group">
-        <label>Relato de cómo sucedió el Siniestro:</label>
-        <textarea id="siniestro-relato" rows="4"></textarea>
+        <label>Relato del Siniestro:</label>
+        <textarea id="siniestro-relato" rows="4" style="width: 100%; box-sizing: border-box;"></textarea>
     </div>
 
     <div class="button-group">
-        <button type="button" id="btn-enviar" onclick="enviarWhatsApp()">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="20" height="20" alt="ws">
-            WhatsApp
-        </button>
-        <button type="button" id="btn-pdf" onclick="generarPDF()">
-            📄 Descargar PDF
-        </button>
+        <button type="button" id="btn-enviar" onclick="enviarWhatsApp()">Enviar por WhatsApp</button>
+        <button type="button" id="btn-pdf" onclick="generarPDF()">Descargar PDF</button>
     </div>
+</div>
 
-   </div>
-
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script src="recorridos.js"></script>
-    <script src="script.js"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="recorridos.js"></script>
+<script src="script.js"></script>
 </body>
 </html>

@@ -12,7 +12,7 @@ const DB_RECORRIDOS = {
     ],
 "QUEDA-EST.GUTIERREZ": [
     ],
-"CONTROL RODEO": [
+"CONTROL-RODEO": [
     ],
 "QUEDA-RECOARO": [
     ],
