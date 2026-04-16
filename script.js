@@ -150,10 +150,47 @@ function cambiarLesionados(delta) {
 }
 
 function enviarWhatsApp() {
+    // Captura de datos básicos
+    const nombre = document.getElementById('chofer-nombre').value;
+    const legajo = document.getElementById('chofer-legajo').value;
+    const fecha = document.getElementById('siniestro-fecha').value;
+    const hora = document.getElementById('siniestro-hora').value;
+    const unidad = document.getElementById('unidad-numero').value;
+    const patente = document.getElementById('unidad-patente').value;
+
+    // Datos de ubicación y recorrido
+    const linea = document.getElementById('linea-input').value;
+    const ramal = document.getElementById('ramal-select').value; // Punto del recorrido
+    const direccionManual = document.getElementById('siniestro-direccion').value;
     const lat = document.getElementById('lat').value;
     const lng = document.getElementById('lng').value;
-    const msg = `Siniestro Informado - Ubicación: https://www.google.com/maps?q=${lat},${lng}`;
-    window.open(`https://wa.me/5492616147829?text=${encodeURIComponent(msg)}`);
+    const sentido = document.getElementById('siniestro-sentido').value;
+
+    // Construcción del campo especial "Lugar del Siniestro" que pediste
+    // Formato: "Dirección + Punto Recorrido + Coordenadas"
+    const lugarDetallado = `${direccionManual} + ${ramal} + ${lat}, ${lng}`;
+
+    // Datos de Terceros
+    const tNombre = document.getElementById('tercero-nombre').value;
+    const tSeguro = document.getElementById('tercero-seguro').value;
+
+    // Construcción del mensaje
+    let mensaje = `*INFORME DE SINIESTRO*\n`;
+    mensaje += `--------------------------\n`;
+    mensaje += `*Chofer:* ${nombre} (Legajo: ${legajo})\n`;
+    mensaje += `*Unidad:* ${unidad} (Patente: ${patente})\n`;
+    mensaje += `*Fecha/Hora:* ${fecha} - ${hora}hs\n`;
+    mensaje += `*Línea:* ${linea}\n`;
+    mensaje += `*Sentido:* ${sentido}\n`;
+    mensaje += `*Lugar:* ${lugarDetallado}\n`;
+    mensaje += `*Tercero:* ${tNombre} - Seguro: ${tSeguro}\n`;
+    mensaje += `*Lesionados:* ${lesionadosCount}\n`;
+    mensaje += `--------------------------\n`;
+    mensaje += `*Ubicación GPS:* https://www.google.com/maps?q=${lat},${lng}`;
+
+    // Abrir WhatsApp
+    const nroTelefono = "5492616147829";
+    window.open(`https://wa.me/${nroTelefono}?text=${encodeURIComponent(mensaje)}`);
 }
 
 function generarPDF() {
