@@ -50,6 +50,24 @@ function init() {
     document.getElementById('siniestro-fecha').valueAsDate = new Date();
 }
 
+lineaInput.addEventListener('focus', function() {
+    this.value = '';
+    datalistLineas.innerHTML = ''; // Limpiamos para reconstruir según el grupo
+    
+    const grupoElegido = grupoSelect.value;
+    if (grupoElegido && DB_RECORRIDOS[grupoElegido]) {
+        const lineas = DB_RECORRIDOS[grupoElegido].recorridos;
+        for (const nroLinea in lineas) {
+            const option = document.createElement('option');
+            option.value = nroLinea;
+            datalistLineas.appendChild(option);
+        }
+    }
+    // Ocultamos el ramal hasta que elijan una línea nueva
+    ramalContainer.style.display = 'none';
+});
+
+
 function actualizarMapa(lat, lng) {
     const pos = [lat, lng];
     map.setView(pos, 16);
@@ -74,21 +92,51 @@ function toggleMapa(checked) {
     }
 }
 
-// Lógica de coordenadas automáticas por punto de recorrido
+// --- LÓGICA DE COORDENADAS Y BLOQUEO DE MAPA ---
 ramalSelect.addEventListener('change', function() {
     const value = this.value;
-    // Limpiar colores de ida/vuelta
+    const checkboxMapa = document.getElementById('no-mapa');
+    
+    // Resetear estilos de color
     this.classList.remove('bg-ida', 'bg-vuelta');
     const selectedOption = this.options[this.selectedIndex];
     if (selectedOption.classList.contains('opcion-ida')) this.classList.add('bg-ida');
     else if (selectedOption.classList.contains('opcion-vuelta')) this.classList.add('bg-vuelta');
 
-    // Buscar si el punto seleccionado tiene coordenadas fijas (se limpia el punto del ";" o ">")
+    let puntoFijoEncontrado = false;
+
     for (let clave in COORDENADAS_FIJAS) {
         if (value.includes(clave)) {
             actualizarMapa(COORDENADAS_FIJAS[clave][0], COORDENADAS_FIJAS[clave][1]);
+            puntoFijoEncontrado = true;
             break;
         }
+    }
+
+    if (puntoFijoEncontrado) {
+        // Bloquear mapa y avisar al usuario
+        map.dragging.disable();
+        map.touchZoom.disable();
+        map.doubleClickZoom.disable();
+        map.scrollWheelZoom.disable();
+        // Desactivamos el click en el mapa temporalmente
+        map.off('click');
+        document.getElementById('map').style.opacity = "0.7";
+        document.getElementById('map').style.cursor = "not-allowed";
+        console.log("Ubicación de control fijada. Mapa bloqueado.");
+    } else {
+        // Rehabilitar mapa si eligen una opción que no es punto fijo
+        map.dragging.enable();
+        map.touchZoom.enable();
+        map.doubleClickZoom.enable();
+        map.scrollWheelZoom.enable();
+        // Volver a activar el click para marcar puntos manuales
+        map.on('click', (e) => {
+            if(document.getElementById('no-mapa').checked) return;
+            actualizarMapa(e.latlng.lat, e.latlng.lng);
+        });
+        document.getElementById('map').style.opacity = "1";
+        document.getElementById('map').style.cursor = "crosshair";
     }
 });
 
