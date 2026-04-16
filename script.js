@@ -1,8 +1,10 @@
 let map, marker;
+let lesionadosCount = 0;
 
+// Coordenadas fijas para bloqueo automático
 const COORDENADAS_FIJAS = {
-    "SAN MARTIN Y 5 ABRIL": [-32.985566, -68.782253],
-    "TROPERO Y 5 ABRIL": [-32.987591, -68.780913],
+    "SAN MARTIN": [-32.985566, -68.782253],
+    "TROPERO": [-32.987591, -68.780913],
     "AMUPE": [-33.001162, -68.758262],
     "GUTIERREZ": [-32.958955, -68.783622],
     "TERMINAL": [-32.895239, -68.830288],
@@ -12,6 +14,7 @@ const COORDENADAS_FIJAS = {
     "CORRALITOS": [-32.859662, -68.662657]
 };
 
+// Elementos del DOM
 const grupoSelect = document.getElementById('grupo-select');
 const lineaInput = document.getElementById('linea-input');
 const datalistLineas = document.getElementById('lineas');
@@ -20,15 +23,23 @@ const ramalContainer = document.getElementById('container-ramal');
 const checkboxNoMapa = document.getElementById('no-mapa');
 const wrapperCheckbox = document.getElementById('capa-checkbox');
 
+// 1. INICIALIZACIÓN DEL MAPA
 function init() {
     map = L.map('map').setView([-32.8895, -68.8458], 13);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap'
+    }).addTo(map);
 
     map.on('click', (e) => {
-        if (!checkboxNoMapa.disabled && !checkboxNoMapa.checked) {
+        // Solo permite marcar si el mapa no está bloqueado por punto fijo o checkbox
+        const estaBloqueado = document.getElementById('map').style.pointerEvents === 'none';
+        if (!estaBloqueado && !checkboxNoMapa.checked) {
             actualizarMapa(e.latlng.lat, e.latlng.lng);
         }
     });
+
+    // Fecha actual por defecto
+    document.getElementById('siniestro-fecha').valueAsDate = new Date();
 }
 
 function actualizarMapa(lat, lng) {
@@ -40,10 +51,15 @@ function actualizarMapa(lat, lng) {
     document.getElementById('lng').value = lng.toFixed(6);
 }
 
+// 2. NORMALIZACIÓN DE TEXTO (Para comparar sin errores)
 function normalizar(t) {
-    return t.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^A-Z0-9]/g, "");
+    if (!t) return "";
+    return t.toString().toUpperCase()
+        .normalize("NFD").replace(/[\u0300-\u036f]/g, "") // Quita acentos
+        .replace(/[^A-Z0-9]/g, ""); // Quita símbolos y espacios
 }
 
+// 3. FUNCIÓN DE BLOQUEO/DESBLOQUEO
 function setEstadoBloqueo(bloquear) {
     const mapaDiv = document.getElementById('map');
     if (bloquear) {
@@ -51,77 +67,42 @@ function setEstadoBloqueo(bloquear) {
         map.touchZoom.disable();
         map.scrollWheelZoom.disable();
         mapaDiv.style.opacity = "0.5";
-        mapaDiv.style.pointerEvents = "none"; // ESTO BLOQUEA TODO
-        checkboxNoMapa.checked = false;
-        checkboxNoMapa.disabled = true;
-        wrapperCheckbox.classList.add('disabled');
+        mapaDiv.style.pointerEvents = "none";
+        if(checkboxNoMapa) checkboxNoMapa.disabled = true;
+        if(wrapperCheckbox) wrapperCheckbox.classList.add('disabled');
     } else {
         map.dragging.enable();
         map.touchZoom.enable();
         map.scrollWheelZoom.enable();
         mapaDiv.style.opacity = "1";
-        mapaDiv.style.pointerEvents = "auto"; // ESTO LIBERA TODO
-        checkboxNoMapa.disabled = false;
-        wrapperCheckbox.classList.remove('disabled');
+        mapaDiv.style.pointerEvents = "auto";
+        if(checkboxNoMapa) checkboxNoMapa.disabled = false;
+        if(wrapperCheckbox) wrapperCheckbox.classList.remove('disabled');
     }
 }
 
+// 4. EVENTO: CAMBIO DE GRUPO (Carga los recorridos)
 grupoSelect.addEventListener('change', function() {
     lineaInput.value = '';
-    lineaInput.disabled = !this.value;
     datalistLineas.innerHTML = '';
     ramalContainer.style.display = 'none';
     setEstadoBloqueo(false);
 
     if (this.value && DB_RECORRIDOS[this.value]) {
-        for (const nro in DB_RECORRIDOS[this.value].recorridos) {
+        lineaInput.disabled = false;
+        lineaInput.placeholder = "Seleccione o escriba el recorrido...";
+        
+        const recorridos = DB_RECORRIDOS[this.value].recorridos;
+        Object.keys(recorridos).forEach(nombre => {
             const opt = document.createElement('option');
-            opt.value = nro;
+            opt.value = nombre;
             datalistLineas.appendChild(opt);
-        }
-    }
-});
-
-lineaInput.addEventListener('input', function() {
-    const val = this.value;
-    const valLimpio = normalizar(val);
-    let esFijo = false;
-
-    for (let clave in COORDENADAS_FIJAS) {
-        if (valLimpio.includes(normalizar(clave))) {
-            actualizarMapa(COORDENADAS_FIJAS[clave][0], COORDENADAS_FIJAS[clave][1]);
-            esFijo = true;
-            break;
-        }
-    }
-
-    setEstadoBloqueo(esFijo);
-
-    const puntos = DB_RECORRIDOS[grupoSelect.value]?.recorridos[val];
-    if (puntos && puntos.length > 0) {
-        ramalSelect.innerHTML = '<option value="">-- Selecciona punto --</option>';
-        puntos.forEach(p => {
-            const opt = document.createElement('option');
-            opt.textContent = p.replace(';', ' - ');
-            opt.value = p;
-            ramalSelect.appendChild(opt);
         });
-        ramalContainer.style.display = 'block';
     } else {
-        ramalContainer.style.display = 'none';
+        lineaInput.disabled = true;
+        lineaInput.placeholder = "Seleccione grupo primero...";
     }
 });
 
-lineaInput.addEventListener('click', function() {
-    this.value = '';
-    setEstadoBloqueo(false);
-    ramalContainer.style.display = 'none';
-});
-
-function toggleMapa(checked) {
-    const container = document.getElementById('map-container');
-    container.style.display = checked ? 'none' : 'block';
-    if (!checked) setTimeout(() => map.invalidateSize(), 100);
-}
-
-document.addEventListener('DOMContentLoaded', init);
+// 5. EVENTO: SELECCIÓN DE RECORRIDO (Bloqueo y Ramales)
+lineaInput.
