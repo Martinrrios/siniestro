@@ -88,29 +88,31 @@
             </select>
         </div>
     </div> <hr>
+   
+ <div class="section-group">
+    <label>SELECCIONE EN EL MAPA LUGAR DEL SINIESTRO (por favor sea preciso)</label>
+    
+    <div class="checkbox-wrapper" id="capa-checkbox">
+        <input type="checkbox" id="no-mapa" onchange="toggleMapa(this.checked)">
+        <label for="no-mapa">NO PUEDO IDENTIFICAR LUGAR EN EL MAPA</label>
+    </div>
+    
+    <div id="map-container">
+        <div id="map"></div>
+    </div>
 
-    <div class="section-group">
-        <label>SELECCIONE EN EL MAPA LUGAR DEL SINIESTRO (por favor sea preciso)</label>
-        <div class="checkbox-container" id="capa-checkbox" style="background: #f8f9fa; padding: 10px; border-radius: 8px; margin-bottom: 10px; border: 1px solid #ddd;">
-            <input type="checkbox" id="no-mapa" onchange="toggleMapa(this.checked)">
-            <label for="no-mapa" style="display:inline; font-weight: normal;">NO PUEDO IDENTIFICAR LUGAR EN EL MAPA (Zona rural / 0.0,0.0)</label>
+    <div class="field-row" style="margin-top: 10px;">
+        <div class="field">
+            <label>Latitud</label>
+            <input type="text" id="lat" readonly placeholder="0.000000">
         </div>
-        
-        <div id="map-container">
-            <div id="map" style="height: 400px; width: 100%; border-radius: 8px;"></div>
+        <div class="field">
+            <label>Longitud</label>
+            <input type="text" id="lng" readonly placeholder="0.000000">
         </div>
-
-        <div class="field-row" style="margin-top: 10px;">
-            <div class="field">
-                <label>Latitud</label>
-                <input type="text" id="lat" readonly placeholder="0.000000">
-            </div>
-            <div class="field">
-                <label>Longitud</label>
-                <input type="text" id="lng" readonly placeholder="0.000000">
-            </div>
-        </div>
-    </div> <hr>
+    </div>
+</div>
+   
 
     <div class="section-group">
         <div class="field">
