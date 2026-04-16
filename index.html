@@ -60,20 +60,20 @@
         </div>
 
         <div class="field">
-            <label>Recorrido:</label>
+            <label>Recorrido (Línea o Punto de Control):</label>
             <input list="lineas" id="linea-input" placeholder="Primero selecciona un grupo..." disabled>
             <datalist id="lineas"></datalist>
         </div>
 
         <div class="field" id="container-ramal" style="display: none;">
-            <label>ÚLTIMA ETAPA MARCADA:</label>
+            <label>ÚLTIMA ETAPA MARCADA (Calle):</label>
             <select id="ramal-select">
-                <option value="">-- Selecciona una opción --</option>
+                <option value="">-- Selecciona un punto --</option>
             </select>
         </div>
 
         <div class="field">
-            <label>Lugar del Siniestro (Calle e intersección o altura):</label>
+            <label>Lugar del Siniestro (Calle e intersección):</label>
             <input type="text" id="siniestro-lugar" placeholder="Ej: Av. San Martín 1234">
         </div>
 
@@ -90,17 +90,17 @@
     </div> <hr>
 
     <div class="section-group">
-        <label>Marcar ubicación exacta en el mapa:</label>
-        <div class="checkbox-container">
+        <label>Ubicación en el mapa:</label>
+        <div class="checkbox-container" id="capa-checkbox">
             <input type="checkbox" id="no-mapa" onchange="toggleMapa(this.checked)">
-            <label for="no-mapa" style="display:inline; font-weight: normal;">No puedo identificar el lugar en el mapa (Zona rural)</label>
+            <label for="no-mapa" style="display:inline; font-weight: normal;">No puedo identificar el lugar (Zona rural / 0.0,0.0)</label>
         </div>
         
         <div id="map-container">
             <div id="map"></div>
         </div>
 
-        <div class="results-container">
+        <div class="field-row" style="margin-top: 10px;">
             <div class="field">
                 <label>Latitud</label>
                 <input type="text" id="lat" readonly placeholder="0.000000">
@@ -115,7 +115,7 @@
     <div class="section-group">
         <div class="field">
             <label>Policía interviniente y N° de acta:</label>
-            <input type="text" id="policia-datos" placeholder="Nombre/Comisaría y N° Acta">
+            <input type="text" id="policia-datos">
         </div>
     </div> <hr>
 
@@ -137,27 +137,6 @@
                 <input type="tel" id="tercero-tel">
             </div>
             <div class="field">
-                <label>Dirección:</label>
-                <input type="text" id="tercero-dir">
-            </div>
-        </div>
-        <h4>Vehículo del Tercero</h4>
-        <div class="field-row">
-            <div class="field">
-                <label>Marca:</label>
-                <input type="text" id="tercero-marca">
-            </div>
-            <div class="field">
-                <label>Modelo:</label>
-                <input type="text" id="tercero-modelo">
-            </div>
-        </div>
-        <div class="field-row">
-            <div class="field">
-                <label>Dominio (Patente):</label>
-                <input type="text" id="tercero-dominio">
-            </div>
-            <div class="field">
                 <label>Seguro y N° Póliza:</label>
                 <input type="text" id="tercero-seguro">
             </div>
@@ -177,7 +156,7 @@
     </div> <hr>
 
     <div class="section-group">
-        <label>Relato de cómo sucedió el Siniestro:</label>
+        <label>Relato del Siniestro:</label>
         <textarea id="siniestro-relato" rows="4"></textarea>
     </div>
 

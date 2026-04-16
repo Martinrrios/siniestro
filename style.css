@@ -14,11 +14,6 @@ body {
     }
 }
 
-#map {
-    transition: opacity 0.3s ease;
-    cursor: crosshair; /* Indica que se puede marcar un punto */
-}
-
 .form-card {
     background: white;
     width: 100%;
@@ -239,4 +234,22 @@ textarea {
     border: 1px solid #ccc;
     font-family: inherit;
     box-sizing: border-box;
+}
+
+.checkbox-container {
+    background: #e9ecef;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    transition: opacity 0.3s;
+}
+
+#map {
+    transition: opacity 0.3s;
+}
+
+.button-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
 }

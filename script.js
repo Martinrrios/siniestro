@@ -19,54 +19,25 @@ const lineaInput = document.getElementById('linea-input');
 const datalistLineas = document.getElementById('lineas');
 const ramalSelect = document.getElementById('ramal-select');
 const ramalContainer = document.getElementById('container-ramal');
+const checkboxNoMapa = document.getElementById('no-mapa');
+const capaCheckbox = document.getElementById('capa-checkbox');
 
 function init() {
-    // Inicializar mapa (Usando un filtro de contraste para que las letras se vean un poco más)
     map = L.map('map').setView([-32.8895, -68.8458], 13);
     
-    // Capa de mapa con mayor nitidez
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '© OpenStreetMap',
         maxZoom: 19,
-        className: 'map-tiles' // Clase CSS para aplicar filtros
+        className: 'map-tiles'
     }).addTo(map);
 
-    if ("geolocation" in navigator) {
-        navigator.geolocation.getCurrentPosition(
-            (position) => {
-                const { latitude, longitude } = position.coords;
-                actualizarMapa(latitude, longitude);
-            },
-            (error) => console.warn("Error geolocalización:", error.message),
-            { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
-        );
-    }
-
     map.on('click', (e) => {
-        if(document.getElementById('no-mapa').checked) return;
+        if(checkboxNoMapa.checked) return;
         actualizarMapa(e.latlng.lat, e.latlng.lng);
     });
 
     document.getElementById('siniestro-fecha').valueAsDate = new Date();
 }
-
-lineaInput.addEventListener('focus', function() {
-    this.value = '';
-    datalistLineas.innerHTML = ''; // Limpiamos para reconstruir según el grupo
-    
-    const grupoElegido = grupoSelect.value;
-    if (grupoElegido && DB_RECORRIDOS[grupoElegido]) {
-        const lineas = DB_RECORRIDOS[grupoElegido].recorridos;
-        for (const nroLinea in lineas) {
-            const option = document.createElement('option');
-            option.value = nroLinea;
-            datalistLineas.appendChild(option);
-        }
-    }
-    // Ocultamos el ramal hasta que elijan una línea nueva
-    ramalContainer.style.display = 'none';
-});
-
 
 function actualizarMapa(lat, lng) {
     const pos = [lat, lng];
@@ -77,70 +48,91 @@ function actualizarMapa(lat, lng) {
     document.getElementById('lng').value = lng.toFixed(6);
 }
 
-function toggleMapa(checked) {
-    const container = document.getElementById('map-container');
-    const latInp = document.getElementById('lat');
-    const lngInp = document.getElementById('lng');
-    
-    if (checked) {
-        container.style.display = 'none';
-        latInp.value = "0.0";
-        lngInp.value = "0.0";
-    } else {
-        container.style.display = 'block';
-        map.invalidateSize(); // Refresca el mapa al volver a mostrarlo
-    }
-}
-
-// --- LÓGICA DE COORDENADAS Y BLOQUEO DE MAPA ---
-ramalSelect.addEventListener('change', function() {
-    const value = this.value;
-    const checkboxMapa = document.getElementById('no-mapa');
-    
-    // Resetear estilos de color
-    this.classList.remove('bg-ida', 'bg-vuelta');
-    const selectedOption = this.options[this.selectedIndex];
-    if (selectedOption.classList.contains('opcion-ida')) this.classList.add('bg-ida');
-    else if (selectedOption.classList.contains('opcion-vuelta')) this.classList.add('bg-vuelta');
-
-    let puntoFijoEncontrado = false;
-
-    for (let clave in COORDENADAS_FIJAS) {
-        if (value.includes(clave)) {
-            actualizarMapa(COORDENADAS_FIJAS[clave][0], COORDENADAS_FIJAS[clave][1]);
-            puntoFijoEncontrado = true;
-            break;
-        }
-    }
-
-    if (puntoFijoEncontrado) {
-        // Bloquear mapa y avisar al usuario
+// Bloquea/Desbloquea Mapa y Checkbox
+function setEstadoBloqueo(bloquear) {
+    if (bloquear) {
         map.dragging.disable();
         map.touchZoom.disable();
         map.doubleClickZoom.disable();
         map.scrollWheelZoom.disable();
-        // Desactivamos el click en el mapa temporalmente
         map.off('click');
-        document.getElementById('map').style.opacity = "0.7";
+        document.getElementById('map').style.opacity = "0.6";
         document.getElementById('map').style.cursor = "not-allowed";
-        console.log("Ubicación de control fijada. Mapa bloqueado.");
+        
+        // Bloquear checkbox rural
+        checkboxNoMapa.checked = false;
+        checkboxNoMapa.disabled = true;
+        capaCheckbox.style.opacity = "0.5";
+        document.getElementById('map-container').style.display = 'block';
     } else {
-        // Rehabilitar mapa si eligen una opción que no es punto fijo
         map.dragging.enable();
         map.touchZoom.enable();
         map.doubleClickZoom.enable();
         map.scrollWheelZoom.enable();
-        // Volver a activar el click para marcar puntos manuales
         map.on('click', (e) => {
-            if(document.getElementById('no-mapa').checked) return;
-            actualizarMapa(e.latlng.lat, e.latlng.lng);
+            if(!checkboxNoMapa.checked) actualizarMapa(e.latlng.lat, e.latlng.lng);
         });
         document.getElementById('map').style.opacity = "1";
         document.getElementById('map').style.cursor = "crosshair";
+        
+        checkboxNoMapa.disabled = false;
+        capaCheckbox.style.opacity = "1";
+    }
+}
+
+function toggleMapa(checked) {
+    const container = document.getElementById('map-container');
+    if (checked) {
+        container.style.display = 'none';
+        document.getElementById('lat').value = "0.0";
+        document.getElementById('lng').value = "0.0";
+    } else {
+        container.style.display = 'block';
+        map.invalidateSize();
+    }
+}
+
+// Limpiar Recorrido al hacer un solo clic
+lineaInput.addEventListener('click', function() {
+    this.value = '';
+    ramalContainer.style.display = 'none';
+    setEstadoBloqueo(false); 
+});
+
+// Detectar selección de Línea o Punto de Control
+lineaInput.addEventListener('input', function() {
+    const val = this.value.toUpperCase();
+    let encontrado = false;
+
+    // Verificar si es punto fijo
+    for (let clave in COORDENADAS_FIJAS) {
+        if (val.includes(clave)) {
+            actualizarMapa(COORDENADAS_FIJAS[clave][0], COORDENADAS_FIJAS[clave][1]);
+            encontrado = true;
+            break;
+        }
+    }
+    setEstadoBloqueo(encontrado);
+
+    // Cargar ramales si es una línea común
+    const puntos = DB_RECORRIDOS[grupoSelect.value]?.recorridos[this.value];
+    if (puntos) {
+        ramalSelect.innerHTML = '<option value="">-- Selecciona punto --</option>';
+        puntos.forEach(p => {
+            const opt = document.createElement('option');
+            opt.textContent = p.replace(';', ' - ');
+            opt.value = p;
+            if (p.includes('>IDA')) opt.classList.add('opcion-ida');
+            else if (p.includes('>VUELTA')) opt.classList.add('opcion-vuelta');
+            ramalSelect.appendChild(opt);
+        });
+        ramalContainer.style.display = 'block';
+    } else {
+        ramalContainer.style.display = 'none';
     }
 });
 
-// --- FUNCION PDF ---
+// PDF
 function generarPDF() {
     const elemento = document.getElementById('form-to-print');
     const opt = {
@@ -150,100 +142,51 @@ function generarPDF() {
         html2canvas: { scale: 2, useCORS: true },
         jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
     };
-    
-    // Ocultar botones antes de imprimir
     document.querySelector('.button-group').style.visibility = 'hidden';
-    
     html2pdf().set(opt).from(elemento).save().then(() => {
         document.querySelector('.button-group').style.visibility = 'visible';
     });
 }
 
-// ... (se mantienen las funciones de cambiarLesionados y enviarWhatsApp del código original) ...
-// Nota: en enviarWhatsApp() actualicé la URL de Google Maps que tenías escrita (tenía un 0 extra)
+// WhatsApp
 function enviarWhatsApp() {
-    const getVal = (id) => {
-        const el = document.getElementById(id);
-        return el ? (el.value || "S/D") : "S/D";
-    };
-    
-    let textoLesionados = "";
-    document.querySelectorAll('.lesionado-card').forEach((card, i) => {
-        textoLesionados += `%0A*Lesionado ${i+1}:*%0A` +
-            `- Nombre: ${card.querySelector('.L-nombre').value || "S/D"}%0A` +
-            `- DNI: ${card.querySelector('.L-dni').value || "S/D"}%0A` +
-            `- Tel: ${card.querySelector('.L-tel').value || "S/D"}%0A` +
-            `- Dir: ${card.querySelector('.L-dir').value || "S/D"}%0A`;
-    });
+    const getVal = (id) => document.getElementById(id)?.value || "S/D";
+    const lat = getVal('lat');
+    const lng = getVal('lng');
+    const linkMapa = (lat === "0.0") ? "Zona rural" : `https://www.google.com/maps?q=${lat},${lng}`;
 
-    const lat = document.getElementById('lat').value;
-    const lng = document.getElementById('lng').value;
-    const linkMapa = (lat === "0.0") ? "Zona rural (Sin coordenadas)" : `https://www.google.com/maps?q=${lat},${lng}`;
-
-    const mensaje = 
-        `*INFORME DE SINIESTRO*%0A` +
-        `----------------------------------------%0A` +
-        `*CHOFER:* ${getVal('chofer-nombre')}%0A` +
-        `*LEGAJO:* ${getVal('chofer-legajo')}%0A%0A` +
-        `*UNIDAD:* ${getVal('unidad-interno')} | *PATENTE:* ${getVal('unidad-patente')}%0A%0A` +
-        `*LUGAR:* ${getVal('siniestro-lugar')}%0A` +
-        `*MAPA:* ${linkMapa}%0A%0A` +
-        `*RELATO:* ${getVal('siniestro-relato')}`;
-
+    const mensaje = `*INFORME DE SINIESTRO*%0A*CHOFER:* ${getVal('chofer-nombre')}%0A*INTERNO:* ${getVal('unidad-interno')}%0A*LUGAR:* ${getVal('siniestro-lugar')}%0A*MAPA:* ${linkMapa}`;
     window.open(`https://wa.me/5492616147829?text=${mensaje}`, '_blank');
 }
 
-// Mantener listeners de grupos/líneas del script original
+// Carga inicial de datos
 grupoSelect.addEventListener('change', function() {
-    const grupoElegido = this.value;
     lineaInput.value = '';
     datalistLineas.innerHTML = '';
-    ramalContainer.style.display = 'none';
-    if (grupoElegido && DB_RECORRIDOS[grupoElegido]) {
+    if (this.value && DB_RECORRIDOS[this.value]) {
         lineaInput.disabled = false;
-        const lineas = DB_RECORRIDOS[grupoElegido].recorridos;
-        for (const nroLinea in lineas) {
-            const option = document.createElement('option');
-            option.value = nroLinea;
-            datalistLineas.appendChild(option);
+        for (const nro in DB_RECORRIDOS[this.value].recorridos) {
+            const opt = document.createElement('option');
+            opt.value = nro;
+            datalistLineas.appendChild(opt);
         }
-    } else { lineaInput.disabled = true; }
-});
-
-lineaInput.addEventListener('input', function() {
-    const grupoElegido = grupoSelect.value;
-    const lineaElegida = this.value;
-    if (!grupoElegido || !lineaElegida) return;
-    const puntosEncontrados = DB_RECORRIDOS[grupoElegido]?.recorridos[lineaElegida];
-    if (puntosEncontrados) {
-        ramalSelect.innerHTML = '<option value="">-- Selecciona un punto del recorrido --</option>';
-        puntosEncontrados.forEach(punto => {
-            const el = document.createElement('option');
-            el.textContent = punto.replace(';', ' - '); 
-            el.value = punto;
-            if (punto.includes('>IDA')) el.classList.add('opcion-ida');
-            else if (punto.includes('>VUELTA')) el.classList.add('opcion-vuelta');
-            ramalSelect.appendChild(el);
-        });
-        ramalContainer.style.display = 'block';
-    } else { ramalContainer.style.display = 'none'; }
+    }
 });
 
 function cambiarLesionados(delta) {
     const contenedor = document.getElementById('lista-lesionados');
-    const displayCount = document.getElementById('cant-lesionados');
     if (delta > 0) {
         lesionadosCount++;
         const div = document.createElement('div');
         div.className = 'lesionado-card';
         div.id = `lesionado-${lesionadosCount}`;
-        div.innerHTML = `<h4>Lesionado ${lesionadosCount}</h4><div class="field-row"><div class="field"><label>Nombre:</label><input type="text" class="L-nombre"></div><div class="field"><label>DNI:</label><input type="number" class="L-dni"></div></div>`;
+        div.innerHTML = `<h4>Lesionado ${lesionadosCount}</h4><div class=\"field-row\"><div class=\"field\"><label>Nombre:</label><input type=\"text\" class=\"L-nombre\"></div><div class=\"field\"><label>DNI:</label><input type=\"number\" class=\"L-dni\"></div></div>`;
         contenedor.appendChild(div);
     } else if (lesionadosCount > 0) {
         document.getElementById(`lesionado-${lesionadosCount}`).remove();
         lesionadosCount--;
     }
-    displayCount.innerText = lesionadosCount;
+    document.getElementById('cant-lesionados').innerText = lesionadosCount;
 }
 
 document.addEventListener('DOMContentLoaded', init);
