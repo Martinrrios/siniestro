@@ -157,8 +157,8 @@ function cambiartestigos(delta) {
     if (delta > 0) {
         testigosCount++;
         const div = document.createElement('div');
-        div.className = 'testidos-card';
-        div.id = `les-${testigosCount}`;
+        div.className = 'testigos-card';
+        div.id = `tes-${testigosCount}`;
         div.innerHTML = `
             <h4>Testigos ${testigosCount}</h4>
             <div class="field-row">
@@ -172,7 +172,7 @@ function cambiartestigos(delta) {
         `;
         contenedor.appendChild(div);
     } else if (testigosCount > 0) {
-        document.getElementById(`les-${testigosCount}`).remove();
+        document.getElementById(`tes-${testigosCount}`).remove();
         testigosCount--;
     }
     displayCount.innerText = testigosCount;
