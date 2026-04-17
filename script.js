@@ -194,7 +194,24 @@ function enviarWhatsApp() {
         infoLesionados = " Sin lesionados.";
     }
 
-    // CONSTRUCCIÓN DEL MENSAJE
+   
+
+function enviarWhatsApp() {
+    // 1. Capturamos el valor del grupo seleccionado
+    const grupo = document.getElementById('grupoSeleccionado').value;
+    
+    // 2. Definimos los números (usa el formato internacional sin el +)
+    let telefonoDestino;
+    
+    if (grupo === "Grupo 200") {
+        telefonoDestino = "5492612013938"; // Reemplaza con el número para G200
+    } else if (grupo === "Grupo 800") {
+        telefonoDestino = "5492616147829"; // Reemplaza con el número para G800
+    }
+
+    
+    const url = `https://api.whatsapp.com/send?phone=${telefonoDestino}&text=${encodeURIComponent(mensaje)}`;
+ // CONSTRUCCIÓN DEL MENSAJE
     let mensaje = `*⚠️ INFORME DE SINIESTRO*\n`;
     mensaje += `---------------------------------------------------\n`;
     mensaje += `*PERSONAL Y UNIDAD*\n`;
@@ -227,9 +244,9 @@ function enviarWhatsApp() {
     
     mensaje += `*MAPA:* https://www.google.com/maps?q=${lat},${lng}`;
 
-    // Envío
-    const nroTelefono = "5492616147829";
-    window.open(`https://wa.me/${nroTelefono}?text=${encodeURIComponent(mensaje)}`);
+    // 4. Abrimos WhatsApp
+    window.open(url, '_blank');
+}
 }
 
 
