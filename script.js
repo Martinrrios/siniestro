@@ -230,7 +230,19 @@ function enviarWhatsApp() {
     } else {
         infoLesionados = " Sin lesionados.";
     }
-
+    
+    // 6. Procesar Testigos dinámicamente
+    let infotestigos = "";
+    const listaCards = document.querySelectorAll('.testigo-card');
+    
+    if (listaCards.length > 0) {
+        listaCards.forEach((card, index) => {
+            const inputs = card.querySelectorAll('input');
+            infotestigos += `\n   - *Testigo ${index + 1}:* ${inputs[0].value || 'S/D'}, DNI: ${inputs[1].value || 'S/D'}, Dom: ${inputs[2].value || 'S/D'}, Tel: ${inputs[3].value || 'S/D'}`;
+        });
+    } else {
+        infotestigos = " Sin lesionados.";
+    }
     // CONSTRUCCIÓN DEL MENSAJE
     let mensaje = `*⚠️ INFORME DE SINIESTRO*\n`;
     mensaje += `------------------------------------------\n`;
@@ -252,6 +264,7 @@ function enviarWhatsApp() {
     mensaje += `• Seguro/Póliza: ${tSeguro}\n\n`;
 
     mensaje += `*LESIONADOS (${lesionadosCount}):*${infoLesionados}\n\n`;
+    mensaje += `*TESTIGOS (${testigosCount}):*${infotestigos}\n\n`;
 
     mensaje += `*RELATO:* ${relato}\n\n`;
     
