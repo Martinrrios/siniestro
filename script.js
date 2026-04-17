@@ -197,22 +197,21 @@ function enviarWhatsApp() {
     // CONSTRUCCIÓN DEL MENSAJE
     let mensaje = `*⚠️ INFORME DE SINIESTRO*\n`;
     mensaje += `------------------------------------------\n`;
-    mensaje += `*PERSONAL Y UNIDAD*\n`;
-    mensaje += `• Chofer: ${nombre} (Legajo: ${legajo})\n`;
-    mensaje += `• Unidad: ${unidad} (Patente: ${patente})\n`;
-    mensaje += `• Fecha/Hora: ${fecha} - ${hora}hs\n\n`;
+    mensaje += `• Chofer: ${nombre}\n`;
+    mensaje += `• Legajo: ${legajo}\n`;
+    mensaje += `• Unidad: ${unidad}\n`;
+    mensaje += `• Patente: ${patente}\n`;
+    mensaje += `• Fecha: ${fecha} Hora: ${hora}hs\n\n`;
 
-    mensaje += `*UBICACIÓN Y RECORRIDO*\n`;
-    mensaje += `• Grupo/Línea: ${grupo} - ${linea}\n`;
+    mensaje += `• Grupo: ${grupo} Recorrido: ${linea}\n`;
     mensaje += `• Sentido: ${sentido}\n`;
-    //mensaje += `• Lugar: ${direccionManual} + ${ramal} + ${lat},${lng}\n`;
     mensaje += `• Lugar: ${direccionManual};${ramal};${lat}, ${lng}\n`;
-    mensaje += `• Acta/Policía: ${acta}\n\n`;
+    mensaje += `• Policia/Acta: ${acta}\n\n`;
 
     mensaje += `*TERCERO INVOLUCRADO*\n`;
-    mensaje += `• Nombre: ${tNombre} (DNI: ${tDni})\n`;
-    mensaje += `• Tel/Dom: ${tTel} / ${tDom}\n`;
-    mensaje += `• Vehículo: ${tMarca} ${tModelo} (Patente: ${tDominio})\n`;
+    mensaje += `• Nombre: ${tNombre} DNI: ${tDni}\n`;
+    mensaje += `• Dom: ${tDom} Teléfono: ${tTel}\n`;
+    mensaje += `• Vehículo: ${tMarca} ${tModelo} Patente: ${tDominio}\n`;
     mensaje += `• Seguro/Póliza: ${tSeguro}\n\n`;
 
     mensaje += `*LESIONADOS (${lesionadosCount}):*${infoLesionados}\n\n`;
