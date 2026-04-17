@@ -173,6 +173,20 @@ h3 {
     justify-content: center;
 }
 
+.btn-controls button {
+    background: #e9ecef;
+    border: 1px solid #ccc;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .counter-controls button:hover {
     background: #dee2e6;
 }
