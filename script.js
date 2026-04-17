@@ -150,6 +150,8 @@ function cambiarLesionados(delta) {
 }
 
 function enviarWhatsApp() {
+
+    
     // 1. Datos del Personal y Unidad
     const nombre = document.getElementById('chofer-nombre').value;
     const legajo = document.getElementById('chofer-legajo').value;
@@ -193,63 +195,54 @@ function enviarWhatsApp() {
     } else {
         infoLesionados = " Sin lesionados.";
     }
-
-   
-
-function enviarWhatsApp() {
-    // 1. Capturamos el valor del grupo seleccionado
+/////////////////////
     const grupo = document.getElementById('grupoSeleccionado').value;
     
     // 2. Definimos los números (usa el formato internacional sin el +)
     let telefonoDestino;
     
     if (grupo === "Grupo 200") {
-        telefonoDestino = "5492612013938"; // Reemplaza con el número para G200
+        nroTelefono = "5491112345678"; // Reemplaza con el número para G200
     } else if (grupo === "Grupo 800") {
-        telefonoDestino = "5492616147829"; // Reemplaza con el número para G800
+        nroTelefono = "5491187654321"; // Reemplaza con el número para G800
     }
-
-    
-    const url = `https://api.whatsapp.com/send?phone=${telefonoDestino}&text=${encodeURIComponent(mensaje)}`;
- // CONSTRUCCIÓN DEL MENSAJE
+////////////////////
+    // CONSTRUCCIÓN DEL MENSAJE
     let mensaje = `*⚠️ INFORME DE SINIESTRO*\n`;
-    mensaje += `---------------------------------------------------\n`;
+    mensaje += `------------------------------------------\n`;
     mensaje += `*PERSONAL Y UNIDAD*\n`;
-    mensaje += `• Chofer: ${nombre}\n`;
-    mensaje += `• Legajo: ${legajo}\n`;
-    mensaje += `• Unidad: ${unidad}\n`;
-    mensaje += `• Patente: ${patente}\n`;
-    mensaje += `• Fecha: ${fecha}\n`;
-    mensaje += `• Hora: ${hora}hs\n`;
+    mensaje += `• Chofer: ${nombre} (Legajo: ${legajo})\n`;
+    mensaje += `• Unidad: ${unidad} (Patente: ${patente})\n`;
+    mensaje += `• Fecha/Hora: ${fecha} - ${hora}hs\n\n`;
 
-    mensaje += `*UBICACIÓN - RECORRIDO - Nº ACTA*\n`;
+    mensaje += `*UBICACIÓN Y RECORRIDO*\n`;
     mensaje += `• Grupo/Línea: ${grupo} - ${linea}\n`;
-    mensaje += `• Servicio: ${linea}\n`;
     mensaje += `• Sentido: ${sentido}\n`;
+    //mensaje += `• Lugar: ${direccionManual} + ${ramal} + ${lat},${lng}\n`;
     mensaje += `• Lugar: ${direccionManual};${ramal};${lat}, ${lng}\n`;
-    mensaje += `• Policía/Acta: ${acta}\n`;
+    mensaje += `• Acta/Policía: ${acta}\n\n`;
 
     mensaje += `*TERCERO INVOLUCRADO*\n`;
-    mensaje += `• Nombre: ${tNombre}\n`;
-    mensaje += `• DNI: ${tDni}\n`;
-    mensaje += `• Domicilio: ${tDom}\n`;
-    mensaje += `• Teléfono: ${tTel}\n`;
-    mensaje += `• Vehículo: ${tMarca} ${tModelo}\n`;
-    mensaje += `• Patente: ${tDominio}\n`;
-    mensaje += `• Seguro/Póliza: ${tSeguro}\n`;
+    mensaje += `• Nombre: ${tNombre} (DNI: ${tDni})\n`;
+    mensaje += `• Tel/Dom: ${tTel} / ${tDom}\n`;
+    mensaje += `• Vehículo: ${tMarca} ${tModelo} (Patente: ${tDominio})\n`;
+    mensaje += `• Seguro/Póliza: ${tSeguro}\n\n`;
 
-    mensaje += `*LESIONADOS (${lesionadosCount}):*${infoLesionados}\n`;
+    mensaje += `*LESIONADOS (${lesionadosCount}):*${infoLesionados}\n\n`;
 
     mensaje += `*RELATO:* ${relato}\n\n`;
     
     mensaje += `*MAPA:* https://www.google.com/maps?q=${lat},${lng}`;
 
-    // 4. Abrimos WhatsApp
-    window.open(url, '_blank');
-}
+    // Envío
+    
+    window.open(`https://wa.me/${nroTelefono}?text=${encodeURIComponent(mensaje)}`);
 }
 
-
+function generarPDF() {
+    const element = document.getElementById('form-to-print');
+    html2pdf().from(element).save('informe-siniestro.pdf');
+}
 
 document.addEventListener('DOMContentLoaded', () => {
     initMap();
