@@ -226,9 +226,9 @@ function enviarWhatsApp() {
     let nroTelefono = "";
 
     // Validamos según lo seleccionado en el id 'grupo-select'
-    if (grupo === "200") {
+    if (grupo === "G200") {
         nroTelefono = "5492612013938"; // Reemplaza con el número para el Grupo 200
-    } else if (grupo === "800") {
+    } else if (grupo === "G800") {
         nroTelefono = "5492616147829"; // Reemplaza con el número para el Grupo 800
     } else {
         // Opción por defecto o alerta si no hay selección válida
