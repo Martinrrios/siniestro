@@ -151,7 +151,7 @@ function cambiarLesionados(delta) {
 }
 
 function cambiartestigos(delta) {
-    const contenedor = document.getElementById('lista-testigos');
+    const contenedor = document.getElementById('testigos-lista');
     const displayCount = document.getElementById('cant-testigos');
     
     if (delta > 0) {
