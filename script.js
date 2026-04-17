@@ -222,7 +222,8 @@ function enviarWhatsApp() {
     } else {
         infoLesionados = " Sin lesionados.";
     }
-     if (listaCards.length > 0) {
+    // . Procesar Testigos dinámicamente
+    if (listaCards.length > 0) {
         listaCards.forEach((card, index) => {
             const inputs = card.querySelectorAll('input');
             infotestigos += `\n   - *Testigo ${index + 1}:* ${inputs[0].value || 'S/D'}, DNI: ${inputs[1].value || 'S/D'}, Dom: ${inputs[2].value || 'S/D'}, Tel: ${inputs[3].value || 'S/D'}`;
@@ -252,6 +253,8 @@ function enviarWhatsApp() {
     mensaje += `• Seguro/Póliza: ${tSeguro}\n\n`;
 
     mensaje += `*LESIONADOS (${lesionadosCount}):*${infoLesionados}\n\n`;
+
+    mensaje += `*TESTIGOS (${testigoCount}):*${infotestigos}\n\n`;
 
     mensaje += `*RELATO:* ${relato}\n\n`;
     
