@@ -195,7 +195,7 @@ function enviarWhatsApp() {
     } else {
         infoLesionados = " Sin lesionados.";
     }
-/////////////////////
+//
     const grupo = document.getElementById('grupoSeleccionado').value;
     
     // 2. Definimos los números (usa el formato internacional sin el +)
@@ -206,7 +206,7 @@ function enviarWhatsApp() {
     } else if (grupo === "Grupo 800") {
         nroTelefono = "5491187654321"; // Reemplaza con el número para G800
     }
-////////////////////
+//
     // CONSTRUCCIÓN DEL MENSAJE
     let mensaje = `*⚠️ INFORME DE SINIESTRO*\n`;
     mensaje += `------------------------------------------\n`;
