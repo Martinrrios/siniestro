@@ -123,16 +123,17 @@
         <div id="lista-lesionados"></div>
     </div>
 
-    <div class="seccion-testigos">
-    <h3>Testigos</h3>
-    <div class="contador-container">
-        <button type="button" onclick="cambiarTestigos(-1)">-</button>
-        <span id="cant-testigos">0</span>
-        <button type="button" onclick="cambiarTestigos(1)">+</button>
-    </div>
-    
-    <div id="testigos-lista"></div>
+    <div class="section-group">
+	<div class="header-inline">
+          <h3>Testigos</h3>
+          <div class="counter-controls">
+              <button type="button" onclick="cambiarTestigos(-1)">-</button>
+              <span id="cant-testigos">0</span>
+              <button type="button" onclick="cambiarTestigos(1)">+</button>
+        </div>
+        <div id="testigos-lista"></div>
 	</div>
+
     <div class="section-group">
         <label>Relato del Siniestro:</label>
         <textarea id="siniestro-relato" rows="4" style="width: 100%; box-sizing: border-box;"></textarea>

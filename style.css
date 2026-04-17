@@ -8,7 +8,6 @@ body {
     margin: 0;
 }
 
-
 .testigo-card, .lesionado-card {
     border: 1px solid #ccc;
     padding: 15px;
@@ -215,8 +214,8 @@ h3 {
     margin-top: 25px;
 }
 
-button[onclick^="enviarWhatsApp"], 
-button[onclick^="generarPDF"] {
+button[onclick^="enviarWhatsApp"]
+	{
     flex: 1;
     padding: 15px;
     border: none;
