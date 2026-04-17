@@ -205,13 +205,14 @@ function enviarWhatsApp() {
     mensaje += `*UBICACIÓN Y RECORRIDO*\n`;
     mensaje += `• Grupo/Línea: ${grupo} - ${linea}\n`;
     mensaje += `• Sentido: ${sentido}\n`;
-    mensaje += `• Lugar: ${direccionManual} + ${ramal} + ${lat}, ${lng}\n`;
+    //mensaje += `• Lugar: ${direccionManual} + ${ramal} + ${lat}, ${lng}\n`;
+    mensaje += `• Lugar: ${direccionManual};${ramal};${lat}, ${lng}\n`;
     mensaje += `• Acta/Policía: ${acta}\n\n`;
 
     mensaje += `*TERCERO INVOLUCRADO*\n`;
     mensaje += `• Nombre: ${tNombre} (DNI: ${tDni})\n`;
     mensaje += `• Tel/Dom: ${tTel} / ${tDom}\n`;
-    mensaje += `• Vehículo: ${tMarca} ${tModelo} (Dominio: ${tDominio})\n`;
+    mensaje += `• Vehículo: ${tMarca} ${tModelo} (Patente: ${tDominio})\n`;
     mensaje += `• Seguro/Póliza: ${tSeguro}\n\n`;
 
     mensaje += `*LESIONADOS (${lesionadosCount}):*${infoLesionados}\n\n`;
