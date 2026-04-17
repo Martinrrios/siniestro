@@ -175,6 +175,7 @@ function enviarWhatsApp() {
     const tDom = document.getElementById('tercero-domicilio').value;
     const tMarca = document.getElementById('tercero-marca').value;
     const tModelo = document.getElementById('tercero-modelo').value;
+    const tDominio = document.getElementById('tercero-dominio').value;
     const tSeguro = document.getElementById('tercero-seguro').value;
 
     // 4. Relato
@@ -210,7 +211,7 @@ function enviarWhatsApp() {
     mensaje += `*TERCERO INVOLUCRADO*\n`;
     mensaje += `• Nombre: ${tNombre} (DNI: ${tDni})\n`;
     mensaje += `• Tel/Dom: ${tTel} / ${tDom}\n`;
-    mensaje += `• Vehículo: ${tMarca} ${tModelo}\n`;
+    mensaje += `• Vehículo: ${tMarca} ${tModelo} (Dominio: ${tDominio})\n`;
     mensaje += `• Seguro/Póliza: ${tSeguro}\n\n`;
 
     mensaje += `*LESIONADOS (${lesionadosCount}):*${infoLesionados}\n\n`;
