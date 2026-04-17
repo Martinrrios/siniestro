@@ -222,14 +222,27 @@ function enviarWhatsApp() {
     mensaje += `*MAPA:* https://www.google.com/maps?q=${lat},${lng}`;
 
     // Envío
-    const nroTelefono = "5492616147829";
-    window.open(`https://wa.me/${nroTelefono}?text=${encodeURIComponent(mensaje)}`);
+    // LÓGICA DE SELECCIÓN DE TELÉFONO
+    let nroTelefono = "";
+
+    // Validamos según lo seleccionado en el id 'grupo-select'
+    if (grupo === "Grupo 200") {
+        nroTelefono = "5492612013938"; // Reemplaza con el número para el Grupo 200
+    } else if (grupo === "Grupo 800") {
+        nroTelefono = "5492616147829"; // Reemplaza con el número para el Grupo 800
+    } else {
+        // Opción por defecto o alerta si no hay selección válida
+        alert("Por favor, seleccione un grupo válido para enviar el reporte.");
+        return; 
+    }
+
+    // Envío final
+    const url = `https://wa.me/${nroTelefono}?text=${encodeURIComponent(mensaje)}`;
+    window.open(url, '_blank');
 }
 
-function generarPDF() {
-    const element = document.getElementById('form-to-print');
-    html2pdf().from(element).save('informe-siniestro.pdf');
-}
+
+
 
 document.addEventListener('DOMContentLoaded', () => {
     initMap();
