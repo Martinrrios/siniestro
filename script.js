@@ -199,20 +199,27 @@ function enviarWhatsApp() {
     mensaje += `------------------------------------------\n`;
     mensaje += `*PERSONAL Y UNIDAD*\n`;
     mensaje += `• Chofer: ${nombre} (Legajo: ${legajo})\n`;
-    mensaje += `• Unidad: ${unidad} (Patente: ${patente})\n`;
-    mensaje += `• Fecha/Hora: ${fecha} - ${hora}hs\n\n`;
+    mensaje += `• Legajo: ${legajo}\n`;
+    mensaje += `• Unidad: ${unidad}\n`;
+    mensaje += `• Patente: ${patente}\n`;
+    mensaje += `• Fecha: ${fecha}\n`;
+    mensaje += `• Hora: ${hora}hs\n\n`;
 
     mensaje += `*UBICACIÓN Y RECORRIDO*\n`;
     mensaje += `• Grupo/Línea: ${grupo} - ${linea}\n`;
+    mensaje += `• Servicio: ${linea}\n`;
     mensaje += `• Sentido: ${sentido}\n`;
-    //mensaje += `• Lugar: ${direccionManual} + ${ramal} + ${lat}, ${lng}\n`;
+    //mensaje += `• Lugar: ${direccionManual} + ${ramal} + ${lat},${lng}\n`;
     mensaje += `• Lugar: ${direccionManual};${ramal};${lat}, ${lng}\n`;
-    mensaje += `• Acta/Policía: ${acta}\n\n`;
+    mensaje += `• Policía/Acta: ${acta}\n\n`;
 
     mensaje += `*TERCERO INVOLUCRADO*\n`;
-    mensaje += `• Nombre: ${tNombre} (DNI: ${tDni})\n`;
-    mensaje += `• Tel/Dom: ${tTel} / ${tDom}\n`;
-    mensaje += `• Vehículo: ${tMarca} ${tModelo} (Patente: ${tDominio})\n`;
+    mensaje += `• Nombre: ${tNombre}\n`;
+    mensaje += `• DNI: ${tDni}\n`;
+    mensaje += `• Domicilio: ${tDom}\n`;
+    mensaje += `• Teléfono: ${tTel}\n`;
+    mensaje += `• Vehículo: ${tMarca} ${tModelo}\n`;
+    mensaje += `• Patente: ${tDominio})\n`;
     mensaje += `• Seguro/Póliza: ${tSeguro}\n\n`;
 
     mensaje += `*LESIONADOS (${lesionadosCount}):*${infoLesionados}\n\n`;
@@ -226,10 +233,7 @@ function enviarWhatsApp() {
     window.open(`https://wa.me/${nroTelefono}?text=${encodeURIComponent(mensaje)}`);
 }
 
-function generarPDF() {
-    const element = document.getElementById('form-to-print');
-    html2pdf().from(element).save('informe-siniestro.pdf');
-}
+
 
 document.addEventListener('DOMContentLoaded', () => {
     initMap();
