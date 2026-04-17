@@ -196,7 +196,7 @@ function enviarWhatsApp() {
 
     // CONSTRUCCIÓN DEL MENSAJE
     let mensaje = `*⚠️ INFORME DE SINIESTRO*\n`;
-    mensaje += `-------------------------------------------\n`;
+    mensaje += `---------------------------------------------------\n`;
     mensaje += `*PERSONAL Y UNIDAD*\n`;
     mensaje += `• Chofer: ${nombre}\n`;
     mensaje += `• Legajo: ${legajo}\n`;
