@@ -150,8 +150,6 @@ function cambiarLesionados(delta) {
 }
 
 function enviarWhatsApp() {
-
-    
     // 1. Datos del Personal y Unidad
     const nombre = document.getElementById('chofer-nombre').value;
     const legajo = document.getElementById('chofer-legajo').value;
@@ -195,18 +193,7 @@ function enviarWhatsApp() {
     } else {
         infoLesionados = " Sin lesionados.";
     }
-//
-    const grupo = document.getElementById('grupoSeleccionado').value;
-    
-    // 2. Definimos los números (usa el formato internacional sin el +)
-    let telefonoDestino;
-    
-    if (grupo === "Grupo 200") {
-        nroTelefono = "5491112345678"; // Reemplaza con el número para G200
-    } else if (grupo === "Grupo 800") {
-        nroTelefono = "5491187654321"; // Reemplaza con el número para G800
-    }
-//
+
     // CONSTRUCCIÓN DEL MENSAJE
     let mensaje = `*⚠️ INFORME DE SINIESTRO*\n`;
     mensaje += `------------------------------------------\n`;
@@ -235,7 +222,7 @@ function enviarWhatsApp() {
     mensaje += `*MAPA:* https://www.google.com/maps?q=${lat},${lng}`;
 
     // Envío
-    
+    const nroTelefono = "5492616147829";
     window.open(`https://wa.me/${nroTelefono}?text=${encodeURIComponent(mensaje)}`);
 }
 
