@@ -23,7 +23,7 @@ const checkboxNoMapa = document.getElementById('no-mapa');
 const mapDiv = document.getElementById('map');
 
 function initMap() {
-    map = L.map('map').setView([-32.8895, -68.8458], 13);
+    map = L.map('map').setView([-32.8895, -68.8458], 20);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
     
     map.on('click', (e) => {
