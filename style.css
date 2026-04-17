@@ -8,24 +8,8 @@ body {
     margin: 0;
 }
 
-.testigo-card, .lesionado-card {
-    border: 1px solid #ccc;
-    padding: 15px;
-    margin-bottom: 10px;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-}
 
-.field-row {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 8px;
-}
 
-.field-row input {
-    flex: 1;
-    padding: 8px;
-}
 
 .form-card {
     background: white;
@@ -214,8 +198,8 @@ h3 {
     margin-top: 25px;
 }
 
-button[onclick^="enviarWhatsApp"]
-	{
+button[onclick^="enviarWhatsApp"], 
+button[onclick^="generarPDF"] {
     flex: 1;
     padding: 15px;
     border: none;

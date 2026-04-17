@@ -1,6 +1,5 @@
 let map, marker;
 let lesionadosCount = 0;
-let testigosCount = 0;
 
 // Diccionario de coordenadas fijas (debe coincidir con recorridos.js)
 const COORDENADAS_FIJAS = {
@@ -150,42 +149,6 @@ function cambiarLesionados(delta) {
     displayCount.innerText = lesionadosCount;
 }
 
-function cambiarTestigos(delta) {
-    const contenedor = document.getElementById('testigos-lista');
-    const displayCount = document.getElementById('cant-testigos');
-    
-    if (delta > 0) {
-        testigosCount++;
-        
-        // Crear el div principal con la clase correspondiente
-        const div = document.createElement('div');
-        div.className = 'testigo-card'; // Usa tu clase de CSS
-        div.id = `tes-${testigosCount}`;
-        
-        // Insertar la estructura de inputs (limpia de CSS)
-        div.innerHTML = `
-            <h4>Testigo ${testigosCount}</h4>
-            <div class="field-row">
-                <input type="text" placeholder="Nombre completo">
-                <input type="number" placeholder="DNI">
-            </div>
-            <div class="field-row">
-                <input type="text" placeholder="Domicilio">
-                <input type="tel" placeholder="Teléfono">
-            </div>
-        `;
-        contenedor.appendChild(div);
-    } else if (testigosCount > 0) {
-        const el = document.getElementById(`tes-${testigosCount}`);
-        if (el) el.remove();
-        testigosCount--;
-    }
-    
-    if (displayCount) {
-        displayCount.innerText = testigosCount;
-    }
-}
-
 function enviarWhatsApp() {
     // 1. Datos del Personal y Unidad
     const nombre = document.getElementById('chofer-nombre').value;
@@ -230,19 +193,7 @@ function enviarWhatsApp() {
     } else {
         infoLesionados = " Sin lesionados.";
     }
-    
-    // 6. Procesar Testigos dinámicamente
-    let infotestigos = "";
-    const listaCards = document.querySelectorAll('.testigo-card');
-    
-    if (listaCards.length > 0) {
-        listaCards.forEach((card, index) => {
-            const inputs = card.querySelectorAll('input');
-            infotestigos += `\n   - *Testigo ${index + 1}:* ${inputs[0].value || 'S/D'}, DNI: ${inputs[1].value || 'S/D'}, Dom: ${inputs[2].value || 'S/D'}, Tel: ${inputs[3].value || 'S/D'}`;
-        });
-    } else {
-        infotestigos = " Sin lesionados.";
-    }
+
     // CONSTRUCCIÓN DEL MENSAJE
     let mensaje = `*⚠️ INFORME DE SINIESTRO*\n`;
     mensaje += `------------------------------------------\n`;
@@ -264,7 +215,6 @@ function enviarWhatsApp() {
     mensaje += `• Seguro/Póliza: ${tSeguro}\n\n`;
 
     mensaje += `*LESIONADOS (${lesionadosCount}):*${infoLesionados}\n\n`;
-    mensaje += `*TESTIGOS (${testigosCount}):*${infotestigos}\n\n`;
 
     mensaje += `*RELATO:* ${relato}\n\n`;
     
