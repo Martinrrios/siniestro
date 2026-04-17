@@ -1,5 +1,6 @@
 let map, marker;
 let lesionadosCount = 0;
+let testigosCount = 0;
 
 // Diccionario de coordenadas fijas (debe coincidir con recorridos.js)
 const COORDENADAS_FIJAS = {
@@ -147,6 +148,34 @@ function cambiarLesionados(delta) {
         lesionadosCount--;
     }
     displayCount.innerText = lesionadosCount;
+}
+
+function cambiartestigos(delta) {
+    const contenedor = document.getElementById('lista-testigos');
+    const displayCount = document.getElementById('cant-testigos');
+    
+    if (delta > 0) {
+        testigosCount++;
+        const div = document.createElement('div');
+        div.className = 'testidos-card';
+        div.id = `les-${testigosCount}`;
+        div.innerHTML = `
+            <h4>Testigos ${testigosCount}</h4>
+            <div class="field-row">
+                <input type="text" placeholder="Nombre completo">
+                <input type="number" placeholder="DNI">
+            </div>
+            <div class="field-row" style="margin-top:5px;">
+                <input type="text" placeholder="Domicilio">
+                <input type="tel" placeholder="Teléfono">
+            </div>
+        `;
+        contenedor.appendChild(div);
+    } else if (testigosCount > 0) {
+        document.getElementById(`les-${testigosCount}`).remove();
+        testigosCount--;
+    }
+    displayCount.innerText = testigosCount;
 }
 
 function enviarWhatsApp() {
