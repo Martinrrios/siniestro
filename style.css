@@ -177,7 +177,7 @@ h3 {
     background: #dee2e6;
 }
 
-.lesionado-card {
+.lesionado-card , .testigo-card{
     background: #f8f9fa;
     padding: 15px;
     border-radius: 8px;

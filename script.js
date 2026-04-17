@@ -1,5 +1,6 @@
 let map, marker;
 let lesionadosCount = 0;
+let testigosCount = 0;
 
 // Diccionario de coordenadas fijas (debe coincidir con recorridos.js)
 const COORDENADAS_FIJAS = {
@@ -147,6 +148,61 @@ function cambiarLesionados(delta) {
         lesionadosCount--;
     }
     displayCount.innerText = lesionadosCount;
+}
+
+function cambiarTestigos(delta) {
+    // Usamos nombres de constantes específicos para esta función
+    const contenedorTes = document.getElementById('testigos-lista');
+    const displayTes = document.getElementById('cant-testigos');
+
+    if (delta > 0) {
+        testigosCount++;
+        
+        const divTes = document.createElement('div');
+        divTes.className = 'testigo-card'; // Clase separada para CSS
+        divTes.id = `tes-${testigosCount}`;
+
+        const h4 = document.createElement('h4');
+        h4.textContent = `Testigo ${testigosCount}`;
+        divTes.appendChild(h4);
+
+        // Fila 1
+        const row1 = document.createElement('div');
+        row1.className = 'field-row';
+        const inNombre = document.createElement('input');
+        inNombre.type = 'text';
+        inNombre.placeholder = 'Nombre completo';
+        const inDni = document.createElement('input');
+        inDni.type = 'number';
+        inDni.placeholder = 'DNI';
+        row1.appendChild(inNombre);
+        row1.appendChild(inDni);
+        divTes.appendChild(row1);
+
+        // Fila 2
+        const row2 = document.createElement('div');
+        row2.className = 'field-row';
+        row2.style.marginTop = '5px';
+        const inDom = document.createElement('input');
+        inDom.type = 'text';
+        inDom.placeholder = 'Domicilio';
+        const inTel = document.createElement('input');
+        inTel.type = 'tel';
+        inTel.placeholder = 'Teléfono';
+        row2.appendChild(inDom);
+        row2.appendChild(inTel);
+        divTes.appendChild(row2);
+
+        contenedorTes.appendChild(divTes);
+    } else if (testigosCount > 0) {
+        const el = document.getElementById(`tes-${testigosCount}`);
+        if (el) el.remove();
+        testigosCount--;
+    }
+
+    if (displayTes) {
+        displayTes.innerText = testigosCount;
+    }
 }
 
 function enviarWhatsApp() {
