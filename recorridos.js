@@ -518,11 +518,13 @@ const DB_RECORRIDOS = {
 "G200": {
         
         "recorridos": {
+ 	    "FUERA-DE-SERVICIO": [
+             ],
 	    "CONTROL-CORRALITOS": [
             ],
             "QUEDE-TERMINAL": [
             ],
-	"CONTROL-RODEO": [
+	    "CONTROL-RODEO": [
             ],
 	    
 	    "1208": [
