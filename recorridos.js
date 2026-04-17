@@ -3,20 +3,21 @@ const DB_RECORRIDOS = {
         
     "recorridos": {
 
-    
+    "FUERA-DE-SERVICIO": [
+    ],
     "CONTROL-SAN-MARTIN-Y-5-ABRIL": [
     ],
-"CONTROL-TROPERO-Y-5-ABRIL": [
+    "CONTROL-TROPERO-Y-5-ABRIL": [
     ],
-"QUEDA-B-AMUPE": [
+    "QUEDA-B-AMUPE": [
     ],
-"QUEDA-EST.GUTIERREZ": [
+    "QUEDA-EST.GUTIERREZ": [
     ],
-"CONTROL-RODEO": [
+    "CONTROL-RODEO": [
     ],
-"QUEDA-RECOARO": [
+    "QUEDA-RECOARO": [
     ],
-"QUEDA-B-C.SOÑADA": [
+    "QUEDA-B-C.SOÑADA": [
     ],
     "1873": [
         "1;ESTACION GUTIERREZ; >IDA",
