@@ -48,6 +48,11 @@ hr {
     margin-bottom: 20px;
 }
 
+.section-map {
+    margin-bottom: 20px;
+    padding: 25px;
+}
+
 .field-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
