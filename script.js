@@ -319,3 +319,28 @@ document.addEventListener('DOMContentLoaded', () => {
     initMap();
     document.getElementById('siniestro-fecha').valueAsDate = new Date();
 });
+
+function verificarClave() {
+    const claveIngresada = document.getElementById('clave-input').value;
+    const pantalla = document.getElementById('bloqueo-pantalla');
+    const errorMsg = document.getElementById('error-msg');
+    
+    // Aquí defines tu clave
+    const claveCorrecta = "1234"; 
+
+    if (claveIngresada === claveCorrecta) {
+        pantalla.style.display = 'none'; // Oculta el bloqueo
+        // Opcional: Guardar en la sesión para que no pida clave todo el tiempo
+        sessionStorage.setItem('autorizado', 'true');
+    } else {
+        errorMsg.style.display = 'block'; // Muestra error
+        document.getElementById('clave-input').value = ""; // Limpia el input
+    }
+}
+
+// Al cargar la página, revisar si ya estaba autorizado
+window.onload = function() {
+    if (sessionStorage.getItem('autorizado') === 'true') {
+        document.getElementById('bloqueo-pantalla').style.display = 'none';
+    }
+}
