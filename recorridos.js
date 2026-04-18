@@ -265,7 +265,7 @@ const DB_RECORRIDOS = {
     "823": [
 	"8-AMUPE (P. Moreno y Saavedra); >IDA",
         "8-B° T. SOSA; >IDA",
-        "8-MAIPU (PERON);  >IDA
+        "8-MAIPU (PERON);  >IDA",
         "8-B° CANCILLER; >IDA",
         "8-MAZA Y J.B. JUSTO; >IDA",
         "8-MAZA Y SARMIENTO; >IDA",
@@ -280,7 +280,7 @@ const DB_RECORRIDOS = {
         "8-B° CANCILLER; >VUELTA",
         "8-MAIPU (HOSPITAL); >VUELTA",
         "8-B° T. SOSA; >VUELTA",
-        "8-AMUPE (P. Moreno y Saavedra); >VUELTA",
+        "8-AMUPE (P. Moreno y Saavedra); >VUELTA"
     ],
     "824": [
         "8-AMUPE (P. Moreno y Saavedra); >IDA",
@@ -302,7 +302,7 @@ const DB_RECORRIDOS = {
         "8-B° CANCILLER; >VUELTA",
         "8-MAIPU (HOSPITAL); >VUELTA",
         "8-B° T. SOSA; >VUELTA",
-        "8-AMUPE (P. Moreno y Saavedra); >VUELTA",
+        "8-AMUPE (P. Moreno y Saavedra); >VUELTA"
     ],
     "825": [
 	   "8-CONTROL  MAIPU; >IDA",
@@ -315,15 +315,16 @@ const DB_RECORRIDOS = {
            "8-VARIANTE Y SARMIENTO; >VUELTA",
            "8-VARIANTE (PTE HIERRO); >VUELTA",
            "8-OZAMIS Y CORREA; >VUELTA",
-           "8-CONTROL  MAIPU; >VUELTA",
+           "8-CONTROL  MAIPU; >VUELTA"
     ],
     "830": [
-           "8-OZAMIS Y CORREA; >VUELTA",
-           "8-OZAMIS Y 60 GRANADEROS; >VUELTA",
-           "8-RUSSELL; >VUELTA",
-           "8-CRUZ DE PIEDRA; >VUELTA",
-           "8-RECOARO; >VUELTA",
-           "8-LUNLUNTA; >VUELTA",
+           "8-ESTACION GUTIERREZ.; >IDA",
+           "8-OZAMIS Y CORREA; >IDA",
+           "8-OZAMIS Y 60 GRANADEROS; >IDA",
+           "8-RUSSELL; >IDA",
+           "8-CRUZ DE PIEDRA; >IDA",
+           "8-RECOARO; >IDA",
+           "8-LUNLUNTA; >IDA",
            "8-SAENZ PEÑA Y GUIÑAZU; >VUELTA",
            "8-MUSEO DE FADER; >VUELTA",
            "8-RUSSELL; >VUELTA",
@@ -333,7 +334,7 @@ const DB_RECORRIDOS = {
            "8-CANAL PESCARA; >VUELTA",
            "8-BELGRANO Y ACCESO ESTE; >VUELTA",
            "8-R. PEÑA Y URQUIZA; >VUELTA",
-           "8-ESTACION GUTIERREZ.; >VUELTA",
+           "8-CONTROL RODEO; >VUELTA"
     ],
     "840": [
            "8-CONTROL RODEO; >IDA",
@@ -351,8 +352,7 @@ const DB_RECORRIDOS = {
            "8-CRUZ DE PIEDRA; >VUELTA",
            "8-RUSSELL; >VUELTA",
            "8-MAIPU (PERON); >VUELTA",
-           "8-P. VAZQUEZ Y CORREA; >VUELTA",
-           "8-CONTROL RODEO; >VUELTA",
+           "8-P. VAZQUEZ Y CORREA; >VUELTA"
     ],
     "850": [
            "8-CONTROL  MAIPU; >IDA",
@@ -373,7 +373,7 @@ const DB_RECORRIDOS = {
            "8-ORTEGA; >VUELTA",
            "8-GOMEZ Y CANAL PESCARA; >VUELTA",
            "8-OZAMIS Y CORREA; >VUELTA",
-           "8-CONTROL  MAIPU; >VUELTA",
+           "8-CONTROL  MAIPU; >VUELTA"
     ],
     "852": [
            "8-ESTACION GUTIERREZ; >IDA",
@@ -389,7 +389,7 @@ const DB_RECORRIDOS = {
            "8-URQUIZA Y R60; >VUELTA",
            "8-T. SOSA Y URQUIZA; >VUELTA",
            "8-MAIPU (PERON); >VUELTA",
-           "8-ESTACION GUTIERREZ; >VUELTA",
+           "8-ESTACION GUTIERREZ; >VUELTA"
     ],
     "853": [
            "8-CONTROL  MAIPU; >IDA",
@@ -405,7 +405,7 @@ const DB_RECORRIDOS = {
            "8-VARIANTE (PTE HIERRO); >VUELTA",
            "8-MAIPU (MUNICIPALIDAD); >VUELTA",
            "8-B° T. SOSA; >VUELTA",
-           "8-CONTROL  MAIPU; >VUELTA",
+           "8-CONTROL  MAIPU; >VUELTA"
     ],
     "854": [
            "8-CONTROL  MAIPU; >IDA",
@@ -421,7 +421,7 @@ const DB_RECORRIDOS = {
            "8-P.MORENO Y PUEYRREDON; >VUELTA",
            "8-URQUIZA Y P.MORENO; >VUELTA",
            "8-TROPERO Y G.CRUZ; >VUELTA",
-           "8-CONTROL  MAIPU; >VUELTA",
+           "8-CONTROL  MAIPU; >VUELTA"
     ],
     "855": [
            "8-CONTROL  MAIPU; >IDA",
@@ -437,7 +437,7 @@ const DB_RECORRIDOS = {
            "8-P.MORENO Y PUEYRREDON; >VUELTA",
            "8-URQUIZA Y P.MORENO; >VUELTA",
            "8-TROPERO Y G.CRUZ; >VUELTA",
-           "8-CONTROL  MAIPU; >VUELTA",
+           "8-CONTROL  MAIPU; >VUELTA"
     ],
     "856": [
            "8-CONTROL  MAIPU; >IDA",
@@ -459,10 +459,10 @@ const DB_RECORRIDOS = {
            "8-ESC. JOSE ALVAREZ; >VUELTA",
            "8-URQUIZA Y R60; >VUELTA",
            "8-T. SOSA Y URQUIZA; >VUELTA",
-           "8-CONTROL  MAIPU; >VUELTA",
+           "8-CONTROL  MAIPU; >VUELTA"
     ],
     "857": [
-            "8-ESTACION GUTIERREZ; >IDA",
+           "8-ESTACION GUTIERREZ; >IDA",
            "8-OZAMIS Y 60 GRANADEROS; >IDA",
            "8-T. SOSA Y URQUIZA; >IDA",
            "8-URQUIZA Y R60; >IDA",
@@ -476,7 +476,7 @@ const DB_RECORRIDOS = {
            "8-URQUIZA Y R60; >VUELTA",
            "8-T. SOSA Y URQUIZA; >VUELTA",
            "8-MAIPU (PERON); >VUELTA",
-           "8-ESTACION GUTIERREZ; >VUELTA",
+           "8-ESTACION GUTIERREZ; >VUELTA"
     ],
     "860": [
            "8-ESTACION GUTIERREZ; >IDA",
@@ -490,7 +490,7 @@ const DB_RECORRIDOS = {
            "8-RUSSELL; >VUELTA",
            //"8-MAIPU (MUNICIPALIDAD); >VUELTA", SE QUITA ESTA ESTAPA PORQUE ES DE CONTROL
            "8-MAIPU (PERON); >VUELTA",
-           "8-ESTACION GUTIERREZ; >VUELTA",
+           "8-ESTACION GUTIERREZ; >VUELTA"
     ],
     "861": [
         "8-ESTACION GUTIERREZ; >IDA",
@@ -573,7 +573,7 @@ const DB_RECORRIDOS = {
            "8-RUSSELL; >VUELTA",
            "8-CRUZ DE PIEDRA (C.VIDELA Y OZAMIS); >VUELTA",
            "8-TRES ESQUINAS (V.ARANDA); >VUELTA",
-           "8-AMUPE (P. Moreno y Saavedra); >VUELTA",
+           "8-AMUPE (P. Moreno y Saavedra); >VUELTA"
     ],
     "867": [
         "8-TRES ESQUINAS (ESC. CRUZ DE PIEDRA); >IDA",
@@ -603,7 +603,7 @@ const DB_RECORRIDOS = {
            "8-CRUZ DE PIEDRA; >VUELTA",
            "8-RUSSELL; >VUELTA",
            "8-MAIPU (MUNICIPALIDAD); >VUELTA",
-           "8-CONTROL  MAIPU; >VUELTA",
+           "8-CONTROL  MAIPU; >VUELTA"
     ],
     "869": [
            "8-CONTROL  MAIPU; >IDA",
@@ -612,7 +612,7 @@ const DB_RECORRIDOS = {
            "8-SUTE; >VUELTA",
            "8-T. SOSA Y URQUIZA; >VUELTA",
            "8-MAIPU (MUNICIPALIDAD); >VUELTA",
-           "8-CONTROL  MAIPU; >VUELTA",
+           "8-CONTROL  MAIPU; >VUELTA"
     ],
     "870": [
         "8-CONTROL MAIPU; >IDA",
@@ -718,7 +718,7 @@ const DB_RECORRIDOS = {
            "8-Bº MALCAYAES; >IDA",
            "8-CELINA ALVAREZ; >VUELTA",
            "8-MAIPU (ESC.OZAMIS); >VUELTA",
-           "8-CONTROL  MAIPU; >VUELTA",
+           "8-CONTROL  MAIPU; >VUELTA"
     ],
     "891": [
            "8-CONTROL  MAIPU; >IDA",
@@ -728,7 +728,7 @@ const DB_RECORRIDOS = {
            "8-Bº MALCAYAES; >VUELTA",
            "8-ESC. AGUIRRE; >VUELTA",
            "8-CELINA ALVAREZ; >VUELTA",
-           "8-CONTROL  MAIPU; >VUELTA",
+           "8-CONTROL  MAIPU; >VUELTA"
     ],
     "892": [
            "8-CONTROL  MAIPU; >IDA",
@@ -737,7 +737,7 @@ const DB_RECORRIDOS = {
            "8-ESC. AGUIRRE; >VUELTA",
            "8-MAITEN; >VUELTA",
            "8-Bº MALCAYAES; >VUELTA",
-           "8-CONTROL  MAIPU; >VUELTA",
+           "8-CONTROL  MAIPU; >VUELTA"
     ],
     "893": [
            "8-CONTROL  MAIPU; >IDA",
@@ -747,7 +747,7 @@ const DB_RECORRIDOS = {
            "8-R. PEÑA Y URQUIZA; >VUELTA",
            "8-MAZA Y SARMIENTO; >VUELTA",
            "8-OZAMIS Y CORREA; >VUELTA",
-           "8-CONTROL  MAIPU; >VUELTA",
+           "8-CONTROL  MAIPU; >VUELTA"
     ],
     "896": [
         "8-AMUPE (P. Y URQUIZA); >IDA",
