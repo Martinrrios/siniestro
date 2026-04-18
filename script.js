@@ -318,7 +318,7 @@ function verificarClave() {
     const errorMsg = document.getElementById('error-msg');
     
     // Aquí defines tu clave
-    const claveCorrecta = "1234"; 
+    const claveCorrecta = "4321"; 
 
     if (claveIngresada === claveCorrecta) {
         pantalla.style.display = 'none'; // Oculta el bloqueo
