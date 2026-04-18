@@ -32,8 +32,8 @@ header h2 {
 }
 
 header p {
-    color: #666;
-    font-size: 0.9rem;
+    color: #296b28;
+    font-size: 1rem;
     margin-top: 5px;
 }
 
@@ -70,7 +70,7 @@ label {
 
 input, select, textarea {
     padding: 10px;
-    border: 1px solid #937777;
+    border: 1px solid #36ad20;
     border-radius: 6px;
     font-size: 1rem;
     outline: none;
