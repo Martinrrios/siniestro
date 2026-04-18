@@ -263,7 +263,7 @@ const DB_RECORRIDOS = {
         "8-CONTROL MAIPU; >VUELTA"
     ],
     "823": [
-	8-AMUPE (P. Moreno y Saavedra); >IDA",
+	"8-AMUPE (P. Moreno y Saavedra); >IDA",
         "8-B° T. SOSA; >IDA",
         "8-MAIPU (PERON);  >IDA
         "8-B° CANCILLER; >IDA",
