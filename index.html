@@ -9,6 +9,14 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+<div id="bloqueo-pantalla" style="position:fixed; top:0; left:0; width:100%; height:100%; background:white; z-index:9999; display:flex; flex-direction:column; align-items:center; justify-content:center;">
+    <h2>Acceso Restringido</h2>
+    <p>Ingresa la clave para continuar</p>
+    <input type="password" id="clave-input" placeholder="Contraseña" style="padding:10px; margin-bottom:10px; border-radius:5px; border:1px solid #ccc;">
+    <button onclick="verificarClave()" style="padding:10px 20px; background:#007bff; color:white; border:none; border-radius:5px; cursor:pointer;">Entrar</button>
+    <p id="error-msg" style="color:red; display:none; margin-top:10px;">Clave incorrecta</p>
+</div>
+
 
 <div class="form-card" id="form-to-print">
     <header>
@@ -152,4 +160,5 @@
 <script src="recorridos.js"></script>
 <script src="script.js"></script>
 </body>
+
 </html>
