@@ -1,7 +1,7 @@
 /* --- CONFIGURACIÓN GENERAL --- */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f0f2f5;
+    background-color: #9ee5f5;
     display: flex;
     justify-content: center;
     padding: 20px;
@@ -27,7 +27,7 @@ header {
 
 header h2 {
     margin: 0;
-    color: #2c3e50;
+    color: #1d80e3;
     font-size: 1.8rem;
 }
 
@@ -109,7 +109,7 @@ input:disabled, select:disabled {
 
 /* --- CHECKBOX ZONA RURAL --- */
 .checkbox-container {
-    background: #fff3cd; /* Fondo amarillento */
+    background: #efff6d; /* Fondo amarillento */
     padding: 12px;
     border-radius: 8px;
     margin-bottom: 10px;
@@ -124,7 +124,7 @@ input:disabled, select:disabled {
 .checkbox-container label {
     margin-bottom: 0;
     cursor: pointer;
-    color: #856404;
+    color: #12552a;
     display: flex;
     align-items: center;
     gap: 8px;
