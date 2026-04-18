@@ -312,14 +312,6 @@ function enviarWhatsApp() {
     window.open(url, '_blank');
 }
 
-
-
-
-document.addEventListener('DOMContentLoaded', () => {
-    initMap();
-    document.getElementById('siniestro-fecha').valueAsDate = new Date();
-});
-
 function verificarClave() {
     const claveIngresada = document.getElementById('clave-input').value;
     const pantalla = document.getElementById('bloqueo-pantalla');
@@ -344,3 +336,10 @@ window.onload = function() {
         document.getElementById('bloqueo-pantalla').style.display = 'none';
     }
 }
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    initMap();
+    document.getElementById('siniestro-fecha').valueAsDate = new Date();
+});
+
