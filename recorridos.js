@@ -352,7 +352,8 @@ const DB_RECORRIDOS = {
            "8-CRUZ DE PIEDRA; >VUELTA",
            "8-RUSSELL; >VUELTA",
            "8-MAIPU (PERON); >VUELTA",
-           "8-P. VAZQUEZ Y CORREA; >VUELTA"
+           "8-P. VAZQUEZ Y CORREA; >VUELTA",
+	   "8-ESTACION GUTIERREZ.; >VUELTA"
     ],
     "850": [
            "8-CONTROL  MAIPU; >IDA",
