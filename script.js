@@ -286,7 +286,7 @@ function enviarWhatsApp() {
 
     mensaje += `*LESIONADOS (${lesionadosCount}):*${infoLesionados}\n\n`;
 
-    mensaje += `*TESTIGOS (${testigosCount}):*${infoTestigos}\n\n`;
+    mensaje += `*TESTIGOS (${testigosCount}):*${infotestigos}\n\n`;
 
     mensaje += `*RELATO:* ${relato}\n\n`;
     
