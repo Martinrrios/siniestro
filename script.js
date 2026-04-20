@@ -211,43 +211,23 @@ function abrirSelector() {
     const container = document.getElementById('map-selector-container');
     container.style.display = 'block';
 
-    // Inicializamos el mapa si no existe
+    // Si el mapa no ha sido creado, lo creamos
     if (!selectorMap) {
-        selectorMap = L.map('map-selector').setView([-34.6, -58.4], 13); // Ajusta a tu zona
+        selectorMap = L.map('map-selector').setView([-34.6, -58.4], 13);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(selectorMap);
-
-        // Evento al hacer clic en el mapa selector
+        
         selectorMap.on('click', function(e) {
-            const latlng = e.latlng;
-            console.log("Punto capturado:", latlng);
-            
-            // 1. Aquí guardas los datos o mueves el marcador en tu mapa principal
-            procesarPuntoSeleccionado(latlng);
-            
-            // 2. Cerramos el selector
+            procesarPuntoSeleccionado(e.latlng);
             cerrarSelector();
         });
     }
-    
-    // Forzamos a Leaflet a recalcular el tamaño del contenedor
-    setTimeout(() => selectorMap.invalidateSize(), 100);
-}
 
-function cerrarSelector() {
-    document.getElementById('map-selector-container').style.display = 'none';
+    // ¡ESTA ES LA LÍNEA MÁGICA!
+    // Le dice al mapa: "Oye, tu contenedor ya es visible, vuelve a medirte".
+    setTimeout(() => {
+        selectorMap.invalidateSize();
+    }, 10); 
 }
-
-function procesarPuntoSeleccionado(coords) {
-    // Aquí actualizas tu lógica principal, por ejemplo:
-    // alert("Seleccionaste: " + coords.lat + ", " + coords.lng);
-}
-
-// Escuchar el zoom en tu mapa original
-map.on('zoomend', function() {
-    if (map.getZoom() > 17) {
-        abrirSelector();
-    }
-});
 
 function enviarWhatsApp() {
     // 1. Datos del Personal y Unidad
