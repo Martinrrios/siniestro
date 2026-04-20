@@ -264,7 +264,7 @@ function enviarWhatsApp() {
             infotestigos += `\n   - *Testigo ${index + 1}:* ${inputs[0].value || 'S/D'}, DNI: ${inputs[1].value || 'S/D'}, Dom: ${inputs[2].value || 'S/D'}, Tel: ${inputs[3].value || 'S/D'}`;
         });
     } else {
-        infotestigos = " Sin lesionados.";
+        infotestigos = " Sin testigos.";
     }
 
 
