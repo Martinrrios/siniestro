@@ -1,4 +1,6 @@
 let map, marker;
+let selectorMap; // Variable para el mapa secundario
+let selectorLayer; // Para mostrar el punto seleccionado
 let lesionadosCount = 0;
 let testigosCount = 0;
 
@@ -204,6 +206,48 @@ function cambiarTestigos(delta) {
         displayTes.innerText = testigosCount;
     }
 }
+
+function abrirSelector() {
+    const container = document.getElementById('map-selector-container');
+    container.style.display = 'block';
+
+    // Inicializamos el mapa si no existe
+    if (!selectorMap) {
+        selectorMap = L.map('map-selector').setView([-34.6, -58.4], 13); // Ajusta a tu zona
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(selectorMap);
+
+        // Evento al hacer clic en el mapa selector
+        selectorMap.on('click', function(e) {
+            const latlng = e.latlng;
+            console.log("Punto capturado:", latlng);
+            
+            // 1. Aquí guardas los datos o mueves el marcador en tu mapa principal
+            procesarPuntoSeleccionado(latlng);
+            
+            // 2. Cerramos el selector
+            cerrarSelector();
+        });
+    }
+    
+    // Forzamos a Leaflet a recalcular el tamaño del contenedor
+    setTimeout(() => selectorMap.invalidateSize(), 100);
+}
+
+function cerrarSelector() {
+    document.getElementById('map-selector-container').style.display = 'none';
+}
+
+function procesarPuntoSeleccionado(coords) {
+    // Aquí actualizas tu lógica principal, por ejemplo:
+    // alert("Seleccionaste: " + coords.lat + ", " + coords.lng);
+}
+
+// Escuchar el zoom en tu mapa original
+map.on('zoomend', function() {
+    if (map.getZoom() > 17) {
+        abrirSelector();
+    }
+});
 
 function enviarWhatsApp() {
     // 1. Datos del Personal y Unidad
