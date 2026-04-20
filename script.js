@@ -1,4 +1,6 @@
 let map, marker;
+let selectorMap; // Variable para el mapa secundario
+let selectorLayer; // Para mostrar el punto seleccionado
 let lesionadosCount = 0;
 let testigosCount = 0;
 
@@ -204,6 +206,8 @@ function cambiarTestigos(delta) {
         displayTes.innerText = testigosCount;
     }
 }
+
+
 
 function enviarWhatsApp() {
     // 1. Datos del Personal y Unidad
