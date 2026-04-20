@@ -1,6 +1,4 @@
 let map, marker;
-let selectorMap; // Variable para el mapa secundario
-let selectorLayer; // Para mostrar el punto seleccionado
 let lesionadosCount = 0;
 let testigosCount = 0;
 
@@ -205,28 +203,6 @@ function cambiarTestigos(delta) {
     if (displayTes) {
         displayTes.innerText = testigosCount;
     }
-}
-
-function abrirSelector() {
-    const container = document.getElementById('map-selector-container');
-    container.style.display = 'block';
-
-    // Si el mapa no ha sido creado, lo creamos
-    if (!selectorMap) {
-        selectorMap = L.map('map-selector').setView([-34.6, -58.4], 13);
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(selectorMap);
-        
-        selectorMap.on('click', function(e) {
-            procesarPuntoSeleccionado(e.latlng);
-            cerrarSelector();
-        });
-    }
-
-    // ¡ESTA ES LA LÍNEA MÁGICA!
-    // Le dice al mapa: "Oye, tu contenedor ya es visible, vuelve a medirte".
-    setTimeout(() => {
-        selectorMap.invalidateSize();
-    }, 10); 
 }
 
 function enviarWhatsApp() {

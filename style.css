@@ -15,9 +15,9 @@ body {
     background: #efeeee;
     width: 100%;
     max-width: 850px;
-    padding: 25px;
+    padding: 10px;
     border-radius: 5px;
-    box-shadow: 0 9px 20px rgb(0 0 0 / 79%);
+    box-shadow: 0 9px 20px rgb(0 0 0 / 50%);
 }
 
 header {
