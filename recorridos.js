@@ -6,7 +6,6 @@ const DB_RECORRIDOS = {
     "FUERA-DE-SERVICIO": [
     ],
     "CONTROL-SAN-MARTIN-Y-5-ABRIL": [
-	"CONTROL-SAN-MARTIN-Y-5-ABRIL"
     ],
     "CONTROL-TROPERO-Y-5-ABRIL": [
     ],
