@@ -302,7 +302,7 @@ function enviarWhatsApp() {
 
     // Validamos según lo seleccionado en el id 'grupo-select'
     if (grupo === "G200") {
-        nroTelefono = "5492612013938"; // Reemplaza con el número para el Grupo 200
+        nroTelefono = "5492612039225"; // Reemplaza con el número para el Grupo 200
     } else if (grupo === "G800") {
         nroTelefono = "5492612013938"; // Reemplaza con el número para el Grupo 800
     } else {
@@ -322,7 +322,7 @@ function verificarClave() {
     const errorMsg = document.getElementById('error-msg');
     
     // Aquí defines tu clave
-    const claveCorrecta = "M789"; 
+    const claveCorrecta = "m789"; 
 
     if (claveIngresada === claveCorrecta) {
         pantalla.style.display = 'none'; // Oculta el bloqueo
