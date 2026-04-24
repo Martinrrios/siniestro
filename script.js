@@ -341,30 +341,6 @@ window.onload = function() {
     }
 }
 
-document.querySelector('form').addEventListener('submit'), function(event) {
-  // Obtenemos todos los inputs y selects del formulario
-  const inputs = this.querySelectorAll('input, select, textarea');
-  let estaCompleto = true;
-
-  inputs.forEach(input => {
-    // Verificamos si el valor está vacío o solo tiene espacios
-    if (!input.value.trim()) {
-      estaCompleto = false;
-      input.style.borderColor = "red"; // Opcional: resaltar el error
-    } else {
-      input.style.borderColor = ""; // Limpiar si ya se completó
-    }
-  });
-
-  if (!estaCompleto) {
-    // Detenemos el envío del formulario
-    event.preventDefault();
-    
-    // Mostramos el mensaje solicitado
-    alert("Por favor debe completar todos los datos, no dejar celdas vacías, si no tiene algún dato escriba en la celda sin datos");
-  }
-});
-
 
 document.addEventListener('DOMContentLoaded', () => {
     initMap();
