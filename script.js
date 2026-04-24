@@ -341,7 +341,7 @@ window.onload = function() {
     }
 }
 
-document.querySelector('form').addEventListener('submit', function(event) {
+document.querySelector('form').addEventListener('submit'), function(event) {
   // Obtenemos todos los inputs y selects del formulario
   const inputs = this.querySelectorAll('input, select, textarea');
   let estaCompleto = true;
