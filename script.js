@@ -319,8 +319,9 @@ async function enviarWhatsApp() {
     // Envío final
     const url = `https://wa.me/${nroTelefono}?text=${encodeURIComponent(mensaje)}`;
     window.open(url, '_blank');
+
 // --- ENVÍO A GOOGLE SHEETS (Versión Optimizada) ---
-const urlPlanilla = "https://script.google.com/macros/s/AKfycbx5kjxKBcWARmd371q8401o1f26zaVi9mFfQcyAhhXM-07RWnQErrM4l5QMTvZx5Td4/exec";
+const urlPlanilla = "https://script.google.com/macros/s/AKfycbybY5jUeetJ5Fi2nNvoXCps_i5lrBszRSUTjC1P05js5ReNtqkaLd3JJHYsWFsfhCez/exec";
 
 // Usamos URLSearchParams para que los datos viajen como campos de formulario
 const formData = new URLSearchParams();
@@ -329,15 +330,12 @@ formData.append('hora', hora);
 formData.append('chofer', nombre);
 formData.append('legajo', legajo);
 formData.append('unidad', unidad);
-formData.append('patente', patente);
 formData.append('grupo', grupo);
 formData.append('linea', linea);
-formData.append('lat', lat);
-formData.append('lng', lng);
+formData.append('lugar', ${direccionManual};${ramal};${lat}, ${lng}\n`);
 formData.append('tercero', `${tNombre} (DNI: ${tDni}, Tel: ${tTel}, Vehículo: ${tMarca} ${tModelo})`);
 formData.append('lesionados', infoLesionados);
 formData.append('testigos', infotestigos);
-formData.append('relato', relato);
 
 try {
     await fetch(urlPlanilla, {
