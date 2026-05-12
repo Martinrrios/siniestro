@@ -267,6 +267,36 @@ function enviarWhatsApp() {
         infotestigos = " Sin testigos.";
     }
 
+// --- NUEVO: ENVÍO A GOOGLE SHEETS ---
+    const urlPlanilla = "https://script.google.com/macros/s/AKfycbx1g7yqChQFZ6Y9UzZ0iUONxjoiZ1-vGziUNva5Nnt5v-o8g0GOBjLefQ43OPDsOorr/exec"; // REEMPLAZA ESTO
+    const datosParaSheet = {
+        fecha: fecha,
+        hora: hora,
+        chofer: nombre,
+        legajo: legajo,
+        unidad: unidad,
+        patente: patente,
+        grupo: grupo,
+        linea: linea,
+        lat: lat,
+        lng: lng,
+        tercero: `${tNombre} (DNI: ${tDni}, Tel: ${tTel}, Vehículo: ${tMarca} ${tModelo})`,
+        lesionados: infoLesionados,
+        testigos: infotestigos,
+        relato: relato
+    };
+
+    try {
+        await fetch(urlPlanilla, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(datosParaSheet)
+        });
+    } catch (e) {
+        console.error("Error al guardar en Sheet", e);
+    }
+    // ---------------------------------------
 
     // CONSTRUCCIÓN DEL MENSAJE
     let mensaje = `*⚠️ INFORME DE SINIESTRO*\n`;
@@ -336,36 +366,7 @@ function verificarClave() {
     }
 }
 
-// --- NUEVO: ENVÍO A GOOGLE SHEETS ---
-    const urlPlanilla = "https://docs.google.com/spreadsheets/d/188trHliU7Wni9nNUTW06i5YQ608SULsUDQ4H6Zahv88/edit?gid=0#gid=0"; // REEMPLAZA ESTO
-    const datosParaSheet = {
-        fecha: fecha,
-        hora: hora,
-        chofer: nombre,
-        legajo: legajo,
-        unidad: unidad,
-        patente: patente,
-        grupo: grupo,
-        linea: linea,
-        lat: lat,
-        lng: lng,
-        tercero: `${tNombre} (DNI: ${tDni}, Tel: ${tTel}, Vehículo: ${tMarca} ${tModelo})`,
-        lesionados: infoLesionados,
-        testigos: infotestigos,
-        relato: relato
-    };
 
-    try {
-        await fetch(urlPlanilla, {
-            method: 'POST',
-            mode: 'no-cors',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(datosParaSheet)
-        });
-    } catch (e) {
-        console.error("Error al guardar en Sheet", e);
-    }
-    // ---------------------------------------
 
 // Al cargar la página, revisar si ya estaba autorizado
 window.onload = function() {
