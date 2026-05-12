@@ -320,7 +320,7 @@ async function enviarWhatsApp() {
     const url = `https://wa.me/${nroTelefono}?text=${encodeURIComponent(mensaje)}`;
     window.open(url, '_blank');
 // --- ENVÍO A GOOGLE SHEETS (Versión Optimizada) ---
-const urlPlanilla = "https://script.google.com/macros/s/AKfycbxBXn9qxlTUkcI4WOXlSZ8UUeQWl1_rjipg_hUhJzPDMxBgNadYSOWu1UEFkiq6QpM7/exec";
+const urlPlanilla = "https://script.google.com/macros/s/AKfycbx5kjxKBcWARmd371q8401o1f26zaVi9mFfQcyAhhXM-07RWnQErrM4l5QMTvZx5Td4/exec";
 
 // Usamos URLSearchParams para que los datos viajen como campos de formulario
 const formData = new URLSearchParams();
