@@ -268,7 +268,7 @@ async function enviarWhatsApp() {
     }
 
 // --- NUEVO: ENVÍO A GOOGLE SHEETS ---
-    const urlPlanilla = "https://script.google.com/macros/s/AKfycbx1g7yqChQFZ6Y9UzZ0iUONxjoiZ1-vGziUNva5Nnt5v-o8g0GOBjLefQ43OPDsOorr/exec"; // REEMPLAZA ESTO
+    const urlPlanilla = "https://script.google.com/macros/s/AKfycbzNmcoMY-PASlEZliJR5F-pxyedVRwrO1wNKxrWGz31YO6N_sBi0nWraGtdwG8CYVJP/exec"; // REEMPLAZA ESTO
     const datosParaSheet = {
         fecha: fecha,
         hora: hora,
