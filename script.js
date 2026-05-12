@@ -316,6 +316,37 @@ function enviarWhatsApp() {
     window.open(url, '_blank');
 }
 
+// --- NUEVO: ENVÍO A GOOGLE SHEETS ---
+    const urlPlanilla = "TU_URL_DE_APPS_SCRIPT_AQUI"; // REEMPLAZA ESTO
+    const datosParaSheet = {
+        fecha: fecha,
+        hora: hora,
+        chofer: nombre,
+        legajo: legajo,
+        unidad: unidad,
+        patente: patente,
+        grupo: grupo,
+        linea: linea,
+        lat: lat,
+        lng: lng,
+        tercero: `${tNombre} (DNI: ${tDni}, Tel: ${tTel}, Vehículo: ${tMarca} ${tModelo})`,
+        lesionados: infoLesionados,
+        testigos: infotestigos,
+        relato: relato
+    };
+
+    try {
+        await fetch(urlPlanilla, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(datosParaSheet)
+        });
+    } catch (e) {
+        console.error("Error al guardar en Sheet", e);
+    }
+    // ---------------------------------------
+
 function verificarClave() {
     const claveIngresada = document.getElementById('clave-input').value;
     const pantalla = document.getElementById('bloqueo-pantalla');
