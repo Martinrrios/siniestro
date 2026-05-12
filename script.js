@@ -337,7 +337,7 @@ function verificarClave() {
 }
 
 // --- NUEVO: ENVÍO A GOOGLE SHEETS ---
-    const urlPlanilla = "https://script.google.com/macros/s/AKfycbx1g7yqChQFZ6Y9UzZ0iUONxjoiZ1-vGziUNva5Nnt5v-o8g0GOBjLefQ43OPDsOorr/exec"; // REEMPLAZA ESTO
+    const urlPlanilla = "https://docs.google.com/spreadsheets/d/188trHliU7Wni9nNUTW06i5YQ608SULsUDQ4H6Zahv88/edit?gid=0#gid=0"; // REEMPLAZA ESTO
     const datosParaSheet = {
         fecha: fecha,
         hora: hora,
