@@ -333,7 +333,7 @@ formData.append('unidad', unidad);
 formData.append('grupo', grupo);
 formData.append('linea', linea);
 formData.append('lugar', ${direccionManual};${ramal};${lat}, ${lng}\n`);
-formData.append('tercero', `${tNombre} (DNI: ${tDni}, Tel: ${tTel}, Vehículo: ${tMarca} ${tModelo})`);
+formData.append('tercero', ${tNombre} (DNI: ${tDni}, Tel: ${tTel}, Vehículo: ${tMarca} ${tModelo}));
 formData.append('lesionados', infoLesionados);
 formData.append('testigos', infotestigos);
 
