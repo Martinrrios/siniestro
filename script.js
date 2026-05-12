@@ -298,6 +298,27 @@ async function enviarWhatsApp() {
 
 
 
+
+
+
+    // Envío
+    // LÓGICA DE SELECCIÓN DE TELÉFONO
+    let nroTelefono = "";
+
+    // Validamos según lo seleccionado en el id 'grupo-select'
+    if (grupo === "G200") {
+        nroTelefono = "5492612039225"; // Reemplaza con el número para el Grupo 200
+    } else if (grupo === "G800") {
+        nroTelefono = "5492612013938"; // Reemplaza con el número para el Grupo 800
+    } else {
+        // Opción por defecto o alerta si no hay selección válida
+        alert("Por favor, seleccione un grupo válido para enviar el reporte.");
+        return; 
+    }
+
+    // Envío final
+    const url = `https://wa.me/${nroTelefono}?text=${encodeURIComponent(mensaje)}`;
+    window.open(url, '_blank');
 // --- ENVÍO A GOOGLE SHEETS (Versión Optimizada) ---
 const urlPlanilla = "https://script.google.com/macros/s/AKfycbxBXn9qxlTUkcI4WOXlSZ8UUeQWl1_rjipg_hUhJzPDMxBgNadYSOWu1UEFkiq6QpM7/exec";
 
@@ -333,26 +354,6 @@ try {
 }
 
 // --- ENVÍO A GOOGLE SHEETS (Versión Optimizada) ---
-
-
-    // Envío
-    // LÓGICA DE SELECCIÓN DE TELÉFONO
-    let nroTelefono = "";
-
-    // Validamos según lo seleccionado en el id 'grupo-select'
-    if (grupo === "G200") {
-        nroTelefono = "5492612039225"; // Reemplaza con el número para el Grupo 200
-    } else if (grupo === "G800") {
-        nroTelefono = "5492612013938"; // Reemplaza con el número para el Grupo 800
-    } else {
-        // Opción por defecto o alerta si no hay selección válida
-        alert("Por favor, seleccione un grupo válido para enviar el reporte.");
-        return; 
-    }
-
-    // Envío final
-    const url = `https://wa.me/${nroTelefono}?text=${encodeURIComponent(mensaje)}`;
-    window.open(url, '_blank');
 }
 
 
