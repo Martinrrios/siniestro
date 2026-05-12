@@ -209,7 +209,7 @@ function cambiarTestigos(delta) {
 
 
 
-function enviarWhatsApp() {
+async function enviarWhatsApp() {
     // 1. Datos del Personal y Unidad
     const nombre = document.getElementById('chofer-nombre').value;
     const legajo = document.getElementById('chofer-legajo').value;
