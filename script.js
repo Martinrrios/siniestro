@@ -267,36 +267,6 @@ async function enviarWhatsApp() {
         infotestigos = " Sin testigos.";
     }
 
-// --- NUEVO: ENVÍO A GOOGLE SHEETS ---
-    const urlPlanilla = "https://script.google.com/macros/s/AKfycbzNmcoMY-PASlEZliJR5F-pxyedVRwrO1wNKxrWGz31YO6N_sBi0nWraGtdwG8CYVJP/exec"; // REEMPLAZA ESTO
-    const datosParaSheet = {
-        fecha: fecha,
-        hora: hora,
-        chofer: nombre,
-        legajo: legajo,
-        unidad: unidad,
-        patente: patente,
-        grupo: grupo,
-        linea: linea,
-        lat: lat,
-        lng: lng,
-        tercero: `${tNombre} (DNI: ${tDni}, Tel: ${tTel}, Vehículo: ${tMarca} ${tModelo})`,
-        lesionados: infoLesionados,
-        testigos: infotestigos,
-        relato: relato
-    };
-
-    try {
-        await fetch(urlPlanilla, {
-            method: 'POST',
-            mode: 'no-cors',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(datosParaSheet)
-        });
-    } catch (e) {
-        console.error("Error al guardar en Sheet", e);
-    }
-    // ---------------------------------------
 
     // CONSTRUCCIÓN DEL MENSAJE
     let mensaje = `*⚠️ INFORME DE SINIESTRO*\n`;
@@ -325,6 +295,45 @@ async function enviarWhatsApp() {
     mensaje += `*RELATO:* ${relato}\n\n`;
     
     mensaje += `*MAPA:* https://www.google.com/maps?q=${lat},${lng}`;
+
+
+
+// --- ENVÍO A GOOGLE SHEETS (Versión Optimizada) ---
+const urlPlanilla = "https://script.google.com/macros/s/AKfycbxBXn9qxlTUkcI4WOXlSZ8UUeQWl1_rjipg_hUhJzPDMxBgNadYSOWu1UEFkiq6QpM7/exec";
+
+// Usamos URLSearchParams para que los datos viajen como campos de formulario
+const formData = new URLSearchParams();
+formData.append('fecha', fecha);
+formData.append('hora', hora);
+formData.append('chofer', nombre);
+formData.append('legajo', legajo);
+formData.append('unidad', unidad);
+formData.append('patente', patente);
+formData.append('grupo', grupo);
+formData.append('linea', linea);
+formData.append('lat', lat);
+formData.append('lng', lng);
+formData.append('tercero', `${tNombre} (DNI: ${tDni}, Tel: ${tTel}, Vehículo: ${tMarca} ${tModelo})`);
+formData.append('lesionados', infoLesionados);
+formData.append('testigos', infotestigos);
+formData.append('relato', relato);
+
+try {
+    await fetch(urlPlanilla, {
+        method: 'POST',
+        mode: 'no-cors', 
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: formData.toString()
+    });
+    console.log("Petición enviada a la planilla");
+} catch (e) {
+    console.error("Error al guardar en Sheet", e);
+}
+
+// --- ENVÍO A GOOGLE SHEETS (Versión Optimizada) ---
+
 
     // Envío
     // LÓGICA DE SELECCIÓN DE TELÉFONO
