@@ -248,7 +248,7 @@ async function enviarWhatsApp() {
     if (listaCards.length > 0) {
         listaCards.forEach((card, index) => {
             const inputs = card.querySelectorAll('input');
-            infoLesionados += `\n   - *Lesionado ${index + 1}:* ${inputs[0].value || 'S/D'}, DNI: ${inputs[1].value || 'S/D'}, Dom: ${inputs[2].value || 'S/D'}, Tel: ${inputs[3].value || 'S/D'}`;
+            infoLesionados += `\n   - *Lesionado ${index + 1}:* ${inputs[0].value || 'S/D'}, DNI: ${inputs[1].value || 'S/D'}, Dirección: ${inputs[2].value || 'S/D'}, Tel: ${inputs[3].value || 'S/D'}`;
         });
     } else {
         infoLesionados = " Sin lesionados.";
@@ -261,7 +261,7 @@ async function enviarWhatsApp() {
     if (listatest.length > 0) {
         listatest.forEach((card, index) => {
             const inputs = card.querySelectorAll('input');
-            infotestigos += `\n   - *Testigo ${index + 1}:* ${inputs[0].value || 'S/D'}, DNI: ${inputs[1].value || 'S/D'}, Dom: ${inputs[2].value || 'S/D'}, Tel: ${inputs[3].value || 'S/D'}`;
+            infotestigos += `\n   - *Testigo ${index + 1}:* ${inputs[0].value || 'S/D'}, DNI: ${inputs[1].value || 'S/D'}, Dirección: ${inputs[2].value || 'S/D'}, Tel: ${inputs[3].value || 'S/D'}`;
         });
     } else {
         infotestigos = " Sin testigos.";
@@ -275,18 +275,19 @@ async function enviarWhatsApp() {
     mensaje += `• Legajo: ${legajo}\n`;
     mensaje += `• Unidad: ${unidad}\n`;
     mensaje += `• Patente: ${patente}\n`;
-    mensaje += `• Fecha: ${fecha} Hora: ${hora}hs\n\n`;
+    mensaje += `• Fecha: ${fecha}\n`;
+    mensaje += `• Hora:${hora}hs\n\n`;
 
-    mensaje += `• Grupo: ${grupo} Recorrido: ${linea}\n`;
+    mensaje += `• Grupo: ${grupo}\n`;
+    mensaje += `• Recorrido: ${linea}\n`;
     mensaje += `• Sentido: ${sentido}\n`;
     mensaje += `• Lugar: ${direccionManual};${ramal};${lat}, ${lng}\n`;
-    mensaje += `• Policia/Acta: ${acta}\n\n`;
+    mensaje += `• Policía/Acta: ${acta}\n\n`;
 
     mensaje += `*TERCERO INVOLUCRADO*\n`;
     mensaje += `• Nombre: ${tNombre} DNI: ${tDni}\n`;
-    mensaje += `• Dom: ${tDom} Teléfono: ${tTel}\n`;
-    mensaje += `• Vehículo: ${tMarca} ${tModelo} Patente: ${tDominio}\n`;
-    mensaje += `• Seguro/Póliza: ${tSeguro}\n\n`;
+    mensaje += `• Dirección: ${tDom} Teléfono: ${tTel}\n`;
+    mensaje += `• Vehículo: ${tMarca} ${tModelo} Patente: ${tDominio} Seguro/Póliza: ${tSeguro}\n\n`;
 
     mensaje += `*LESIONADOS (${lesionadosCount}):*${infoLesionados}\n\n`;
 
@@ -336,6 +337,7 @@ formData.append('lugar', `${direccionManual};${ramal};${lat}, ${lng}`);
 formData.append('tercero', `${tNombre} (DNI: ${tDni}, Tel: ${tTel}, Vehículo: ${tMarca} ${tModelo})`);
 formData.append('lesionados', infoLesionados);
 formData.append('testigos', infotestigos);
+formData.append('relato', infotestigos);
 
 try {
     await fetch(urlPlanilla, {
