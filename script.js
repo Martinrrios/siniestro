@@ -269,7 +269,7 @@ async function enviarWhatsApp() {
 
 
     // CONSTRUCCIÓN DEL MENSAJE
-    let mensaje = `*⚠️ INFORME DE SINIESTRO*\n`;
+    let mensaje = `⚠️ INFORME DE SINIESTRO\n`;
     mensaje += `------------------------------------------\n`;
     mensaje += `• Chofer: ${nombre}\n`;
     mensaje += `• Legajo: ${legajo}\n`;
@@ -284,18 +284,18 @@ async function enviarWhatsApp() {
     mensaje += `• Lugar: ${direccionManual};${ramal};${lat}, ${lng}\n`;
     mensaje += `• Policía/Acta: ${acta}\n\n`;
 
-    mensaje += `*TERCERO INVOLUCRADO*\n`;
+    mensaje += `TERCERO INVOLUCRADO\n`;
     mensaje += `• Nombre: ${tNombre} DNI: ${tDni}\n`;
     mensaje += `• Dirección: ${tDom} Teléfono: ${tTel}\n`;
     mensaje += `• Vehículo: ${tMarca} ${tModelo} Patente: ${tDominio} Seguro/Póliza: ${tSeguro}\n\n`;
 
-    mensaje += `*LESIONADOS (${lesionadosCount}):*${infoLesionados}\n\n`;
+    mensaje += `LESIONADOS (${lesionadosCount}):${infoLesionados}\n\n`;
 
-    mensaje += `*TESTIGOS (${testigosCount}):*${infotestigos}\n\n`;
+    mensaje += `TESTIGOS (${testigosCount}):${infotestigos}\n\n`;
 
-    mensaje += `*RELATO:* ${relato}\n\n`;
+    mensaje += `RELATO: ${relato}\n\n`;
     
-    mensaje += `*MAPA:* https://www.google.com/maps?q=${lat},${lng}`;
+    mensaje += `MAPA: https://www.google.com/maps?q=${lat},${lng}`;
 
 
 
@@ -337,7 +337,7 @@ formData.append('lugar', `${direccionManual};${ramal};${lat}, ${lng}`);
 formData.append('tercero', `${tNombre} (DNI: ${tDni}, Tel: ${tTel}, Vehículo: ${tMarca} ${tModelo})`);
 formData.append('lesionados', infoLesionados);
 formData.append('testigos', infotestigos);
-formData.append('relato', infotestigos);
+formData.append('relato', relato);
 
 try {
     await fetch(urlPlanilla, {
