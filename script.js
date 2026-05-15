@@ -322,7 +322,7 @@ async function enviarWhatsApp() {
     window.open(url, '_blank');
 
 // --- ENVÍO A GOOGLE SHEETS (Versión Optimizada) ---
-const urlPlanilla = "https://script.google.com/macros/s/AKfycbzkZhzS1BwwpDO-lOcWRQ8my5Xh9JJO6rDZ1EVm1cxushtFYWfthzUZ7o2s4skfzKnz/exec";
+const urlPlanilla = "https://script.google.com/macros/s/AKfycbyWPpEOIX0ue7IlVtBEg6DBeLiZLY1IvbZCFbuvDfcBQ6dSpPb7YiNDSaM-nazJ-WV5/exec";
 
 // Usamos URLSearchParams para que los datos viajen como campos de formulario
 const formData = new URLSearchParams();
